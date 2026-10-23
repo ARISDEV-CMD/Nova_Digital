@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 interface AdminLayoutProps {
   currentView: string;
@@ -16,10 +16,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   onNavigate,
   children,
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = (view: string) => { onNavigate(view); setMobileMenuOpen(false); };
   return (
     <div className="min-h-screen bg-[#0f131c] text-[#dfe2ee] flex">
       {/* Left Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-72 bg-[#181c24] z-50 flex flex-col justify-between py-6 border-r border-[#262a33] shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+      <aside className={`fixed left-0 top-0 h-full w-72 bg-[#181c24] z-50 flex flex-col justify-between py-6 border-r border-[#262a33] shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-transform md:translate-x-0 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <div className="flex flex-col gap-6">
           {/* Logo & Title */}
           <div className="px-6 flex items-center gap-3">
@@ -35,27 +37,27 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </div>
 
           {/* System status widgets */}
-          <div className="mx-6 px-3 py-2.5 rounded-lg bg-[#1c2028] flex flex-col gap-1.5 border border-[#31353e]/60">
+          <div className="hidden md:flex mx-6 px-3 py-2.5 rounded-lg bg-[#1c2028] flex-col gap-1.5 border border-[#31353e]/60">
             <div className="flex items-center justify-between text-xs">
               <span className="text-[#c7c4d7] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#4cd7f6] animate-pulse"></span>
-                Stripe & MoMo
+                Mode de demonstration
               </span>
-              <span className="font-['JetBrains_Mono'] text-[#4cd7f6] font-bold">OK</span>
+              <span className="font-['JetBrains_Mono'] text-[#4cd7f6] font-bold">DEMO</span>
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-[#c7c4d7] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#8083ff]"></span>
-                Supabase RLS
+                Backend
               </span>
-              <span className="font-['JetBrains_Mono'] text-[#c0c1ff] font-bold">ACTIF</span>
+              <span className="font-['JetBrains_Mono'] text-[#c0c1ff] font-bold">NON CONNECTE</span>
             </div>
           </div>
 
           {/* Navigation Items */}
           <nav className="px-4 flex flex-col gap-1" aria-label="Console Administration">
             <button
-              onClick={() => onNavigate('admin-dashboard')}
+              onClick={() => navigate('admin-dashboard')}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left ${
                 currentView === 'admin-dashboard'
                   ? 'bg-[#8083ff] text-[#0d0096] font-bold shadow-[0_0_12px_rgba(128,131,255,0.25)]'
@@ -67,7 +69,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             </button>
 
             <button
-              onClick={() => onNavigate('admin-produits')}
+              onClick={() => navigate('admin-produits')}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left ${
                 currentView === 'admin-produits'
                   ? 'bg-[#8083ff] text-[#0d0096] font-bold shadow-[0_0_12px_rgba(128,131,255,0.25)]'
@@ -79,7 +81,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             </button>
 
             <button
-              onClick={() => onNavigate('admin-promos')}
+              onClick={() => navigate('admin-promos')}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left ${
                 currentView === 'admin-promos'
                   ? 'bg-[#8083ff] text-[#0d0096] font-bold shadow-[0_0_12px_rgba(128,131,255,0.25)]'
@@ -93,7 +95,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <div className="h-px bg-[#262a33] my-2"></div>
 
             <button
-              onClick={() => onNavigate('accueil')}
+              onClick={() => navigate('accueil')}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#4cd7f6] hover:bg-[#262a33] hover:text-white transition-all text-left font-semibold"
             >
               <span className="material-symbols-outlined text-[20px]">storefront</span>
@@ -101,7 +103,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             </button>
 
             <button
-              onClick={() => onNavigate('mon-espace-client')}
+              onClick={() => navigate('mon-espace-client')}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#c7c4d7] hover:bg-[#262a33] hover:text-white transition-all text-left"
             >
               <span className="material-symbols-outlined text-[20px]">account_circle</span>
@@ -115,18 +117,20 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <div className="p-3 rounded-xl bg-[#1c2028] flex items-center justify-between border border-[#31353e]/60">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 rounded-full bg-[#4cd7f6]"></div>
-              <span className="text-xs text-[#c7c4d7]">v2.4.1-prod</span>
+              <span className="text-xs text-[#c7c4d7]">Frontend demo</span>
             </div>
-            <span className="font-['JetBrains_Mono'] text-xs text-[#908fa0]">99.98% SLA</span>
+            <span className="font-['JetBrains_Mono'] text-xs text-[#908fa0]">DEMO</span>
           </div>
         </div>
       </aside>
 
+      {mobileMenuOpen && <button type="button" aria-label="Fermer le menu" onClick={() => setMobileMenuOpen(false)} className="fixed inset-0 z-40 bg-black/60 md:hidden" />}
       {/* Main Content Pane with Fixed Header */}
-      <div className="pl-72 flex flex-col flex-1 min-h-screen">
+      <div className="md:pl-72 flex flex-col flex-1 min-h-screen">
         {/* Admin Top Header */}
-        <header className="fixed top-0 left-72 right-0 h-16 bg-[#0f131c]/80 backdrop-blur-xl z-40 flex items-center justify-between px-8 border-b border-[#262a33]">
-          <div className="flex items-center gap-6">
+        <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-[#0f131c]/80 backdrop-blur-xl z-40 flex items-center justify-between px-3 md:px-8 border-b border-[#262a33]">
+          <div className="flex items-center gap-2 md:gap-6">
+            <button type="button" aria-label="Ouvrir le menu" onClick={() => setMobileMenuOpen(true)} className="md:hidden p-2 rounded-lg hover:bg-[#262a33]"><span className="material-symbols-outlined">menu</span></button>
             <div className="flex items-center gap-2 text-xs">
               <span className="text-[#908fa0]">Admin</span>
               <span className="material-symbols-outlined text-[#908fa0] text-[14px]">chevron_right</span>
@@ -145,7 +149,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <div className="flex items-center gap-4">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1c2028] text-[#4cd7f6] border border-[#31353e]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#4cd7f6] animate-ping"></span>
-              PROD-LIVE
+              DEMO
             </span>
             <div className="flex items-center gap-3 pl-3">
               <div className="text-right hidden xl:block">
@@ -160,7 +164,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         </header>
 
         {/* Content Body */}
-        <main className="w-full pt-16 flex-1 px-8 py-8">
+        <main className="w-full pt-16 flex-1 px-3 sm:px-5 md:px-8 py-5 md:py-8">
           <div key={currentView} className="page-transition">
             {children}
           </div>
@@ -175,8 +179,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               Datacenter: eu-west-3 (Paris)
             </span>
           </div>
-          <div className="flex items-center gap-6">
-            <button onClick={() => onNavigate('accueil')} className="hover:text-white transition-colors">
+          <div className="flex items-center gap-2 md:gap-6">
+            <button onClick={() => navigate('accueil')} className="hover:text-white transition-colors">
               Retour boutique
             </button>
             <span className="hover:text-white cursor-pointer">Audits & Logs</span>

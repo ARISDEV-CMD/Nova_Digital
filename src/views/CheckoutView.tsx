@@ -32,38 +32,30 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
   onNavigate,
   currency,
 }) => {
-  const [email, setEmail] = useState('alexandre.martin@techfounder.io');
-  const [name, setName] = useState('Alexandre Martin');
-  const [vat, setVat] = useState('FR 82 912384910');
-  const [createAccount, setCreateAccount] = useState(false);
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [vat, setVat] = useState('');
 
   const [paymentTab, setPaymentTab] = useState<'card' | 'momo' | 'paypal'>('card');
-  const [cardNum, setCardNum] = useState('4532 •••• •••• 8920');
-  const [cardExp, setCardExp] = useState('11/27');
-  const [cardCvc, setCardCvc] = useState('884');
 
-  const [momoCountry, setMomoCountry] = useState('CI');
-  const [momoOp, setMomoOp] = useState<'orange' | 'mtn'>('orange');
-  const [momoPhone, setMomoPhone] = useState('07 00 00 00 00');
 
-  const [promoInput, setPromoInput] = useState('WELCOME10');
-  const [appliedPromo, setAppliedPromo] = useState<string>('WELCOME10');
-  const [promoMessage, setPromoMessage] = useState<string>('Code WELCOME10 activé (-10 € offerts)');
-  const [discountAmount, setDiscountAmount] = useState<number>(10);
+  const [promoInput, setPromoInput] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState('');
+  const [promoMessage, setPromoMessage] = useState('');
+  const [formError, setFormError] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
   const subtotal = calculateSubtotal(cartItems);
+  const appliedPromoResult = appliedPromo ? validatePromoCode(appliedPromo, subtotal, promos) : null;
+  const discountAmount = appliedPromoResult?.valid ? appliedPromoResult.discount : 0;
 
   const handleApplyPromo = () => {
     const res = validatePromoCode(promoInput, subtotal, promos);
     if (res.valid) {
       setAppliedPromo(promoInput.toUpperCase());
-      setDiscountAmount(res.discount);
       setPromoMessage(res.message);
     } else {
       setAppliedPromo('');
-      setDiscountAmount(0);
       setPromoMessage(res.message);
     }
   };
@@ -71,62 +63,24 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
   const finalTotalEur = Math.max(0, subtotal - discountAmount);
   const finalTotalXaf = Math.round(finalTotalEur * EUR_TO_XAF_RATE);
 
-  const countryPrefixes: Record<string, string> = {
-    CI: '+225',
-    CM: '+237',
-    SN: '+221',
-    BJ: '+229',
-    TG: '+228',
-  };
-
   const handleFinalCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim() || !name.trim()) {
-      alert("Veuillez saisir votre adresse e-mail et votre nom pour recevoir vos fichiers.");
-      return;
-    }
-
-    setIsProcessing(true);
-
+    if (!cartItems.length) return;
+    if (!email.trim() || !name.trim()) { setFormError('Saisissez votre nom et une adresse e-mail valide.'); return; }
+    setFormError(''); setIsProcessing(true);
     setTimeout(() => {
       const newOrder: OrderRecord = {
-        id: `ord-${Math.floor(1000 + Math.random() * 9000)}`,
-        orderNumber: `#NOVA-${Math.floor(9400 + Math.random() * 100)}`,
-        date: new Date().toLocaleDateString('fr-FR', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        clientName: name,
-        clientEmail: email,
-        companyName: vat ? 'Studio Martin Tech' : undefined,
-        vatNumber: vat || undefined,
-        items: cartItems.map((item, idx) => ({
-          product: item.product,
-          licenseTier: item.licenseTier,
-          priceEur: item.priceEur,
-          licenseKey: `NOVA-${item.product.sku.substring(0, 4)}-${Math.floor(1000 + Math.random() * 9000)}-AUTH`,
-        })),
+        id: `demo-ord-${Date.now()}`, orderNumber: `#DEMO-${Math.floor(1000 + Math.random() * 9000)}`, date: new Date().toLocaleString('fr-FR'),
+        clientName: name, clientEmail: email, vatNumber: vat || undefined,
+        items: cartItems.map(item => ({product:item.product,licenseTier:item.licenseTier,priceEur:item.priceEur,licenseKey:'DEMO-NON-ACTIVE'})),
         paymentMethod: paymentTab === 'card' ? 'stripe' : paymentTab,
-        paymentLabel:
-          paymentTab === 'card'
-            ? 'Stripe • Visa terminant par 8920'
-            : paymentTab === 'momo'
-            ? `${momoOp.toUpperCase()} Money (${momoPhone})`
-            : 'PayPal Express',
-        totalEur: finalTotalEur,
-        invoiceRef: `FAC-2025-${Math.floor(1000 + Math.random() * 9000)}`,
-        status: 'paid',
-        token: `live_hmac_${Date.now()}_token`,
+        paymentLabel: 'DEMO ONLY - NO PAYMENT PROCESSED', totalEur: finalTotalEur, invoiceRef: 'DEMO-NON-ACTIVE', status: 'pending', token: 'DEMO-NON-ACTIVE',
       };
-
-      setIsProcessing(false);
-      onOrderCompleted(newOrder);
-      onNavigate('confirmation');
-    }, 1200);
+      setIsProcessing(false); onOrderCompleted(newOrder); onNavigate('confirmation');
+    }, 450);
   };
+
+  if (cartItems.length === 0) return <div className="mx-auto max-w-3xl px-4 py-20"><div className="rounded-xl border border-[#31353e] bg-[#181c24] p-6 text-center"><h1 className="text-xl font-bold text-white">Votre panier est vide</h1><p className="mt-2 text-sm text-[#c7c4d7]">Ajoutez un produit au panier pour continuer. Aucun paiement reel n'est possible dans cette demo.</p><button type="button" onClick={()=>onNavigate('catalogue')} className="mt-5 min-h-11 rounded-xl bg-[#8083ff] px-5 text-sm font-semibold text-[#0d0096]">Retour au catalogue</button></div></div>;
 
   return (
     <div className="w-full bg-[#0f131c] text-[#dfe2ee] min-h-screen">
@@ -199,7 +153,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="alexandre.martin@techfounder.io"
+                        placeholder="vous@exemple.fr"
                         required
                         className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#0a0e16] text-white placeholder-[#908fa0] text-sm focus:outline-none focus:ring-1 focus:ring-[#8083ff] border border-[#31353e]"
                       />
@@ -219,7 +173,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Alexandre Martin"
+                      placeholder="Votre nom complet"
                       required
                       className="w-full px-3 py-2.5 rounded-lg bg-[#0a0e16] text-white placeholder-[#908fa0] text-sm focus:outline-none focus:ring-1 focus:ring-[#8083ff] border border-[#31353e]"
                     />
@@ -240,40 +194,6 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                   </div>
                 </div>
 
-                {/* Account creation toggle */}
-                <div className="pt-2 bg-[#1c2028]/60 p-3.5 rounded-lg space-y-2 border border-[#31353e]/40">
-                  <label className="flex items-start gap-2.5 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={createAccount}
-                      onChange={(e) => setCreateAccount(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 rounded bg-[#0a0e16] text-[#8083ff] accent-[#8083ff] cursor-pointer"
-                    />
-                    <div className="flex-1">
-                      <span className="text-xs font-semibold text-white block">
-                        Créer un compte NovaDigital pour synchroniser mes accès à vie
-                      </span>
-                      <span className="text-[11px] text-[#c7c4d7] block">
-                        Conservez l'historique des versions, releases GitHub et vos clés API au même endroit.
-                      </span>
-                    </div>
-                  </label>
-                  {createAccount && (
-                    <div className="pt-2">
-                      <label className="block text-xs text-white mb-1" htmlFor="account-password">
-                        Mot de passe de sécurité
-                      </label>
-                      <input
-                        id="account-password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="8+ caractères alphanumériques"
-                        className="w-full px-3 py-2 rounded-lg bg-[#0a0e16] text-white placeholder-[#908fa0] text-sm focus:outline-none focus:ring-1 focus:ring-[#8083ff] border border-[#31353e]"
-                      />
-                    </div>
-                  )}
-                </div>
               </section>
 
               {/* Step 2: Payment Rail Selector */}
@@ -283,11 +203,9 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                     <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#571bc1] text-white font-bold text-xs">
                       2
                     </span>
-                    <h2 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">
-                      Moyen de paiement sécurisé
-                    </h2>
+                    <h2 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">Payment options (demo)</h2>
                   </div>
-                  <span className="font-mono text-xs text-[#908fa0]">Protocole 3D Secure 2.0</span>
+                  <span className="font-mono text-xs text-[#908fa0]">Demo mode - no payment provider connected</span>
                 </div>
 
                 {/* Tab Buttons */}
@@ -330,194 +248,12 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                   </button>
                 </div>
 
-                {/* TAB PANEL 1: Stripe Card */}
-                {paymentTab === 'card' && (
-                  <div className="space-y-4 pt-2">
-                    <div className="flex items-center justify-between text-xs text-[#c7c4d7]">
-                      <span>Cartes acceptées</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-2 py-0.5 rounded bg-[#1c2028] text-[10px] font-mono font-bold text-white border border-[#31353e]">
-                          VISA
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-[#1c2028] text-[10px] font-mono font-bold text-white border border-[#31353e]">
-                          MASTERCARD
-                        </span>
-                        <span className="px-2 py-0.5 rounded bg-[#1c2028] text-[10px] font-mono font-bold text-white border border-[#31353e]">
-                          AMEX
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-xs text-white mb-1" htmlFor="card-num">Numéro de carte</label>
-                      <div className="relative flex items-center">
-                        <span className="material-symbols-outlined absolute left-3 text-[#908fa0] text-lg">credit_card</span>
-                        <input
-                          id="card-num"
-                          type="text"
-                          value={cardNum}
-                          onChange={(e) => setCardNum(e.target.value)}
-                          placeholder="4532 •••• •••• 8920"
-                          className="w-full pl-10 pr-10 py-2.5 rounded-lg bg-[#0a0e16] text-white font-mono text-sm focus:outline-none focus:ring-1 focus:ring-[#8083ff] border border-[#31353e]"
-                        />
-                        <span className="material-symbols-outlined absolute right-3 text-[#4cd7f6] text-lg">lock</span>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs text-white mb-1" htmlFor="card-exp">Date d'expiration</label>
-                        <input
-                          id="card-exp"
-                          type="text"
-                          value={cardExp}
-                          onChange={(e) => setCardExp(e.target.value)}
-                          placeholder="MM / AA"
-                          className="w-full px-3 py-2.5 rounded-lg bg-[#0a0e16] text-white font-mono text-sm focus:outline-none focus:ring-1 focus:ring-[#8083ff] border border-[#31353e]"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs text-white mb-1" htmlFor="card-cvc">Cryptogramme CVC</label>
-                        <input
-                          id="card-cvc"
-                          type="password"
-                          value={cardCvc}
-                          onChange={(e) => setCardCvc(e.target.value)}
-                          placeholder="CVC"
-                          maxLength={4}
-                          className="w-full px-3 py-2.5 rounded-lg bg-[#0a0e16] text-white font-mono text-sm focus:outline-none focus:ring-1 focus:ring-[#8083ff] border border-[#31353e]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <div className="rounded-xl border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-6 text-amber-100" role="status">Payment is unavailable in this demo. Card, PayPal, and Mobile Money details are not requested or transmitted. Submitting creates only a local pending demo order.</div>
 
-                {/* TAB PANEL 2: Mobile Money (MTN / Orange) */}
-                {paymentTab === 'momo' && (
-                  <div className="space-y-4 pt-2">
-                    <div className="p-3.5 rounded-lg bg-[#1c2028]/60 space-y-1 border border-[#31353e]/40">
-                      <div className="flex items-center gap-2 text-[#4cd7f6] text-xs font-bold">
-                        <span className="material-symbols-outlined text-base">cell_tower</span>
-                        <span>Réseau Afrique Centrale & Ouest (Instant USSD)</span>
-                      </div>
-                      <p className="text-xs text-[#c7c4d7]">
-                        Après validation, un message contextuel s'affichera directement sur votre téléphone portable pour autoriser le débit sécurisé.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs text-white mb-1" htmlFor="momo-country">Pays du compte</label>
-                        <select
-                          id="momo-country"
-                          value={momoCountry}
-                          onChange={(e) => setMomoCountry(e.target.value)}
-                          className="w-full px-3 py-2.5 rounded-lg bg-[#0a0e16] text-white text-xs focus:outline-none border border-[#31353e]"
-                        >
-                          <option value="CI">Côte d'Ivoire (+225)</option>
-                          <option value="CM">Cameroun (+237)</option>
-                          <option value="SN">Sénégal (+221)</option>
-                          <option value="BJ">Bénin (+229)</option>
-                          <option value="TG">Togo (+228)</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs text-white mb-1">Opérateur Télécom</label>
-                        <div className="grid grid-cols-2 gap-2">
-                          <label
-                            onClick={() => setMomoOp('orange')}
-                            className={`flex items-center justify-center gap-1.5 p-2 rounded-lg cursor-pointer border text-xs font-semibold ${
-                              momoOp === 'orange'
-                                ? 'bg-[#1c2028] border-[#4cd7f6] text-white'
-                                : 'bg-[#0a0e16] border-[#31353e] text-[#c7c4d7]'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="momo-op"
-                              checked={momoOp === 'orange'}
-                              onChange={() => setMomoOp('orange')}
-                              className="accent-[#4cd7f6]"
-                            />
-                            <span>Orange</span>
-                          </label>
-                          <label
-                            onClick={() => setMomoOp('mtn')}
-                            className={`flex items-center justify-center gap-1.5 p-2 rounded-lg cursor-pointer border text-xs font-semibold ${
-                              momoOp === 'mtn'
-                                ? 'bg-[#1c2028] border-[#4cd7f6] text-white'
-                                : 'bg-[#0a0e16] border-[#31353e] text-[#c7c4d7]'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="momo-op"
-                              checked={momoOp === 'mtn'}
-                              onChange={() => setMomoOp('mtn')}
-                              className="accent-[#4cd7f6]"
-                            />
-                            <span>MTN MoMo</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs text-white mb-1" htmlFor="momo-phone">Numéro de téléphone mobile</label>
-                      <div className="relative flex items-center">
-                        <span className="absolute left-3 font-mono text-[#c7c4d7] text-xs font-bold">
-                          {countryPrefixes[momoCountry] || '+225'}
-                        </span>
-                        <input
-                          id="momo-phone"
-                          type="tel"
-                          value={momoPhone}
-                          onChange={(e) => setMomoPhone(e.target.value)}
-                          placeholder="07 00 00 00 00"
-                          className="w-full pl-16 pr-4 py-2.5 rounded-lg bg-[#0a0e16] text-white font-mono text-sm focus:outline-none focus:ring-1 focus:ring-[#4cd7f6] border border-[#31353e]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* TAB PANEL 3: PayPal Express */}
-                {paymentTab === 'paypal' && (
-                  <div className="p-6 rounded-xl bg-[#1c2028] text-center space-y-3 border border-[#31353e]">
-                    <div className="w-12 h-12 mx-auto rounded-full bg-[#571bc1] flex items-center justify-center text-white">
-                      <span className="material-symbols-outlined text-2xl">account_balance_wallet</span>
-                    </div>
-                    <h4 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">PayPal Express Checkout</h4>
-                    <p className="text-xs text-[#c7c4d7] max-w-sm mx-auto">
-                      Vous serez redirigé en toute sécurité vers l'interface PayPal pour valider votre transaction en 1 clic avec votre solde ou compte bancaire relié.
-                    </p>
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#262a33] text-[#d0bcff] text-xs font-semibold">
-                      <span className="material-symbols-outlined text-sm">verified</span> Protection des Achats PayPal
-                    </span>
-                  </div>
-                )}
-
-                {/* Big Final Call to Action */}
                 <div className="pt-4 space-y-2">
-                  <button
-                    type="submit"
-                    disabled={isProcessing || cartItems.length === 0}
-                    className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#571bc1] via-[#8083ff] to-[#009eb9] hover:brightness-110 active:scale-[0.99] text-white font-['Plus_Jakarta_Sans'] text-base font-bold flex items-center justify-center gap-3 transition-all shadow-xl disabled:opacity-50"
-                  >
-                    <span className="material-symbols-outlined text-xl">
-                      {isProcessing ? 'hourglass_top' : 'lock_open'}
-                    </span>
-                    <span>
-                      {isProcessing
-                        ? 'Traitement sécurisé en cours...'
-                        : paymentTab === 'momo'
-                        ? `Valider ${finalTotalXaf.toLocaleString('fr-FR')} FCFA & Télécharger`
-                        : `Payer ${formatPriceEur(finalTotalEur)} & Télécharger mes fichiers`}
-                    </span>
-                    <span className="material-symbols-outlined text-xl">arrow_forward</span>
-                  </button>
-                  <p className="text-center text-xs text-[#908fa0]">
-                    Accès direct au dashboard de téléchargement et aux archives ZIP dès validation bancaire.
-                  </p>
+                  {formError && <p role="alert" className="rounded-lg border border-rose-300/20 bg-rose-300/10 p-3 text-sm text-rose-200">{formError}</p>}
+                  <button type="submit" disabled={isProcessing} className="w-full min-h-12 rounded-xl bg-[#8083ff] px-6 py-3 text-sm font-bold text-[#0d0096] transition-colors hover:bg-[#a6a8ff] disabled:opacity-50">{isProcessing ? 'Preparing demo order...' : 'Create demo order'}</button>
+                  <p className="text-center text-xs text-[#908fa0]">No payment will be processed. Demo orders do not unlock downloads or licenses.</p>
                 </div>
               </section>
 
@@ -555,7 +291,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                     Récapitulatif du panier
                   </h2>
                   <span className="px-2.5 py-0.5 rounded-full bg-[#262a33] text-[#4cd7f6] font-mono text-xs font-bold border border-[#31353e]">
-                    {cartItems.length} {cartItems.length > 1 ? 'articles' : 'article'}
+                    {cartItems.reduce((total, item) => total + (item.quantity || 1), 0)} {cartItems.reduce((total, item) => total + (item.quantity || 1), 0) > 1 ? 'articles' : 'article'}
                   </span>
                 </div>
 
@@ -604,8 +340,8 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                             </span>
                           </div>
                           <div className="flex items-center justify-between pt-1">
-                            <span className="text-[11px] text-[#908fa0] font-mono">{item.product.formatLabel}</span>
-                            <span className="text-xs font-bold text-white font-mono">{formatPriceEur(item.priceEur)}</span>
+                            <span className="text-[11px] text-[#908fa0] font-mono">{item.product.formatLabel} ? Qt? {item.quantity || 1}</span>
+                            <span className="text-xs font-bold text-white font-mono">{formatPriceEur(item.priceEur * (item.quantity || 1))}</span>
                           </div>
                         </div>
                       </div>
@@ -647,7 +383,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                       }`}
                     >
                       <span className="material-symbols-outlined text-xs">
-                        {discountAmount > 0 ? 'check_circle' : 'error'}
+                        {appliedPromoResult?.valid ? 'check_circle' : 'error'}
                       </span>
                       <span>{promoMessage}</span>
                     </div>

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from 'react';
-import { Product, formatPriceEur, formatPriceXaf, EUR_TO_XAF_RATE } from '../utils/shop-logic.ts';
+import React, { useEffect, useState, useMemo } from 'react';
+import {Product,filterCatalogProducts,EUR_TO_XAF_RATE} from '../utils/shop-logic.ts';
+import {ProductCard} from '../components/products/ProductCard.tsx';import {EmptyState} from '../components/feedback/EmptyState.tsx';import {Button} from '../components/ui/Button.tsx';import {Badge} from '../components/ui/Badge.tsx';
 
 interface CatalogViewProps {
   products: Product[];
@@ -21,72 +22,18 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   initialCategory = 'all',
   currency,
 }) => {
-  const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
-  const [maxPrice, setMaxPrice] = useState<number>(200);
-  const [minRating, setMinRating] = useState<number>(0);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [sortOrder, setSortOrder] = useState<'pop' | 'new' | 'price-asc' | 'price-desc' | 'rating'>('pop');
-  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
-  const [selectedLicense, setSelectedLicense] = useState<'standard' | 'extended' | 'personal'>('standard');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  // Filtered & sorted products
-  const filteredProducts = useMemo(() => {
-    let list = products.filter((p) => !p.isDraft);
-
-    if (search.trim()) {
-      const q = search.toLowerCase().trim();
-      list = list.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.subtitle.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.tags.some((t) => t.toLowerCase().includes(q))
-      );
-    }
-
-    if (selectedCategory !== 'all') {
-      list = list.filter((p) => p.category === selectedCategory);
-    }
-
-    list = list.filter((p) => p.priceEur <= maxPrice);
-
-    if (minRating > 0) {
-      list = list.filter((p) => p.rating >= minRating);
-    }
-
-    switch (sortOrder) {
-      case 'price-asc':
-        list.sort((a, b) => a.priceEur - b.priceEur);
-        break;
-      case 'price-desc':
-        list.sort((a, b) => b.priceEur - a.priceEur);
-        break;
-      case 'rating':
-        list.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'new':
-        list.sort((a, b) => b.reviewCount - a.reviewCount);
-        break;
-      case 'pop':
-      default:
-        list.sort((a, b) => b.reviewCount * b.rating - a.reviewCount * a.rating);
-        break;
-    }
-
-    return list;
-  }, [products, search, selectedCategory, maxPrice, minRating, sortOrder]);
-
-  const handleResetFilters = () => {
-    setSearch('');
-    setSelectedCategory('all');
-    setMaxPrice(200);
-    setMinRating(0);
-    setSelectedLicense('standard');
-  };
-
-  const fcfaPrice = Math.round(maxPrice * EUR_TO_XAF_RATE);
+  const [search,setSearch]=useState('');
+  const [selectedCategory,setSelectedCategory]=useState<string>(initialCategory);
+  const [maxPrice,setMaxPrice]=useState(200);
+  const [deliveryType,setDeliveryType]=useState<Product['deliveryType']|'all'>('all');
+  const [viewMode,setViewMode]=useState<'grid'|'list'>('grid');
+  const [sortOrder,setSortOrder]=useState<'manual'|'price-asc'|'price-desc'>('manual');
+  const [mobileFilterOpen,setMobileFilterOpen]=useState(false);
+  const [currentPage,setCurrentPage]=useState(1);const pageSize=8;
+  const filteredProducts=useMemo(()=>filterCatalogProducts(products,{search,category:selectedCategory,maxPrice,deliveryType:deliveryType==='all'?undefined:deliveryType,sort:sortOrder==='manual'?undefined:sortOrder}),[products,search,selectedCategory,maxPrice,deliveryType,sortOrder]);
+  const publishedProducts=products.filter(p=>!p.isDraft);const totalPages=Math.max(1,Math.ceil(filteredProducts.length/pageSize));const visibleProducts=filteredProducts.slice((currentPage-1)*pageSize,currentPage*pageSize);const fcfaPrice=Math.round(maxPrice*EUR_TO_XAF_RATE);
+  useEffect(()=>{setCurrentPage(1)},[search,selectedCategory,maxPrice,deliveryType,sortOrder]);
+  const handleResetFilters=()=>{setSearch('');setSelectedCategory(initialCategory);setMaxPrice(200);setDeliveryType('all');setSortOrder('manual')};
 
   return (
     <div className="w-full bg-[#0f131c] text-[#dfe2ee]">
@@ -118,7 +65,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
               <h1 className="font-['Plus_Jakarta_Sans'] text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
                 Explorez nos{' '}
                 <span className="bg-gradient-to-r from-[#c0c1ff] via-[#d0bcff] to-[#4cd7f6] bg-clip-text text-transparent">
-                  180+ Ressources
+                  Ressources
                 </span>{' '}
                 Digitales
               </h1>
@@ -127,22 +74,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
               </p>
             </div>
 
-            {/* Quick Stats Widget */}
-            <div className="flex items-center gap-4 bg-[#181c24] px-4 py-2.5 rounded-xl shrink-0 shadow-sm border border-[#262a33]">
-              <div className="text-left">
-                <span className="block font-['JetBrains_Mono'] text-[11px] text-[#908fa0] uppercase tracking-wider">
-                  Taux de mise à jour
-                </span>
-                <span className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#c0c1ff]">99.4%</span>
-              </div>
-              <div className="w-px h-8 bg-[#31353e]"></div>
-              <div className="text-left">
-                <span className="block font-['JetBrains_Mono'] text-[11px] text-[#908fa0] uppercase tracking-wider">
-                  Avis vérifiés
-                </span>
-                <span className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#4cd7f6]">4.92/5</span>
-              </div>
-            </div>
+            <div className="flex items-center gap-4 rounded-xl border border-[#262a33] bg-[#181c24] px-4 py-3"><div><span className="block text-[11px] uppercase tracking-wider text-[#908fa0]">Produits pr?sent?s</span><span className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">{publishedProducts.length}</span></div><div className="h-8 w-px bg-[#31353e]"/><div><span className="block text-[11px] uppercase tracking-wider text-[#908fa0]">Mode</span><span className="font-['Plus_Jakarta_Sans'] text-sm font-semibold text-[#4cd7f6]">D?mo locale</span></div></div>
           </div>
         </section>
 
@@ -171,7 +103,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
               <div className="text-xs text-[#c7c4d7] flex items-center gap-1.5 px-2">
                 <span className="w-2 h-2 rounded-full bg-[#8083ff]"></span>
                 <span>
-                  Affichage de <strong className="text-white">{filteredProducts.length}</strong> sur 184 ressources
+                  {filteredProducts.length} r?sultat{filteredProducts.length>1?'s':''} sur {publishedProducts.length} produit{publishedProducts.length>1?'s':''}
                 </span>
               </div>
 
@@ -181,16 +113,11 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                   <span className="material-symbols-outlined text-[#908fa0] text-sm mr-1">sort</span>
                   <select
                     value={sortOrder}
-                    onChange={(e) => setSortOrder(e.target.value as any)}
+                    onChange={(e) => setSortOrder(e.target.value as 'manual'|'price-asc'|'price-desc')}
                     aria-label="Trier les résultats"
                     className="bg-transparent text-[#dfe2ee] text-xs font-medium focus:outline-none cursor-pointer pr-1"
                   >
-                    <option className="bg-[#1c2028]" value="pop">Les plus populaires</option>
-                    <option className="bg-[#1c2028]" value="new">Nouveautés (v2.4)</option>
-                    <option className="bg-[#1c2028]" value="price-asc">Prix croissant</option>
-                    <option className="bg-[#1c2028]" value="price-desc">Prix décroissant</option>
-                    <option className="bg-[#1c2028]" value="rating">Mieux notés (★ 4.8+)</option>
-                  </select>
+                    <option className="bg-[#1c2028]" value="manual">Ordre du catalogue</option><option className="bg-[#1c2028]" value="price-asc">Prix croissant</option><option className="bg-[#1c2028]" value="price-desc">Prix d?croissant</option></select>
                 </div>
 
                 {/* View Switcher */}
@@ -262,12 +189,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 </h3>
                 <div className="space-y-1 pt-1">
                   {[
-                    { id: 'all', label: 'Toutes les catégories', count: 184 },
-                    { id: 'boilerplates', label: 'Boilerplates SaaS', count: 19 },
-                    { id: 'ui', label: 'Templates & UI Figma', count: 42 },
-                    { id: 'formations', label: 'Formations Vidéo', count: 29 },
-                    { id: 'ebooks', label: 'Ebooks & Guides PDF', count: 35 },
-                    { id: 'presets', label: 'Presets & Audio', count: 22 },
+                    {id:'all',label:'Toutes les cat?gories',count:publishedProducts.length},{id:'boilerplates',label:'Boilerplates SaaS',count:publishedProducts.filter(p=>p.category==='boilerplates').length},{id:'ui',label:'Templates & UI Figma',count:publishedProducts.filter(p=>p.category==='ui').length},{id:'formations',label:'Formations vid?o',count:publishedProducts.filter(p=>p.category==='formations').length},{id:'ebooks',label:'Ebooks & guides PDF',count:publishedProducts.filter(p=>p.category==='ebooks').length},{id:'presets',label:'Presets & audio',count:publishedProducts.filter(p=>p.category==='presets').length},
                   ].map((cat) => (
                     <label
                       key={cat.id}
@@ -325,315 +247,17 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 </div>
               </div>
 
-              {/* Section 3: License Type */}
-              <div className="space-y-2 border-t border-[#262a33] pt-4">
-                <h3 className="text-xs uppercase tracking-wider text-[#908fa0] font-semibold">
-                  Type de Licence
-                </h3>
-                <div className="space-y-1.5 pt-1">
-                  {[
-                    { id: 'standard', title: 'Commerciale Standard', desc: '1 projet client final' },
-                    { id: 'extended', title: 'Licence Étendue (SaaS)', desc: 'Projets SaaS & revente autorisée' },
-                    { id: 'personal', title: 'Usage Personnel', desc: 'Apprentissage & sandbox perso' },
-                  ].map((lic) => (
-                    <label
-                      key={lic.id}
-                      className="flex items-start gap-2 group cursor-pointer p-1.5 rounded-lg hover:bg-[#1c2028] transition-colors"
-                    >
-                      <input
-                        type="radio"
-                        name="license-sidebar"
-                        checked={selectedLicense === lic.id}
-                        onChange={() => setSelectedLicense(lic.id as any)}
-                        className="mt-0.5 w-3.5 h-3.5 text-[#8083ff] accent-[#8083ff]"
-                      />
-                      <div className="flex flex-col">
-                        <span className="text-xs text-[#dfe2ee] font-medium">{lic.title}</span>
-                        <span className="text-[11px] text-[#908fa0]">{lic.desc}</span>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Section 4: Rating Filters */}
-              <div className="space-y-2 border-t border-[#262a33] pt-4">
-                <h3 className="text-xs uppercase tracking-wider text-[#908fa0] font-semibold">
-                  Évaluation Minimale
-                </h3>
-                <div className="space-y-1 pt-1">
-                  <button
-                    onClick={() => setMinRating(minRating === 4 ? 0 : 4)}
-                    className={`w-full flex items-center justify-between p-1.5 rounded-lg text-left transition-colors ${
-                      minRating === 4 ? 'bg-[#1c2028] text-white' : 'hover:bg-[#1c2028] text-[#c7c4d7]'
-                    }`}
-                    type="button"
-                  >
-                    <div className="flex items-center gap-1 text-[#4cd7f6]">
-                      {[...Array(4)].map((_, i) => (
-                        <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                          star
-                        </span>
-                      ))}
-                      <span className="material-symbols-outlined text-sm text-[#464554]">star</span>
-                      <span className="text-xs text-[#dfe2ee] ml-1">4.0 et plus</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#908fa0]">142</span>
-                  </button>
-                  <button
-                    onClick={() => setMinRating(minRating === 3 ? 0 : 3)}
-                    className={`w-full flex items-center justify-between p-1.5 rounded-lg text-left transition-colors ${
-                      minRating === 3 ? 'bg-[#1c2028] text-white' : 'hover:bg-[#1c2028] text-[#c7c4d7]'
-                    }`}
-                    type="button"
-                  >
-                    <div className="flex items-center gap-1 text-[#4cd7f6]">
-                      {[...Array(3)].map((_, i) => (
-                        <span key={i} className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                          star
-                        </span>
-                      ))}
-                      <span className="material-symbols-outlined text-sm text-[#464554]">star</span>
-                      <span className="material-symbols-outlined text-sm text-[#464554]">star</span>
-                      <span className="text-xs text-[#dfe2ee] ml-1">3.0 et plus</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#908fa0]">178</span>
-                  </button>
-                </div>
-              </div>
+              <div className="space-y-2 border-t border-[#262a33] pt-4"><h3 className="text-xs font-semibold uppercase tracking-wider text-[#908fa0]">Mode de livraison</h3><div className="space-y-1">{[{id:'all',label:'Tous les formats'},{id:'instant',label:'T?l?chargement direct'},{id:'github',label:'D?p?t GitHub'},{id:'video',label:'Formation vid?o'},{id:'book',label:'Ebook'}].map(option=><label key={option.id} className="flex min-h-10 cursor-pointer items-center gap-2 rounded-lg px-2 text-sm text-[#c7c4d7] transition-colors hover:bg-[#1c2028]"><input type="radio" name="delivery" checked={deliveryType===option.id} onChange={()=>setDeliveryType(option.id as Product['deliveryType']|'all')} className="accent-[#8083ff]"/>{option.label}</label>)}</div></div>
             </div>
 
-            {/* Trust Mini Banner */}
-            <div className="bg-[#262a33] rounded-xl p-4 space-y-1.5 border border-[#31353e]">
-              <div className="flex items-center gap-1.5 text-[#c0c1ff] text-xs font-semibold">
-                <span className="material-symbols-outlined text-base">bolt</span>
-                <span>Clé de Licence Instantanée</span>
-              </div>
-              <p className="text-xs text-[#c7c4d7] leading-relaxed">
-                Délivrée automatiquement à la confirmation du panier. Accès GitHub direct sous 60 secondes.
-              </p>
-            </div>
+            <div className="rounded-xl border border-[#31353e] bg-[#181c24] p-4"><Badge tone="warning">Catalogue de d?monstration</Badge><p className="mt-2 text-xs leading-5 text-[#c7c4d7]">Les informations et tarifs pr?sent?s sont des exemples ? confirmer avant publication.</p></div>
           </aside>
 
           {/* RIGHT COLUMN: Product Grid / List */}
           <main className="lg:col-span-9 space-y-6">
-            {filteredProducts.length === 0 ? (
-              <div className="p-12 text-center bg-[#181c24] rounded-xl border border-[#262a33]">
-                <span className="material-symbols-outlined text-4xl text-[#908fa0] mb-3">search_off</span>
-                <h3 className="text-base font-bold text-white">Aucun produit ne correspond à ces critères</h3>
-                <p className="text-xs text-[#c7c4d7] mt-1 max-w-sm mx-auto">
-                  Essayez d'ajuster votre recherche ou réinitialisez les filtres pour afficher l'ensemble du catalogue.
-                </p>
-                <button
-                  onClick={handleResetFilters}
-                  className="mt-4 px-4 py-2 bg-[#8083ff] text-white text-xs font-semibold rounded-lg hover:bg-[#c0c1ff] hover:text-[#1000a9] transition-colors"
-                >
-                  Réinitialiser tous les filtres
-                </button>
-              </div>
-            ) : (
-              <div
-                className={
-                  viewMode === 'grid'
-                    ? 'grid grid-cols-1 md:grid-cols-2 gap-5'
-                    : 'flex flex-col gap-4'
-                }
-              >
-                {filteredProducts.map((p) => (
-                  <article
-                    key={p.id}
-                    className={`group relative flex ${
-                      viewMode === 'grid' ? 'flex-col' : 'flex-col sm:flex-row'
-                    } bg-[#181c24] rounded-xl overflow-hidden hover:bg-[#1c2028] transition-all duration-300 shadow-md border border-[#262a33]`}
-                  >
-                    <div
-                      className={`relative ${
-                        viewMode === 'grid' ? 'w-full aspect-video' : 'w-full sm:w-64 sm:h-auto aspect-video sm:aspect-auto'
-                      } overflow-hidden bg-[#0a0e16] cursor-pointer shrink-0`}
-                      onClick={() => onNavigate('produit', p.id)}
-                    >
-                      <img
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        alt={p.title}
-                        src={p.image}
-                      />
-                      <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0a0e16]/80 backdrop-blur-md text-[#4cd7f6] text-[11px] font-semibold border border-[#31353e]/40">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#4cd7f6] animate-ping"></span>
-                        <span>{p.formatLabel}</span>
-                      </div>
-                      <div className="absolute bottom-2.5 left-2.5 flex flex-wrap gap-1">
-                        {p.tags.slice(0, 2).map((t, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-0.5 rounded bg-[#31353e]/90 backdrop-blur-md text-white font-['JetBrains_Mono'] text-[10px]"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="p-4 flex-1 flex flex-col justify-between space-y-4">
-                      <div>
-                        <div className="flex items-center justify-between gap-2 text-xs mb-1">
-                          <span className="text-[#c0c1ff] uppercase font-bold tracking-wider text-[11px]">
-                            {p.categoryLabel}
-                          </span>
-                          <div className="flex items-center gap-1 text-[#4cd7f6] font-['JetBrains_Mono']">
-                            <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-                              star
-                            </span>
-                            <span className="text-white font-semibold">{p.rating}</span>
-                            <span className="text-[#908fa0]">({p.reviewCount})</span>
-                          </div>
-                        </div>
-
-                        <h3
-                          onClick={() => onNavigate('produit', p.id)}
-                          className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white group-hover:text-[#c0c1ff] transition-colors cursor-pointer line-clamp-1"
-                        >
-                          {p.title}
-                        </h3>
-
-                        <p className="text-xs text-[#c7c4d7] line-clamp-2 mt-1 leading-relaxed">
-                          {p.description}
-                        </p>
-
-                        <div className="flex flex-wrap items-center gap-1 mt-3">
-                          {p.techStack.map((tech, idx) => (
-                            <span
-                              key={idx}
-                              className="px-2 py-0.5 rounded bg-[#1c2028] text-[10px] text-[#908fa0] font-mono border border-[#31353e]/40"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="pt-3 border-t border-[#262a33] flex items-center justify-between gap-3">
-                        <div>
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">
-                              {formatPriceEur(p.priceEur)}
-                            </span>
-                            {p.oldPriceEur && (
-                              <span className="text-xs text-[#908fa0] line-through">
-                                {formatPriceEur(p.oldPriceEur)}
-                              </span>
-                            )}
-                          </div>
-                          <span className="block font-['JetBrains_Mono'] text-[11px] text-[#4cd7f6]">
-                            ≈ {formatPriceXaf(p.priceEur)}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-1.5">
-                          <button
-                            onClick={() => onNavigate('produit', p.id)}
-                            className="p-2 rounded-lg bg-[#262a33] hover:bg-[#31353e] text-[#dfe2ee] transition-colors flex items-center justify-center"
-                            title="Aperçu interactif"
-                            type="button"
-                          >
-                            <span className="material-symbols-outlined text-base">visibility</span>
-                          </button>
-                          <button
-                            onClick={() => onAddToCart(p, 'standard')}
-                            className="px-3.5 py-2 rounded-lg bg-[#c0c1ff] hover:bg-white text-[#1000a9] text-xs font-bold transition-all flex items-center gap-1 shadow-sm"
-                            type="button"
-                          >
-                            <span className="material-symbols-outlined text-sm">shopping_bag</span>
-                            <span>Ajouter</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-
-            {/* Pagination Controls */}
-            <nav
-              aria-label="Pagination Catalogue"
-              className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0a0e16] p-4 rounded-xl border border-[#262a33]"
-            >
-              <div className="text-xs text-[#c7c4d7]">
-                Page <span className="font-bold text-white">{currentPage}</span> sur <span className="font-bold text-white">16</span> — 8 résultats par page
-              </div>
-              <div className="flex items-center gap-1.5">
-                <button
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  className="p-2 rounded-lg bg-[#181c24] text-[#908fa0] hover:text-white disabled:opacity-40 transition-colors"
-                  type="button"
-                  aria-label="Page précédente"
-                >
-                  <span className="material-symbols-outlined text-base">chevron_left</span>
-                </button>
-                <button
-                  onClick={() => setCurrentPage(1)}
-                  className={`w-8 h-8 rounded-lg text-xs font-bold font-mono flex items-center justify-center ${
-                    currentPage === 1 ? 'bg-[#8083ff] text-white shadow-sm' : 'bg-[#1c2028] text-white'
-                  }`}
-                  type="button"
-                >
-                  1
-                </button>
-                <button
-                  onClick={() => setCurrentPage(2)}
-                  className={`w-8 h-8 rounded-lg text-xs font-bold font-mono flex items-center justify-center ${
-                    currentPage === 2 ? 'bg-[#8083ff] text-white shadow-sm' : 'bg-[#1c2028] text-[#c7c4d7] hover:text-white'
-                  }`}
-                  type="button"
-                >
-                  2
-                </button>
-                <button
-                  onClick={() => setCurrentPage(3)}
-                  className={`w-8 h-8 rounded-lg text-xs font-bold font-mono flex items-center justify-center ${
-                    currentPage === 3 ? 'bg-[#8083ff] text-white shadow-sm' : 'bg-[#1c2028] text-[#c7c4d7] hover:text-white'
-                  }`}
-                  type="button"
-                >
-                  3
-                </button>
-                <span className="w-6 text-center text-[#908fa0] font-mono text-xs">...</span>
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(16, p + 1))}
-                  className="px-3 py-1.5 rounded-lg bg-[#262a33] hover:bg-[#8083ff] hover:text-white text-[#dfe2ee] text-xs font-semibold transition-colors flex items-center gap-1"
-                  type="button"
-                >
-                  <span>Suivant</span>
-                  <span className="material-symbols-outlined text-sm">chevron_right</span>
-                </button>
-              </div>
-            </nav>
-
-            {/* Guarantee mini row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-              <div className="bg-[#181c24] p-3.5 rounded-xl flex items-start gap-2.5 border border-[#262a33]">
-                <span className="material-symbols-outlined text-[#4cd7f6] text-xl">verified</span>
-                <div>
-                  <h4 className="text-xs font-bold text-white">Vérification de Code</h4>
-                  <p className="text-[11px] text-[#c7c4d7] mt-0.5">Zéro dépendance obsolète. Audité par SonarQube & Snyk.</p>
-                </div>
-              </div>
-              <div className="bg-[#181c24] p-3.5 rounded-xl flex items-start gap-2.5 border border-[#262a33]">
-                <span className="material-symbols-outlined text-[#c0c1ff] text-xl">flash_on</span>
-                <div>
-                  <h4 className="text-xs font-bold text-white">Déploiement en 1 Clic</h4>
-                  <p className="text-[11px] text-[#c7c4d7] mt-0.5">Compatibles Vercel, Railway, Docker VPS sans friction.</p>
-                </div>
-              </div>
-              <div className="bg-[#181c24] p-3.5 rounded-xl flex items-start gap-2.5 border border-[#262a33]">
-                <span className="material-symbols-outlined text-[#d0bcff] text-xl">published_with_changes</span>
-                <div>
-                  <h4 className="text-xs font-bold text-white">Mises à Jour Gratuites</h4>
-                  <p className="text-[11px] text-[#c7c4d7] mt-0.5">Accès permanent aux versions majeures via votre espace.</p>
-                </div>
-              </div>
-            </div>
+            {filteredProducts.length===0?<EmptyState icon="search_off" title="Aucun produit trouv?" description="Modifiez la recherche ou les filtres pour afficher d?autres produits." action={<Button variant="secondary" onClick={handleResetFilters}>R?initialiser les filtres</Button>}/>:<div className={viewMode==='grid'?'grid grid-cols-1 gap-5 md:grid-cols-2':'flex flex-col gap-4'}>{visibleProducts.map(product=><ProductCard key={product.id} product={product} currency={currency} layout={viewMode} onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')}/>)}</div>}
+            {totalPages>1&&<nav aria-label="Pagination du catalogue" className="flex flex-col items-center justify-between gap-3 rounded-xl border border-[#262a33] bg-[#0a0e16] p-4 sm:flex-row"><p className="text-xs text-[#c7c4d7]">Page {currentPage} sur {totalPages} ? {filteredProducts.length} r?sultats</p><div className="flex items-center gap-2"><Button size="sm" variant="secondary" disabled={currentPage<=1} onClick={()=>setCurrentPage(p=>Math.max(1,p-1))}>Pr?c?dent</Button><Button size="sm" variant="secondary" disabled={currentPage>=totalPages} onClick={()=>setCurrentPage(p=>Math.min(totalPages,p+1))}>Suivant</Button></div></nav>}
+            <p role="note" className="rounded-xl border border-[#31353e] bg-[#181c24] p-4 text-xs leading-5 text-[#908fa0]">Les indicateurs de confiance seront affich?s lorsqu?ils pourront ?tre v?rifi?s.</p>
           </main>
         </div>
       </div>

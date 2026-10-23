@@ -164,7 +164,7 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
               type="button"
             >
               <span className="material-symbols-outlined text-base text-[#4cd7f6]">sync</span>
-              <span>Synchroniser Buckets</span>
+              <span>Verifier la connexion des fichiers</span>
             </button>
             <button
               onClick={handleOpenCreate}
@@ -548,8 +548,8 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
             <span className="material-symbols-outlined text-[18px]">cloud_done</span>
           </div>
           <div>
-            <div className="text-xs font-bold text-white">Buckets Supabase Synchronisés</div>
-            <div className="font-mono text-[11px] text-[#4cd7f6]">24 actifs vérifiés • CDN Edge purifié</div>
+            <div className="text-xs font-bold text-white">Synchronisation indisponible</div>
+            <div className="font-mono text-[11px] text-[#4cd7f6]">Backend non connecte : aucun bucket synchronise.</div>
           </div>
         </div>
       )}

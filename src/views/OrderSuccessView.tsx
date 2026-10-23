@@ -6,6 +6,8 @@
 import React, { useState } from 'react';
 import { OrderRecord } from '../data/mock-data.ts';
 import { formatPriceEur, formatPriceXaf } from '../utils/shop-logic.ts';
+import { EmptyState } from '../components/feedback/EmptyState.tsx';
+import { Button } from '../components/ui/Button.tsx';
 
 interface OrderSuccessViewProps {
   order: OrderRecord;
@@ -18,7 +20,7 @@ export const OrderSuccessView: React.FC<OrderSuccessViewProps> = ({ order, onNav
   const [downloadedInvoice, setDownloadedInvoice] = useState(false);
 
   const terminalSnippet = `curl -H "X-License-Key: ${
-    order.items[0]?.licenseKey || 'NOVA-NXS-9412-AUTH'
+    order.items[0]?.licenseKey || 'DEMO-NON-ACTIVE'
   }" https://api.novadigital.dev/v2/install.sh | bash`;
 
   const handleCopySnippet = () => {
@@ -36,6 +38,8 @@ export const OrderSuccessView: React.FC<OrderSuccessViewProps> = ({ order, onNav
     setDownloadedInvoice(true);
     setTimeout(() => setDownloadedInvoice(false), 3000);
   };
+
+  if (order.status !== 'paid') return <div className="mx-auto max-w-3xl px-4 py-20"><div className="mb-5 rounded-xl border border-amber-300/20 bg-amber-300/10 p-4 text-sm text-amber-100" role="status">Demo order only - payment pending. No payment was sent, and no downloads or licenses are available.</div><EmptyState title="Commande de demonstration creee" description={`Reference ${order.orderNumber}. Un vrai paiement et la livraison necessitent la connexion des services du serveur.`} action={<Button variant="secondary" onClick={()=>onNavigate('catalogue')}>Retour au catalogue</Button>} icon="pending_actions"/></div>;
 
   return (
     <div className="w-full bg-[#0f131c] text-[#dfe2ee]">

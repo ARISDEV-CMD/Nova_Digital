@@ -21,16 +21,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
 
   return (
     <div className="flex flex-col w-full text-[#dfe2ee]">
+      <div role="status" className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-100">Mode demonstration: chiffres et etats ci-dessous sont des exemples locaux. Aucun paiement ni service cloud n\u2019est connecte.</div>
       {/* Header & Quick Action Buttons */}
       <section className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-[#262a33]">
         <div className="flex flex-col gap-2 max-w-2xl">
           <div className="flex items-center gap-2.5">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-xs bg-[#8083ff]/20 text-[#c0c1ff] font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-[#8083ff] animate-pulse"></span>
-              STREAMING EN DIRECT
+              DEMO DATA
             </span>
             <span className="font-mono text-xs text-[#908fa0]">•</span>
-            <span className="font-mono text-xs text-[#908fa0]">SYNC CLOUD: ACTIF</span>
+            <span className="font-mono text-xs text-[#908fa0]">CLOUD DISCONNECTED</span>
           </div>
           <h1 className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-bold tracking-tight text-white">
             Tableau de Bord & Métriques Clés

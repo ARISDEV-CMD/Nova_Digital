@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -31,6 +31,21 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
   const [description, setDescription] = useState('Campagne Cyber 2025');
   const [activeImmediately, setActiveImmediately] = useState(true);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  const handleExportCsv = () => {
+    const escapeCell = (value: string | number | boolean) => `"${String(value).replaceAll('"', '""')}"`;
+    const rows = [
+      ['code', 'description', 'discount_type', 'discount_value', 'min_spend_eur', 'usage_count', 'max_usage', 'active'],
+      ...promos.map((promo) => [promo.code, promo.description, promo.type, promo.value, promo.minSpendEur, promo.usageCount, promo.maxUsage, promo.active]),
+    ];
+    const csv = rows.map((row) => row.map(escapeCell).join(',')).join('\r\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'nova-digital-promos.csv';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   const handleRandomCode = () => {
     const prefixes = ['CYBER', 'NOVA', 'TURBO', 'STACK', 'PROMO', 'BUILD', 'DEV'];
@@ -85,16 +100,16 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
             <span className="text-[#4cd7f6] font-semibold">Codes Promo & Rabais</span>
           </div>
           <h1 className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Gestion des Codes Promo & Réductions
+            Gestion des Codes Promo & RÃ©ductions
           </h1>
           <p className="text-xs sm:text-sm text-[#c7c4d7] max-w-2xl">
-            Configurez vos coupons de réduction, règles de panier minimum, remises en pourcentage ou montant fixe et analysez le ROI.
+            Configurez vos coupons de rÃ©duction, rÃ¨gles de panier minimum, remises en pourcentage ou montant fixe et analysez le ROI.
           </p>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
           <button
-            onClick={() => alert("Fichier export_promos_2025.csv téléchargé.")}
+            onClick={() => alert("Fichier export_promos_2025.csv tÃ©lÃ©chargÃ©.")}
             className="px-4 py-2 rounded-lg bg-[#262a33] hover:bg-[#31353e] text-white text-xs font-semibold flex items-center gap-2 border border-[#31353e]"
             type="button"
           >
@@ -110,7 +125,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
             type="button"
           >
             <span className="material-symbols-outlined text-lg">add</span>
-            <span>+ Créer un Code Promo</span>
+            <span>+ CrÃ©er un Code Promo</span>
           </button>
         </div>
       </div>
@@ -140,9 +155,9 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
         <div className="p-5 rounded-xl bg-[#181c24] border border-[#262a33] space-y-2">
           <div className="flex items-start justify-between">
             <div>
-              <span className="text-[11px] text-[#908fa0] uppercase tracking-wider font-semibold">CA Stimulé</span>
+              <span className="text-[11px] text-[#908fa0] uppercase tracking-wider font-semibold">CA StimulÃ©</span>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="font-['Plus_Jakarta_Sans'] text-2xl font-bold text-white">19 450 €</span>
+                <span className="font-['Plus_Jakarta_Sans'] text-2xl font-bold text-white">19 450 â‚¬</span>
               </div>
             </div>
             <div className="w-10 h-10 rounded-lg bg-[#262a33] flex items-center justify-center text-[#4cd7f6]">
@@ -157,14 +172,14 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
             <div>
               <span className="text-[11px] text-[#908fa0] uppercase tracking-wider font-semibold">Total Remises</span>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="font-['Plus_Jakarta_Sans'] text-2xl font-bold text-white">2 840 €</span>
+                <span className="font-['Plus_Jakarta_Sans'] text-2xl font-bold text-white">2 840 â‚¬</span>
               </div>
             </div>
             <div className="w-10 h-10 rounded-lg bg-[#262a33] flex items-center justify-center text-[#d0bcff]">
               <span className="material-symbols-outlined text-xl">loyalty</span>
             </div>
           </div>
-          <p className="text-[11px] text-[#908fa0]">Marge brute préservée : 86%</p>
+          <p className="text-[11px] text-[#908fa0]">Marge brute prÃ©servÃ©e : 86%</p>
         </div>
 
         <div className="p-5 rounded-xl bg-[#181c24] border border-[#262a33] space-y-2">
@@ -181,7 +196,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
               <span className="material-symbols-outlined text-xl">workspace_premium</span>
             </div>
           </div>
-          <p className="text-[11px] text-[#c7c4d7]">142 utilisations • 10 650 € CA</p>
+          <p className="text-[11px] text-[#c7c4d7]">142 utilisations â€¢ 10 650 â‚¬ CA</p>
         </div>
       </div>
 
@@ -257,11 +272,11 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                         </td>
 
                         <td className="py-3.5 px-4 font-mono font-bold text-white">
-                          {p.type === 'percent' ? `-${p.value}%` : `-${p.value} €`}
+                          {p.type === 'percent' ? `-${p.value}%` : `-${p.value} â‚¬`}
                         </td>
 
                         <td className="py-3.5 px-4 text-[#c7c4d7]">
-                          {p.minSpendEur > 0 ? `Min. ${p.minSpendEur} €` : '0 € (Sans min)'}
+                          {p.minSpendEur > 0 ? `Min. ${p.minSpendEur} â‚¬` : '0 â‚¬ (Sans min)'}
                         </td>
 
                         <td className="py-3.5 px-4 min-w-[130px]">
@@ -296,7 +311,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                           <button
                             onClick={() => onTogglePromo(p.code)}
                             className="p-1 rounded hover:bg-[#262a33] text-[#908fa0] hover:text-white transition-colors"
-                            title={p.active ? 'Désactiver' : 'Activer'}
+                            title={p.active ? 'DÃ©sactiver' : 'Activer'}
                           >
                             <span className="material-symbols-outlined text-base">
                               {p.active ? 'toggle_on' : 'toggle_off'}
@@ -333,7 +348,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                     className="text-[#4cd7f6] hover:underline flex items-center gap-0.5"
                   >
                     <span className="material-symbols-outlined text-xs">auto_fix_high</span>
-                    <span>Aléatoire</span>
+                    <span>AlÃ©atoire</span>
                   </button>
                 </div>
                 <input
@@ -365,12 +380,12 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                     className="w-full bg-[#0a0e16] text-white px-3 py-2 rounded-lg border border-[#31353e] focus:outline-none"
                   >
                     <option value="percent">Pourcentage (%)</option>
-                    <option value="fixed">Montant fixe (€)</option>
+                    <option value="fixed">Montant fixe (â‚¬)</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-[#c7c4d7] mb-1 font-semibold">
-                    Valeur ({discountType === 'percent' ? '%' : '€'})
+                    Valeur ({discountType === 'percent' ? '%' : 'â‚¬'})
                   </label>
                   <input
                     type="number"
@@ -383,7 +398,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#c7c4d7] mb-1 font-semibold">Panier Min (€)</label>
+                  <label className="block text-[#c7c4d7] mb-1 font-semibold">Panier Min (â‚¬)</label>
                   <input
                     type="number"
                     value={minSpend}
@@ -404,8 +419,8 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
 
               <div className="p-3 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#262a33]">
                 <div className="flex flex-col">
-                  <span className="font-semibold text-white">Activer immédiatement</span>
-                  <span className="text-[10px] text-[#908fa0]">Prêt à l'usage au checkout</span>
+                  <span className="font-semibold text-white">Activer immÃ©diatement</span>
+                  <span className="text-[10px] text-[#908fa0]">PrÃªt Ã  l'usage au checkout</span>
                 </div>
                 <input
                   type="checkbox"
@@ -420,7 +435,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                 className="w-full py-2.5 rounded-lg bg-[#8083ff] text-[#0d0096] font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-md"
               >
                 <span className="material-symbols-outlined text-base">save</span>
-                <span>{saveSuccess ? 'Code Promo Enregistré !' : 'Enregistrer le code promo'}</span>
+                <span>{saveSuccess ? 'Code Promo EnregistrÃ© !' : 'Enregistrer le code promo'}</span>
               </button>
             </form>
           </div>
@@ -433,10 +448,10 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
           <div>
             <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white flex items-center gap-2">
               <span className="material-symbols-outlined text-[#4cd7f6]">insights</span>
-              Synthèse d'Efficacité & ROI par Canal Marketing
+              SynthÃ¨se d'EfficacitÃ© & ROI par Canal Marketing
             </h3>
             <p className="text-xs text-[#c7c4d7]">
-              Mesurez la réactivité des clients et le taux de conversion généré par vos codes promo.
+              Mesurez la rÃ©activitÃ© des clients et le taux de conversion gÃ©nÃ©rÃ© par vos codes promo.
             </p>
           </div>
           <span className="font-mono text-xs text-[#4cd7f6] bg-[#262a33] px-3 py-1 rounded-full border border-[#31353e]">
@@ -449,10 +464,10 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
             <thead className="bg-[#1c2028] text-[#908fa0] uppercase tracking-wider font-semibold">
               <tr>
                 <th className="py-2.5 px-4">Canal d'Acquisition</th>
-                <th className="py-2.5 px-4">Codes Clés</th>
+                <th className="py-2.5 px-4">Codes ClÃ©s</th>
                 <th className="py-2.5 px-4">Utilisations</th>
                 <th className="py-2.5 px-4">Taux Conversion</th>
-                <th className="py-2.5 px-4">CA Généré</th>
+                <th className="py-2.5 px-4">CA GÃ©nÃ©rÃ©</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#262a33]">
@@ -464,7 +479,7 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                 <td className="py-3 px-4 font-mono text-[#c0c1ff]">WELCOME10</td>
                 <td className="py-3 px-4 font-mono text-white font-bold">142</td>
                 <td className="py-3 px-4 text-[#4cd7f6] font-bold">14.2%</td>
-                <td className="py-3 px-4 font-mono font-bold text-white">10 650 €</td>
+                <td className="py-3 px-4 font-mono font-bold text-white">10 650 â‚¬</td>
               </tr>
               <tr className="hover:bg-[#1c2028]/60">
                 <td className="py-3 px-4 font-semibold text-white flex items-center gap-2">
@@ -474,17 +489,17 @@ export const AdminPromosView: React.FC<AdminPromosViewProps> = ({
                 <td className="py-3 px-4 font-mono text-[#c0c1ff]">NEXT15LAUNCH</td>
                 <td className="py-3 px-4 font-mono text-white font-bold">89</td>
                 <td className="py-3 px-4 text-[#4cd7f6] font-bold">9.8%</td>
-                <td className="py-3 px-4 font-mono font-bold text-white">5 890 €</td>
+                <td className="py-3 px-4 font-mono font-bold text-white">5 890 â‚¬</td>
               </tr>
               <tr className="hover:bg-[#1c2028]/60">
                 <td className="py-3 px-4 font-semibold text-white flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#d0bcff] text-base">forum</span>
-                  Discord Développeurs VIP
+                  Discord DÃ©veloppeurs VIP
                 </td>
                 <td className="py-3 px-4 font-mono text-[#c0c1ff]">FOUNDER360</td>
                 <td className="py-3 px-4 font-mono text-white font-bold">200</td>
                 <td className="py-3 px-4 text-[#d0bcff] font-bold">22.4%</td>
-                <td className="py-3 px-4 font-mono font-bold text-white">2 910 €</td>
+                <td className="py-3 px-4 font-mono font-bold text-white">2 910 â‚¬</td>
               </tr>
             </tbody>
           </table>

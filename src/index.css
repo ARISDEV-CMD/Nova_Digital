@@ -67,6 +67,14 @@
   --font-label-md: 'Inter', sans-serif;
   --font-label-sm: 'Inter', sans-serif;
   --font-code-inline: 'JetBrains Mono', monospace;
+
+  --radius-control: 0.625rem;
+  --radius-card: 0.75rem;
+  --shadow-card: 0 12px 32px rgb(0 0 0 / 0.18);
+  --duration-micro: 150ms;
+  --duration-standard: 220ms;
+  --duration-panel: 280ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -76,6 +84,11 @@
     background-color: #0f131c;
     color: #dfe2ee;
     font-family: 'Inter', sans-serif;
+  }
+
+  :focus-visible {
+    outline: 2px solid #4cd7f6;
+    outline-offset: 3px;
   }
 }
 
@@ -121,20 +134,18 @@
 }
 
 .page-transition {
-  animation: page-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: page-enter var(--duration-panel) var(--ease-standard) both;
 }
 
 @keyframes page-enter {
   from {
     opacity: 0;
     transform: translateY(8px);
-    filter: blur(2px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 

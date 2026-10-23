@@ -233,6 +233,7 @@ export interface OrderRecord {
     product: Product;
     licenseTier: 'standard' | 'agency';
     priceEur: number;
+    quantity?: number;
     licenseKey: string;
   }[];
   paymentMethod: 'stripe' | 'momo' | 'paypal';

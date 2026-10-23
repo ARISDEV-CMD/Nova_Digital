@@ -53,6 +53,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
         <div className="absolute top-10 right-0 w-80 h-80 bg-[#009eb9]/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 lg:px-6 pt-6 pb-16 w-full">
+          <div role="status" className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-100">Espace de demonstration : profil, commandes, licences, factures et fichiers sont des exemples. Aucun compte ni fichier reel n\u2019est connecte.</div>
           {/* Section 1: Client Header & Identity */}
           <section className="flex flex-col gap-4 mb-8">
             <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 font-mono text-xs text-[#c7c4d7]">
@@ -91,7 +92,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 bg-[#181c24] px-3 py-1.5 rounded-lg border border-[#262a33]">
                   <span className="material-symbols-outlined text-[#4cd7f6] text-sm">cloud_sync</span>
-                  <span className="font-mono text-xs text-[#c7c4d7]">Auth Supabase 256-bit</span>
+                  <span className="font-mono text-xs text-[#c7c4d7]">Mode demo local</span>
                 </div>
                 <button
                   onClick={handleRegenerateTokens}
@@ -184,7 +185,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
                   </div>
                 </div>
                 <button
-                  onClick={() => showToast("Téléchargement du patch v2.4.2 initié.")}
+                  onClick={() => showToast("Demo only: no update file is connected.")}
                   className="px-4 py-2 rounded-lg bg-[#c0c1ff] text-[#1000a9] text-xs font-bold hover:bg-white transition-colors shadow-sm flex items-center gap-1.5 shrink-0"
                 >
                   <span className="material-symbols-outlined text-sm">download</span>
@@ -303,7 +304,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
                         {/* Actions */}
                         <div className="flex flex-wrap items-center gap-2 pt-1">
                           <button
-                            onClick={() => showToast('Téléchargement de nexus-saas-enterprise-v2.4.zip démarré !')}
+                            onClick={() => showToast("Demo only: no product archive is connected.")}
                             className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#8083ff] to-[#571bc1] text-white text-xs font-bold hover:opacity-95 transition-opacity shadow-sm flex items-center gap-1.5"
                           >
                             <span className="material-symbols-outlined text-sm">download</span>
@@ -373,7 +374,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
 
                         <div className="flex flex-wrap items-center gap-2 pt-1">
                           <button
-                            onClick={() => showToast('Téléchargement du pack Solopreneur (PDF + ePub) démarré !')}
+                            onClick={() => showToast("Demo only: no product archive is connected.")}
                             className="px-4 py-2 rounded-lg bg-[#181c24] hover:bg-[#262a33] text-white text-xs font-bold transition-colors shadow-sm flex items-center gap-1.5 border border-[#31353e]"
                           >
                             <span className="material-symbols-outlined text-sm">download</span>
@@ -440,7 +441,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
                             <span>Ouvrir dans Figma</span>
                           </button>
                           <button
-                            onClick={() => showToast("Téléchargement du fichier Figma Pro UI Kit (.fig) démarré !")}
+                            onClick={() => showToast("Demo only: no product file is connected.")}
                             className="px-4 py-2 rounded-lg bg-[#0a0e16] hover:bg-[#181c24] text-[#dfe2ee] text-xs font-medium transition-colors flex items-center gap-1.5 border border-[#31353e]"
                           >
                             <span className="material-symbols-outlined text-sm">download</span>
@@ -694,7 +695,14 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
               {/* Grid: Order Cards vs Live Invoice Preview */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-4">
-                  {orders.map((ord) => (
+                  {orders.length === 0 ? (
+                    <div className="rounded-xl border border-dashed border-[#31353e] bg-[#181c24] p-8 text-center">
+                      <span className="material-symbols-outlined text-3xl text-[#908fa0]">receipt_long</span>
+                      <h2 className="mt-3 text-base font-semibold text-white">Aucune commande pour le moment</h2>
+                      <p className="mt-2 text-sm text-[#c7c4d7]">Les commandes de demonstration apparaitront ici apres leur creation.</p>
+                      <button type="button" onClick={() => onNavigate('catalogue')} className="mt-4 min-h-11 rounded-lg bg-[#8083ff] px-4 text-sm font-semibold text-[#0d0096]">Parcourir le catalogue</button>
+                    </div>
+                  ) : orders.map((ord) => (
                     <article
                       key={ord.id}
                       onClick={() => setActiveInvoice(ord)}
@@ -748,7 +756,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
                               </div>
                             </div>
                             <span className="font-mono text-xs font-bold text-white shrink-0">
-                              {formatPriceEur(it.priceEur)}
+                              {formatPriceEur(it.priceEur * (it.quantity || 1))}
                             </span>
                           </div>
                         ))}

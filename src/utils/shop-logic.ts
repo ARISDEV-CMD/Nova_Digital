@@ -30,6 +30,7 @@ export interface CartItem {
   product: Product;
   licenseTier: 'standard' | 'agency';
   priceEur: number;
+  quantity?: number;
 }
 
 export interface PromoCode {
@@ -63,7 +64,7 @@ export function formatPriceUsd(amountEur: number): string {
 }
 
 export function calculateSubtotal(items: CartItem[]): number {
-  return items.reduce((acc, item) => acc + item.priceEur, 0);
+  return items.reduce((acc, item) => acc + item.priceEur * (item.quantity || 1), 0);
 }
 
 export function validatePromoCode(
@@ -137,7 +138,8 @@ export function filterCatalogProducts(
     maxPrice?: number;
     minRating?: number;
     format?: string;
-    sort?: 'pop' | 'new' | 'price-asc' | 'price-desc' | 'rating';
+    deliveryType?: Product['deliveryType'];
+    sort?: 'price-asc' | 'price-desc';
   }
 ): Product[] {
   let list = products.filter((p) => !p.isDraft);
@@ -162,9 +164,7 @@ export function filterCatalogProducts(
     list = list.filter((p) => p.priceEur <= options.maxPrice!);
   }
 
-  if (typeof options.minRating === 'number') {
-    list = list.filter((p) => p.rating >= options.minRating!);
-  }
+  if (options.deliveryType) list = list.filter((p) => p.deliveryType === options.deliveryType);
 
   if (options.sort) {
     switch (options.sort) {
@@ -174,15 +174,7 @@ export function filterCatalogProducts(
       case 'price-desc':
         list.sort((a, b) => b.priceEur - a.priceEur);
         break;
-      case 'rating':
-        list.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'new':
-        list.sort((a, b) => b.reviewCount - a.reviewCount);
-        break;
-      case 'pop':
       default:
-        list.sort((a, b) => b.reviewCount * b.rating - a.reviewCount * a.rating);
         break;
     }
   }

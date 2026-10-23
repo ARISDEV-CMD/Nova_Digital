@@ -4,6 +4,12 @@
  */
 
 import React, { useState } from 'react';
+import { useReducedMotionPreference } from '../hooks/use-reduced-motion.ts';
+import { SearchIcon } from '@animateicons/react/lucide/search-icon';
+import { ShoppingBagIcon } from '@animateicons/react/lucide/shopping-bag-icon';
+import { IconButton } from './ui/IconButton.tsx';
+import type { Product } from '../utils/shop-logic.ts';
+import { PriceDisplay } from './ui/PriceDisplay.tsx';
 
 interface NavbarProps {
   currentView: string;
@@ -11,6 +17,7 @@ interface NavbarProps {
   currency: 'EUR' | 'USD' | 'XAF';
   onCurrencyChange: (currency: 'EUR' | 'USD' | 'XAF') => void;
   cartCount: number;
+  products: Product[];
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,7 +26,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   currency,
   onCurrencyChange,
   cartCount,
+  products,
 }) => {
+  const prefersReducedMotion = useReducedMotionPreference();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -112,29 +121,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Quick search button */}
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              aria-label="Recherche rapide"
-              className="p-2 text-[#c7c4d7] hover:text-[#dfe2ee] hover:bg-[#262a33] rounded-lg transition-colors flex items-center justify-center"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-xl">search</span>
-            </button>
+            <IconButton label="Recherche rapide" onClick={() => setIsSearchOpen(true)}>
+              <SearchIcon size={20} color="currentColor" isAnimated={!prefersReducedMotion} />
+            </IconButton>
 
             {/* Cart trigger */}
-            <button
+            <IconButton
+              label={`Panier d'achats (${cartCount} articles)`}
               onClick={() => onNavigate('checkout')}
-              aria-label={`Panier d'achats (${cartCount} articles)`}
-              className="relative p-2 text-[#c7c4d7] hover:text-[#dfe2ee] hover:bg-[#262a33] rounded-lg transition-colors flex items-center justify-center"
-              type="button"
+              className="relative"
             >
-              <span className="material-symbols-outlined text-xl">shopping_bag</span>
+              <ShoppingBagIcon size={20} color="currentColor" isAnimated={!prefersReducedMotion} />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#4cd7f6] text-[#002f38] rounded-full flex items-center justify-center text-[10px] font-bold">
+                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#4cd7f6] px-1 text-[10px] font-bold text-[#002f38]">
                   {cartCount}
                 </span>
               )}
-            </button>
+            </IconButton>
 
             <div className="h-6 w-px bg-[#31353e] hidden sm:block"></div>
 
@@ -197,39 +200,25 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="material-symbols-outlined text-lg">close</span>
               </button>
             </form>
-            <div className="p-3 text-xs text-[#c7c4d7] bg-[#181c24]">
-              <span className="text-[#908fa0] mr-2">Suggestions :</span>
-              <button
-                type="button"
-                onClick={() => {
-                  onNavigate('produit', 'nexus-saas');
-                  setIsSearchOpen(false);
-                }}
-                className="hover:text-[#4cd7f6] mr-3 underline"
-              >
-                Nexus SaaS Starter Kit
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onNavigate('produit', 'figma-pro-kit');
-                  setIsSearchOpen(false);
-                }}
-                className="hover:text-[#4cd7f6] mr-3 underline"
-              >
-                NexusUI Figma
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onNavigate('produit', 'art-du-solopreneur');
-                  setIsSearchOpen(false);
-                }}
-                className="hover:text-[#4cd7f6] underline"
-              >
-                L'Art du Solopreneur
-              </button>
+            <div className="border-b border-[#31353e] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#908fa0]">{searchQuery.trim() ? 'Resultats produits' : 'Produits populaires'}</div>
+            <div className="max-h-[min(60vh,28rem)] overflow-y-auto p-2">
+              {products.filter((product) => {
+                const query = searchQuery.trim().toLocaleLowerCase();
+                return !query || `${product.title} ${product.subtitle} ${product.description} ${product.categoryLabel} ${product.tags.join(' ')}`.toLocaleLowerCase().includes(query);
+              }).slice(0, 5).map((product) => (
+                <button key={product.id} type="button" onClick={() => { onNavigate('produit', product.id); setIsSearchOpen(false); }} className="flex w-full items-center gap-3 rounded-lg p-2 text-left transition-colors hover:bg-[#262a33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4cd7f6]">
+                  <img src={product.image} alt="" className="h-12 w-14 shrink-0 rounded-md object-cover" loading="lazy" />
+                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold text-white">{product.title}</span><span className="mt-0.5 block truncate text-xs text-[#908fa0]">{product.categoryLabel} ? {product.formatLabel}</span></span>
+                  <PriceDisplay amountEur={product.priceEur} currency={currency} className="shrink-0 text-sm font-semibold text-[#4cd7f6]" />
+                  <span aria-hidden="true" className="material-symbols-outlined text-base text-[#908fa0]">visibility</span>
+                </button>
+              ))}
+              {products.filter((product) => {
+                const query = searchQuery.trim().toLocaleLowerCase();
+                return !query || `${product.title} ${product.subtitle} ${product.description} ${product.categoryLabel} ${product.tags.join(' ')}`.toLocaleLowerCase().includes(query);
+              }).length === 0 && <p className="p-5 text-center text-sm text-[#908fa0]">Aucun produit ne correspond. Essayez un autre terme.</p>}
             </div>
+            <div className="border-t border-[#31353e] p-3 text-right"><button type="button" onClick={handleSearchSubmit} className="text-xs font-semibold text-[#c0c1ff] hover:text-white">Voir tous les resultats <span aria-hidden="true">?</span></button></div>
           </div>
         </div>
       )}
