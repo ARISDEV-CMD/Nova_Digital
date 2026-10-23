@@ -1,5 +1,8 @@
 ﻿project_id = "nova-digital"
 
+[auth.email]
+enable_confirmations = false
+
 [functions.notchpay-webhook]
 verify_jwt = false
 
@@ -18,7 +21,7 @@ verify_jwt = false
 verify_jwt = true
 [db.seed]
 enabled = true
-sql_paths = ["./seed.sql"]
+sql_paths = ["./seed.sql", "./seed/pilot_curricula.sql"]
 [functions.course-resource]
 verify_jwt = false
 

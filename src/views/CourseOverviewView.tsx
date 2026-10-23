@@ -4,20 +4,20 @@ import { supabase } from '../lib/supabase.ts';
 
 type Chapter = { id: string; position: number; title: string; description: string };
 type Lesson = { id: string; chapter_id: string; position: number; title: string; summary: string; lesson_type: string; duration_minutes: number; is_free_preview: boolean };
-type CourseDetails = { description_md: string; learning_outcomes: string[]; estimated_minutes: number; level: string; prerequisites_md: string };
+type CourseDetails = { description_md: string; learning_outcomes: string[]; estimated_minutes: number; level: string; prerequisites_md: string; current_version_id: string | null; draft_version_id: string | null };
 const categoryCodes = new Set(['ai_automation', 'web_development', 'design_visual', 'digital_marketing', 'video_content', 'productivity', 'data_bi', 'cybersecurity', 'entrepreneurship', 'career']);
 
 export function isLearningProduct(product: Product): boolean { return categoryCodes.has(product.category); }
 
-export function CourseOverviewView({ product, onNavigate }: { product: Product; onNavigate: (view: string, productId?: string) => void }) {
+export function CourseOverviewView({ product, canPreviewDrafts = false, onNavigate }: { product: Product; canPreviewDrafts?: boolean; onNavigate: (view: string, productId?: string) => void }) {
   const [details, setDetails] = useState<CourseDetails | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [loading, setLoading] = useState(product.courseStatus === 'published');
+  const [loading, setLoading] = useState(product.courseStatus === 'published' || canPreviewDrafts);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!supabase || product.courseStatus !== 'published') return;
+    if (!supabase || (product.courseStatus !== 'published' && !canPreviewDrafts)) return;
     const client = supabase;
     let active = true;
     const load = async () => {
@@ -33,7 +33,7 @@ export function CourseOverviewView({ product, onNavigate }: { product: Product; 
     };
     void load();
     return () => { active = false; };
-  }, [product.courseStatus, product.id]);
+  }, [canPreviewDrafts, product.courseStatus, product.id]);
 
   const firstPreview = lessons.find((lesson) => lesson.is_free_preview);
   const totalMinutes = details?.estimated_minutes || 0;

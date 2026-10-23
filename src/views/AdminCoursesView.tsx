@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
+import { UserRoundCheckIcon } from '@animateicons/react/lucide';
 import { isSupabaseConfigured, supabase } from '../lib/supabase.ts';
 import { CourseCurriculumEditor } from './CourseCurriculumEditor.tsx';
+import { PasswordField } from '../components/ui/PasswordField.tsx';
 
 type Currency = 'XAF' | 'EUR';
 type Course = {
@@ -238,14 +240,12 @@ export const AdminCoursesView: React.FC = () => {
       <div className="mx-auto max-w-xl py-8">
         <Header count={0} />
         <form onSubmit={handleLogin} className="mt-6 space-y-4 rounded-xl border border-[#262a33] bg-[#181c24] p-6">
-          <h2 className="text-lg font-semibold text-white">Connexion administrateur</h2>
+          <h2 className="flex items-center gap-2 text-lg font-semibold text-white"><UserRoundCheckIcon size={21} duration={0.75} color="currentColor" />Connexion administrateur</h2>
           <p className="text-sm text-[#a9afbf]">Connecte-toi avec le compte Supabase dont le profil a le rôle administrateur.</p>
           <label className="block space-y-1.5 text-sm text-[#c7c4d7]">Adresse e-mail
             <input className={inputClass} type="email" autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} required />
           </label>
-          <label className="block space-y-1.5 text-sm text-[#c7c4d7]">Mot de passe
-            <input className={inputClass} type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
-          </label>
+          <PasswordField label="Mot de passe" className={inputClass} autoComplete="current-password" value={password} onChange={setPassword} />
           {error && <Alert message={error} />}
           <button className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020] hover:brightness-110`} disabled={loading}>
             {loading ? 'Connexion…' : 'Se connecter'}

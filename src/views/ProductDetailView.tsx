@@ -104,7 +104,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
           </ol>
           <div className="inline-flex items-center gap-2 font-mono text-xs bg-[#262a33] px-3 py-1 rounded-full text-[#4cd7f6] border border-[#31353e]">
             <span className="w-2 h-2 rounded-full bg-[#4cd7f6] animate-pulse"></span>
-            <span>DerniÃ¨re release: v2.4 (Il y a 3 jours)</span>
+            <span>Dernière release: v2.4 (Il y a 3 jours)</span>
           </div>
         </nav>
 
@@ -135,7 +135,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 <div className="absolute bottom-4 left-4 bg-[#0a0e16]/90 backdrop-blur-md px-3.5 py-1.5 rounded-lg flex items-center gap-2 shadow-lg border border-[#31353e]/60">
                   <span className="w-2 h-2 rounded-full bg-[#4cd7f6] animate-ping"></span>
                   <span className="text-xs font-semibold text-white">
-                    {galleryThumbnails[selectedThumb].badge} : Multi-tenant & SSR ActivÃ©
+                    {galleryThumbnails[selectedThumb].badge} : Multi-tenant & SSR Activé
                   </span>
                 </div>
               </div>
@@ -169,15 +169,15 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                   <span className="material-symbols-outlined">captive_portal</span>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white">Environnement de DÃ©mo Interactif</p>
+                  <p className="text-sm font-bold text-white">Environnement de Démo Interactif</p>
                   <p className="text-xs text-[#c7c4d7]">Explorez l'espace client complet avec authentification et Stripe en mode Sandbox.</p>
                 </div>
               </div>
               <button
-                onClick={() => alert("Environnement Sandbox de dÃ©monstration ouvert ! Identifiant dÃ©mo : demo@novadigital.io")}
+                onClick={() => alert("Environnement Sandbox de démonstration ouvert ! Identifiant démo : demo@novadigital.io")}
                 className="w-full sm:w-auto shrink-0 px-4 py-2 rounded-lg bg-[#262a33] hover:bg-[#31353e] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors group border border-[#31353e]"
               >
-                <span>Tester la DÃ©mo en Direct</span>
+                <span>Tester la Démo en Direct</span>
                 <span className="material-symbols-outlined text-xs text-[#4cd7f6] group-hover:translate-x-0.5 transition-transform">
                   open_in_new
                 </span>
@@ -198,7 +198,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               </div>
               <div className="p-3.5 rounded-lg bg-[#181c24] border border-[#262a33]">
                 <div className="flex items-center justify-between text-[#908fa0] text-xs">
-                  <span className="font-mono">SÃ©curitÃ©</span>
+                  <span className="font-mono">Sécurité</span>
                   <span className="material-symbols-outlined text-[#c0c1ff] text-sm">shield</span>
                 </div>
                 <div className="mt-2">
@@ -223,7 +223,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 </div>
                 <div className="mt-2">
                   <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">~140h</span>
-                  <p className="text-[11px] text-[#c7c4d7]">Ã‰conomisÃ©es au launch</p>
+                  <p className="text-[11px] text-[#c7c4d7]">Économisées au launch</p>
                 </div>
               </div>
             </div>
@@ -239,7 +239,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#571bc1]/40 text-[#d0bcff] font-mono text-xs border border-[#571bc1]/50">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#d0bcff]"></span>
-                  <span>Version 2.4 - Mise Ã  jour rÃ©cente</span>
+                  <span>Version 2.4 - Mise à jour récente</span>
                 </span>
                 <span className="text-xs text-[#4cd7f6] flex items-center gap-1 font-semibold">
                   <span className="material-symbols-outlined text-xs">verified</span> Actif Officiel Nova
@@ -262,7 +262,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               {product.isAvailable === false ? <div className="mb-6 rounded-xl border border-[#31353e] bg-[#0a0e16] p-4 text-xs leading-5 text-[#c7c4d7]">Cette formation est en préparation. Son contenu et son tarif seront disponibles lorsqu’ils seront prêts.</div> : <>
               <div className="space-y-3 mb-6">
                 <label className="text-xs font-bold text-white uppercase tracking-wider block">
-                  SÃ©lectionnez votre type de licence :
+                  Sélectionnez votre type de licence :
                 </label>
 
                 {/* Option 1: Standard */}
@@ -285,11 +285,11 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                     <div>
                       <div className="text-sm font-bold text-white">Licence Standard</div>
                       <div className="text-xs text-[#c7c4d7]">
-                        1 projet commercial ou client unique. Usage illimitÃ© en production.
+                        1 projet commercial ou client unique. Usage illimité en production.
                       </div>
                     </div>
                   </div>
-                  <span className="text-sm font-bold text-white shrink-0 ml-2">69 â‚¬</span>
+                  <span className="text-sm font-bold text-white shrink-0 ml-2">69 €</span>
                 </label>
 
                 {/* Option 2: Agency */}
@@ -317,11 +317,11 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                         </span>
                       </div>
                       <div className="text-xs text-[#c7c4d7]">
-                        Projets illimitÃ©s, code source complet, accÃ¨s aux dÃ©pÃ´ts GitHub privÃ©s Nova.
+                        Projets illimités, code source complet, accès aux dépôts GitHub privés Nova.
                       </div>
                     </div>
                   </div>
-                  <span className="text-sm font-bold text-white shrink-0 ml-2">179 â‚¬</span>
+                  <span className="text-sm font-bold text-white shrink-0 ml-2">179 €</span>
                 </label>
               </div>
 
@@ -332,7 +332,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                   className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#8083ff] via-[#494bd6] to-[#571bc1] hover:brightness-110 text-white text-sm font-bold tracking-wide shadow-xl flex items-center justify-center gap-2 transition-all active:scale-[0.99]"
                 >
                   <span className="material-symbols-outlined text-lg">bolt</span>
-                  <span>Acheter & TÃ©lÃ©charger ImmÃ©diatement</span>
+                  <span>Acheter & Télécharger Immédiatement</span>
                 </button>
 
                 <button
@@ -347,7 +347,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                   <span className="material-symbols-outlined text-sm">
                     {addedAnimation ? 'check' : 'shopping_bag'}
                   </span>
-                  <span>{addedAnimation ? 'AjoutÃ© au Panier âœ“' : 'Ajouter au Panier'}</span>
+                  <span>{addedAnimation ? 'Ajouté au Panier ✓' : 'Ajouter au Panier'}</span>
                 </button>
               </div>
               </>}
@@ -383,7 +383,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               type="button"
             >
               <span className="material-symbols-outlined text-sm">terminal</span>
-              <span>SpÃ©cifications & PrÃ©requis</span>
+              <span>Spécifications & Prérequis</span>
             </button>
             <button
               onClick={() => setActiveTab('avis')}
@@ -395,7 +395,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               type="button"
             >
               <span className="material-symbols-outlined text-sm">rate_review</span>
-              <span>Avis Clients VÃ©rifiÃ©s (142)</span>
+              <span>Avis Clients Vérifiés (142)</span>
             </button>
           </div>
 
@@ -408,7 +408,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                     <span className="material-symbols-outlined">layers</span>
                   </div>
                   <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">Stack Technologique Pure</h3>
-                  <p className="text-xs text-[#c7c4d7]">Architecture modulaire sans dÃ©pendance superflue, construite pour scaler.</p>
+                  <p className="text-xs text-[#c7c4d7]">Architecture modulaire sans dépendance superflue, construite pour scaler.</p>
                   <ul className="space-y-1.5 text-xs text-[#c7c4d7] pt-2">
                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#4cd7f6]"></span> Next.js 14.2+ (App Router, Server Actions)</li>
                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#4cd7f6]"></span> TypeScript 5 en mode strict</li>
@@ -421,13 +421,13 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                   <div className="w-10 h-10 rounded-lg bg-[#262a33] text-[#c0c1ff] flex items-center justify-center">
                     <span className="material-symbols-outlined">database</span>
                   </div>
-                  <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">Backend Supabase ClÃ© en Main</h3>
-                  <p className="text-xs text-[#c7c4d7]">Base PostgreSQL prÃªte avec modÃ¨les relationnels prÃ©dÃ©finis et sÃ©curitÃ© RLS.</p>
+                  <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">Backend Supabase Clé en Main</h3>
+                  <p className="text-xs text-[#c7c4d7]">Base PostgreSQL prête avec modèles relationnels prédéfinis et sécurité RLS.</p>
                   <ul className="space-y-1.5 text-xs text-[#c7c4d7] pt-2">
-                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Auth complÃ¨te : Magic Link, Google, GitHub</li>
+                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Auth complète : Magic Link, Google, GitHub</li>
                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Scripts de migration SQL & Seed data inclus</li>
-                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Row Level Security (RLS) blindÃ©</li>
-                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Supabase Storage prÃªt pour avatars & fichiers</li>
+                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Row Level Security (RLS) blindé</li>
+                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></span> Supabase Storage prêt pour avatars & fichiers</li>
                   </ul>
                 </div>
 
@@ -436,9 +436,9 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                     <span className="material-symbols-outlined">point_of_sale</span>
                   </div>
                   <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white">Facturation Multi-Zone</h3>
-                  <p className="text-xs text-[#c7c4d7]">Recevez des abonnements Stripe et Mobile Money (MTN, Orange) prÃ©-cÃ¢blÃ©s.</p>
+                  <p className="text-xs text-[#c7c4d7]">Recevez des abonnements Stripe et Mobile Money (MTN, Orange) pré-câblés.</p>
                   <ul className="space-y-1.5 text-xs text-[#c7c4d7] pt-2">
-                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#d0bcff]"></span> Stripe Billing Portal & Webhooks sÃ©curisÃ©s</li>
+                    <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#d0bcff]"></span> Stripe Billing Portal & Webhooks sécurisés</li>
                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#d0bcff]"></span> Passerelle Mobile Money (MTN, Orange) native</li>
                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#d0bcff]"></span> Facturation automatique TVA & devises</li>
                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#d0bcff]"></span> Gestion du churn et emails de relance</li>
@@ -449,48 +449,48 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               {/* Source Directory Tree */}
               <div className="p-6 rounded-xl bg-[#181c24] border border-[#262a33]">
                 <h4 className="font-['Plus_Jakarta_Sans'] text-sm font-bold text-white mb-3">
-                  Structure de l'Archive Source DÃ©compressÃ©e
+                  Structure de l'Archive Source Décompressée
                 </h4>
                 <div className="p-4 rounded-lg bg-[#0a0e16] font-mono text-xs text-[#c7c4d7] overflow-x-auto leading-relaxed border border-[#262a33]">
                   <span className="text-[#4cd7f6]">nexus-saas-kit/</span><br />
                   â”œâ”€â”€ <span className="text-[#c0c1ff]">app/</span> <span className="text-[#908fa0]"># Next.js 14/15 App Router (Layouts, Server Actions)</span><br />
                   â”‚   â”œâ”€â”€ (auth)/             <span className="text-[#908fa0]"># Flux Login, Register, Magic Link, Verification</span><br />
-                  â”‚   â”œâ”€â”€ (dashboard)/        <span className="text-[#908fa0]"># Espace client SaaS, Settings, Ã‰quipes, Factures</span><br />
+                  â”‚   â”œâ”€â”€ (dashboard)/        <span className="text-[#908fa0]"># Espace client SaaS, Settings, Équipes, Factures</span><br />
                   â”‚   â””â”€â”€ api/                <span className="text-[#908fa0]"># Webhooks Stripe, Webhooks MoMo, Supabase Webhooks</span><br />
                   â”œâ”€â”€ <span className="text-[#c0c1ff]">components/</span> <span className="text-[#908fa0]"># 48+ Composants UI accessibles</span><br />
-                  â”œâ”€â”€ <span className="text-[#c0c1ff]">supabase/</span> <span className="text-[#908fa0]"># Migrations SQL versionnÃ©es, schemas, triggers RLS</span><br />
+                  â”œâ”€â”€ <span className="text-[#c0c1ff]">supabase/</span> <span className="text-[#908fa0]"># Migrations SQL versionnées, schemas, triggers RLS</span><br />
                   â”œâ”€â”€ <span className="text-[#c0c1ff]">lib/</span> <span className="text-[#908fa0]"># Client Stripe, Supabase Client & Server, Email Resend</span><br />
-                  â”œâ”€â”€ <span className="text-[#d0bcff]">.env.example</span> <span className="text-[#908fa0]"># Variables prÃ©-configurÃ©es avec commentaires</span><br />
-                  â””â”€â”€ <span className="text-[#d0bcff]">README.md</span> <span className="text-[#908fa0]"># Guide d'installation pas-Ã -pas en 10 minutes</span>
+                  â”œâ”€â”€ <span className="text-[#d0bcff]">.env.example</span> <span className="text-[#908fa0]"># Variables pré-configurées avec commentaires</span><br />
+                  â””â”€â”€ <span className="text-[#d0bcff]">README.md</span> <span className="text-[#908fa0]"># Guide d'installation pas-à-pas en 10 minutes</span>
                 </div>
               </div>
             </div>
           )}
 
-          {/* TAB 2: SpÃ©cifications */}
+          {/* TAB 2: Spécifications */}
           {activeTab === 'specs' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-6 rounded-xl bg-[#181c24] space-y-4 border border-[#262a33]">
                 <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#4cd7f6]">checklist</span>
-                  <span>PrÃ©requis SystÃ¨me & Environnement</span>
+                  <span>Prérequis Système & Environnement</span>
                 </h3>
                 <div className="space-y-3">
                   <div className="p-3 rounded-lg bg-[#262a33]/40 border border-[#31353e]/40">
                     <strong className="text-white text-xs block font-semibold">Node.js 18.17+ ou Node.js 20+</strong>
-                    <span className="text-xs text-[#c7c4d7]">Compatible npm, pnpm (recommandÃ©), yarn et bun.</span>
+                    <span className="text-xs text-[#c7c4d7]">Compatible npm, pnpm (recommandé), yarn et bun.</span>
                   </div>
                   <div className="p-3 rounded-lg bg-[#262a33]/40 border border-[#31353e]/40">
                     <strong className="text-white text-xs block font-semibold">Compte Supabase (Gratuit ou Pro)</strong>
-                    <span className="text-xs text-[#c7c4d7]">Le palier gratuit Supabase suffit pour dÃ©buter le dÃ©veloppement.</span>
+                    <span className="text-xs text-[#c7c4d7]">Le palier gratuit Supabase suffit pour débuter le développement.</span>
                   </div>
                   <div className="p-3 rounded-lg bg-[#262a33]/40 border border-[#31353e]/40">
-                    <strong className="text-white text-xs block font-semibold">Compte DÃ©veloppeur Stripe</strong>
-                    <span className="text-xs text-[#c7c4d7]">ClÃ©s API test et webhooks configurables en 2 minutes.</span>
+                    <strong className="text-white text-xs block font-semibold">Compte Développeur Stripe</strong>
+                    <span className="text-xs text-[#c7c4d7]">Clés API test et webhooks configurables en 2 minutes.</span>
                   </div>
                   <div className="p-3 rounded-lg bg-[#262a33]/40 border border-[#31353e]/40">
                     <strong className="text-white text-xs block font-semibold">Service Transactionnel Email (Resend ou Brevo)</strong>
-                    <span className="text-xs text-[#c7c4d7]">Templates d'emails HTML modernes rÃ©digÃ©s en franÃ§ais et anglais.</span>
+                    <span className="text-xs text-[#c7c4d7]">Templates d'emails HTML modernes rédigés en français et anglais.</span>
                   </div>
                 </div>
               </div>
@@ -514,17 +514,17 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                     <span className="text-white font-mono">Tailwind CSS v4</span>
                   </div>
                   <div className="py-2.5 flex justify-between">
-                    <span className="text-[#908fa0]">DÃ©ploiement cible :</span>
+                    <span className="text-[#908fa0]">Déploiement cible :</span>
                     <span className="text-white font-mono">Vercel, AWS Amplify, Docker VPS</span>
                   </div>
                   <div className="py-2.5 flex justify-between">
-                    <span className="text-[#908fa0]">Support & Mises Ã  jour :</span>
-                    <span className="text-[#4cd7f6] font-semibold">Gratuit â€¢ Mises Ã  jour Ã  vie</span>
+                    <span className="text-[#908fa0]">Support & Mises à jour :</span>
+                    <span className="text-[#4cd7f6] font-semibold">Gratuit • Mises à jour à vie</span>
                   </div>
                 </div>
                 <div className="p-3 rounded-lg bg-[#0a0e16] text-xs text-[#c7c4d7] border border-[#262a33]">
-                  <span className="font-bold text-white">Licence commerciale perpÃ©tuelle :</span> Vous conservez 100% de la
-                  propriÃ©tÃ© intellectuelle de votre produit SaaS construit Ã  partir de ce template. ZÃ©ro royalties.
+                  <span className="font-bold text-white">Licence commerciale perpétuelle :</span> Vous conservez 100% de la
+                  propriété intellectuelle de votre produit SaaS construit à partir de ce template. Zéro royalties.
                 </div>
               </div>
             </div>

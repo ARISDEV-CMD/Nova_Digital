@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Col 1: Brand & Value */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <img src="/assets/images/logo.png" alt="" className="w-7 h-7 object-contain" />
+              <img src="/assets/images/logo.png" alt="" className="w-10 h-10 object-contain" />
               <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold tracking-tight text-white">
                 NovaDigital
               </span>

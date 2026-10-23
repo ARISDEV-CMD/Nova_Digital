@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useReducedMotionPreference } from '../hooks/use-reduced-motion.ts';
 import { SearchIcon } from '@animateicons/react/lucide/search-icon';
 import { ShoppingBagIcon } from '@animateicons/react/lucide/shopping-bag-icon';
@@ -13,6 +14,7 @@ import { PriceDisplay } from './ui/PriceDisplay.tsx';
 
 interface NavbarProps {
   currentView: string;
+  isAdmin: boolean;
   onNavigate: (view: string, productId?: string) => void;
   currency: 'EUR' | 'USD' | 'XAF';
   onCurrencyChange: (currency: 'EUR' | 'USD' | 'XAF') => void;
@@ -22,6 +24,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentView,
+  isAdmin,
   onNavigate,
   currency,
   onCurrencyChange,
@@ -30,6 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const prefersReducedMotion = useReducedMotionPreference();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -120,10 +124,29 @@ export const Navbar: React.FC<NavbarProps> = ({
               </select>
             </div>
 
-            {/* Quick search button */}
-            <IconButton label="Recherche rapide" onClick={() => setIsSearchOpen(true)}>
-              <SearchIcon size={20} color="currentColor" isAnimated={!prefersReducedMotion} />
-            </IconButton>
+            {/* Search field opens the full search modal */}
+            <label className="hidden md:flex h-10 w-48 xl:w-64 items-center gap-2 rounded-lg border border-[#31353e] bg-[#181c24] px-3 text-[#908fa0] transition-colors hover:border-[#5557a8] focus-within:border-[#8083ff]">
+              <SearchIcon size={18} color="currentColor" isAnimated={!prefersReducedMotion} />
+              <input
+                type="search"
+                readOnly
+                aria-label="Ouvrir la recherche"
+                placeholder="Rechercher…"
+                onClick={() => setIsSearchOpen(true)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setIsSearchOpen(true);
+                  }
+                }}
+                className="min-w-0 flex-1 cursor-pointer bg-transparent text-sm text-[#dfe2ee] placeholder:text-[#8f96a6] outline-none"
+              />
+            </label>
+            <span className="md:hidden">
+              <IconButton label="Recherche rapide" onClick={() => setIsSearchOpen(true)}>
+                <SearchIcon size={20} color="currentColor" isAnimated={!prefersReducedMotion} />
+              </IconButton>
+            </span>
 
             {/* Cart trigger */}
             <IconButton
@@ -141,31 +164,82 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div className="h-6 w-px bg-[#31353e] hidden sm:block"></div>
 
-            {/* Client profile */}
-            <button
-              onClick={() => onNavigate('mon-espace-client')}
-              className="flex items-center gap-1.5 p-1 hover:bg-[#262a33] rounded-full transition-colors group"
-              title="Mon Espace Client"
-              aria-label="Espace Client"
-            >
-              <img
-                alt="Profile Alexandre Martin"
-                className="w-8 h-8 rounded-full object-cover ring-1 ring-[#4cd7f6]/40"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbjLYCH0Mu1qdXRxpc4SdyhwaYINyKT1x4Y7FhYzfWXiaC74k_7y3vHXglNYbaBpwvAbcjaIa29YhIAFaiBtKGksRuPWBASe0emMeqDLh4O0rEHV5C-E0Gub6whkWesIkVNoEZVrFovvpZCTEXG0Mhku94Dl1mUmqpkPKH7OMNIrwKXo33iHXMMue4Cz2OA-h0HWRpUA-Vyygxty3Yi_67ryvPoNcabjGKRB0ET8mK_lRdCjJ-hjF"
-              />
-              <span className="material-symbols-outlined text-[#c7c4d7] text-base hidden md:inline group-hover:text-[#dfe2ee]">
-                expand_more
-              </span>
-            </button>
+            {/* Profile actions */}
+            {isAdmin ? (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsProfileMenuOpen((open) => !open)}
+                  className="flex items-center gap-1.5 rounded-full p-1 transition-colors hover:bg-[#262a33] group"
+                  title="Profil administrateur"
+                  aria-label="Ouvrir le menu du profil administrateur"
+                  aria-expanded={isProfileMenuOpen}
+                  aria-haspopup="true"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#8083ff] text-[#1000a9] ring-1 ring-[#4cd7f6]/40">
+                    <span className="material-symbols-outlined text-[19px]">admin_panel_settings</span>
+                  </span>
+                  <span className="material-symbols-outlined hidden text-base text-[#c7c4d7] group-hover:text-[#dfe2ee] md:inline">expand_more</span>
+                </button>
+                {isProfileMenuOpen && (
+                  <div aria-label="Menu du profil administrateur" className="absolute right-0 top-full z-[60] mt-2 w-64 overflow-hidden rounded-xl border border-[#31353e] bg-[#181c24] p-2 shadow-2xl">
+                    <div className="border-b border-[#31353e] px-3 py-2">
+                      <p className="text-xs font-semibold text-white">Espace administrateur</p>
+                      <p className="mt-1 text-[11px] text-[#908fa0]">Accès rapide à la console</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { onNavigate('admin-dashboard'); setIsProfileMenuOpen(false); }}
+                      className="mt-2 flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-[#dfe2ee] transition-colors hover:bg-[#262a33] hover:text-white"
+                    >
+                      <span className="material-symbols-outlined text-[19px] text-[#8083ff]">space_dashboard</span>
+                      Revenir au tableau de bord
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => onNavigate('mon-espace-client')}
+                className="flex items-center gap-1.5 p-1 hover:bg-[#262a33] rounded-full transition-colors group"
+                title="Mon Espace Client"
+                aria-label="Espace Client"
+              >
+                <img
+                  alt="Profile Alexandre Martin"
+                  className="w-8 h-8 rounded-full object-cover ring-1 ring-[#4cd7f6]/40"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbjLYCH0Mu1qdXRxpc4SdyhwaYINyKT1x4Y7FhYzfWXiaC74k_7y3vHXglNYbaBpwvAbcjaIa29YhIAFaiBtKGksRuPWBASe0emMeqDLh4O0rEHV5C-E0Gub6whkWesIkVNoEZVrFovvpZCTEXG0Mhku94Dl1mUmqpkPKH7OMNIrwKXo33iHXMMue4Cz2OA-h0HWRpUA-Vyygxty3Yi_67ryvPoNcabjGKRB0ET8mK_lRdCjJ-hjF"
+                />
+                <span className="material-symbols-outlined text-[#c7c4d7] text-base hidden md:inline group-hover:text-[#dfe2ee]">expand_more</span>
+              </button>
+            )}
 
           </div>
         </div>
       </header>
 
       {/* Global Quick Search Modal */}
+      <AnimatePresence>
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-24 px-4">
-          <div className="w-full max-w-xl bg-[#1c2028] border border-[#31353e] rounded-xl shadow-2xl overflow-hidden">
+        <motion.div
+          key="search-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: 'easeOut' }}
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-24 px-4"
+          role="presentation"
+        >
+          <motion.div
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -14, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.985 }}
+            transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 360, damping: 30, mass: 0.8 }}
+            className="w-full max-w-xl bg-[#1c2028] border border-[#31353e] rounded-xl shadow-2xl overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Recherche de produits"
+          >
             <form onSubmit={handleSearchSubmit} className="p-3 border-b border-[#31353e] flex items-center gap-2">
               <span className="material-symbols-outlined text-[#908fa0]">terminal</span>
               <input
@@ -210,9 +284,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               }).length === 0 && <p className="p-5 text-center text-sm text-[#908fa0]">Aucun produit ne correspond. Essayez un autre terme.</p>}
             </div>
             <div className="border-t border-[#31353e] p-3 text-right"><button type="button" onClick={handleSearchSubmit} className="text-xs font-semibold text-[#c0c1ff] hover:text-white">Voir tous les resultats <span aria-hidden="true">?</span></button></div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </>
   );
 };

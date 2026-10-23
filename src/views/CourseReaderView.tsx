@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
+import { UserPlusIcon, UserRoundCheckIcon } from '@animateicons/react/lucide';
 import { supabase } from '../lib/supabase.ts';
+import { PasswordField } from '../components/ui/PasswordField.tsx';
 
 type Course = { id: string; title: string; slug: string; status: string; description_md: string; learning_outcomes: string[]; estimated_minutes: number };
 type Chapter = { id: string; position: number; title: string; description: string };
@@ -140,9 +142,17 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
     const result = registerMode
       ? await supabase.auth.signUp({ email: email.trim(), password })
       : await supabase.auth.signInWithPassword({ email: email.trim(), password });
-    if (result.error) setError(result.error.message);
-    else if (registerMode && !result.data.session) setNotice('Compte créé. Vérifie ton courriel pour confirmer l’inscription, puis connecte-toi.');
-    else { setSession(result.data.session); setNotice('Connexion réussie.'); }
+    if (result.error) {
+      const message = result.error.message.toLowerCase();
+      setError(registerMode && (message.includes('already registered') || message.includes('already exists'))
+        ? 'Un compte existe déjà avec cette adresse. Connecte-toi ou réinitialise ton mot de passe.'
+        : result.error.message);
+    } else if (registerMode && !result.data.session) {
+      setError('La session n’a pas pu être créée. Vérifie que la confirmation des courriels est désactivée dans Supabase.');
+    } else {
+      setSession(result.data.session);
+      setNotice(registerMode ? 'Compte créé et connexion effectuée.' : 'Connexion réussie.');
+    }
     setAuthBusy(false);
   };
 
@@ -169,7 +179,7 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
 
           <main className="min-w-0 space-y-4">
             <section className="overflow-hidden rounded-xl border border-[#262a33] bg-[#181c24]">
-              {lessonLoading ? <div role="status" className="p-10 text-center text-sm text-[#a9afbf]">Chargement de la leçon…</div> : payload?.lesson.locked ? <div className="mx-auto max-w-lg p-8 text-center sm:p-12"><span className="material-symbols-outlined text-4xl text-[#c0c1ff]">lock</span><h2 className="mt-3 text-xl font-bold text-white">Cette leçon est verrouillée</h2><p className="mt-2 text-sm leading-6 text-[#a9afbf]">Connecte-toi avec le compte qui possède l’accès à cette formation. Tu peux aussi commencer par les leçons gratuites.</p>{!session && <form onSubmit={authenticate} className="mt-6 space-y-3 rounded-xl border border-[#31353e] bg-[#10141d] p-4 text-left"><div className="flex gap-2"><button type="button" onClick={() => setRegisterMode(false)} className={`rounded-md px-3 py-2 text-xs ${!registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Connexion</button><button type="button" onClick={() => setRegisterMode(true)} className={`rounded-md px-3 py-2 text-xs ${registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Créer un compte</button></div><label className="block space-y-1 text-xs text-[#a9afbf]">Courriel<input required type="email" autoComplete="email" className={inputClass} value={email} onChange={(event) => setEmail(event.target.value)} /></label><label className="block space-y-1 text-xs text-[#a9afbf]">Mot de passe<input required minLength={8} type="password" autoComplete={registerMode ? 'new-password' : 'current-password'} className={inputClass} value={password} onChange={(event) => setPassword(event.target.value)} /></label><button disabled={authBusy} className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020]`}>{authBusy ? 'Patiente…' : registerMode ? 'Créer mon compte' : 'Se connecter'}</button></form>}</div> : payload && activeLesson ? <>
+              {lessonLoading ? <div role="status" className="p-10 text-center text-sm text-[#a9afbf]">Chargement de la leçon…</div> : payload?.lesson.locked ? <div className="mx-auto max-w-lg p-8 text-center sm:p-12"><span className="material-symbols-outlined text-4xl text-[#c0c1ff]">lock</span><h2 className="mt-3 text-xl font-bold text-white">Cette leçon est verrouillée</h2><p className="mt-2 text-sm leading-6 text-[#a9afbf]">Connecte-toi avec le compte qui possède l’accès à cette formation. Tu peux aussi commencer par les leçons gratuites.</p>{!session && <form onSubmit={authenticate} className="mt-6 space-y-3 rounded-xl border border-[#31353e] bg-[#10141d] p-4 text-left"><div className="flex gap-2"><button type="button" onClick={() => setRegisterMode(false)} className={`rounded-md px-3 py-2 text-xs ${!registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Connexion</button><button type="button" onClick={() => setRegisterMode(true)} className={`rounded-md px-3 py-2 text-xs ${registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Créer un compte</button></div><div className="flex items-center gap-2 text-sm font-semibold text-white">{registerMode ? <UserPlusIcon size={19} duration={0.75} color="currentColor" /> : <UserRoundCheckIcon size={19} duration={0.75} color="currentColor" />}<span>{registerMode ? 'Cr?er un compte' : 'Connexion'}</span></div><label className="block space-y-1 text-xs text-[#a9afbf]">Courriel<input required type="email" autoComplete="email" className={inputClass} value={email} onChange={(event) => setEmail(event.target.value)} /></label><PasswordField label="Mot de passe" className={inputClass} minLength={8} autoComplete={registerMode ? 'new-password' : 'current-password'} value={password} onChange={setPassword} /><button disabled={authBusy} className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020]`}>{authBusy ? 'Patiente…' : registerMode ? 'Créer mon compte' : 'Se connecter'}</button></form>}</div> : payload && activeLesson ? <>
                 {activeLesson.lesson_type === 'video' && videoUrl ? <video ref={videoRef} key={videoUrl} controls playsInline className="aspect-video w-full bg-black" src={videoUrl} onTimeUpdate={(event) => { const seconds = Math.floor(event.currentTarget.currentTime); if (session && seconds - lastProgressSave.current >= 20) { lastProgressSave.current = seconds; void saveProgress(false, seconds); } }} onEnded={(event) => void saveProgress(true, event.currentTarget.currentTime)} onLoadedMetadata={(event) => { const position = payload.progress?.last_position_seconds || 0; if (position) event.currentTarget.currentTime = position; }} /> : activeLesson.lesson_type === 'video' ? <div className="grid aspect-video place-items-center bg-black/60 p-8 text-center text-sm text-[#a9afbf]">La vidéo de cette leçon n’est pas encore disponible.</div> : null}
                 <div className="space-y-4 p-5 sm:p-7"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs uppercase tracking-wide text-[#4cd7f6]">{activeLesson.lesson_type} · {activeLesson.duration_minutes} min</p><h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">{activeLesson.title}</h2>{activeLesson.summary && <p className="mt-2 max-w-3xl text-sm leading-6 text-[#a9afbf]">{activeLesson.summary}</p>}</div>{session && <button type="button" onClick={() => void saveProgress(true, videoRef.current?.currentTime || 0)} className={`${buttonClass} bg-[#262a33] text-white`}><span className="material-symbols-outlined text-base">check</span>Marquer comme terminée</button>}</div>
                   {payload.content?.body_md && <article className="whitespace-pre-wrap rounded-lg border border-[#31353e] bg-[#10141d] p-4 text-sm leading-7 text-[#dfe2ee]">{payload.content.body_md}</article>}

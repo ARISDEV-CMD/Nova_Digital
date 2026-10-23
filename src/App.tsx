@@ -229,6 +229,7 @@ export default function App() {
     <div className="min-h-screen bg-[#0f131c] text-[#dfe2ee] flex flex-col justify-between selection:bg-[#8083ff] selection:text-[#0d0096]">
       <Navbar
         currentView={currentView}
+        isAdmin={authRole === 'admin'}
         onNavigate={handleNavigate}
         currency={currency}
         onCurrencyChange={setCurrency}
@@ -262,7 +263,7 @@ export default function App() {
         )}
 
         {currentView === 'produit' && (
-          selectedProduct && (courseCategories.has(selectedProduct.category) ? <CourseOverviewView product={selectedProduct} onNavigate={handleNavigate} /> : <ProductDetailView
+          selectedProduct && (courseCategories.has(selectedProduct.category) ? <CourseOverviewView product={selectedProduct} canPreviewDrafts={authRole === 'admin'} onNavigate={handleNavigate} /> : <ProductDetailView
             product={selectedProduct}
             onNavigate={handleNavigate}
             onAddToCart={handleAddToCart}
