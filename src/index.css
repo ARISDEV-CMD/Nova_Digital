@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #0f131c;
+  --color-background: #0f131c;
+  --color-surface-dim: #0f131c;
+  --color-surface-container-lowest: #0a0e16;
+  --color-surface-container-low: #181c24;
+  --color-surface-container: #1c2028;
+  --color-surface-container-high: #262a33;
+  --color-surface-container-highest: #31353e;
+  --color-surface-bright: #353942;
+  --color-surface-variant: #31353e;
+
+  --color-on-surface: #dfe2ee;
+  --color-on-surface-variant: #c7c4d7;
+  --color-on-background: #dfe2ee;
+  --color-outline: #908fa0;
+  --color-outline-variant: #464554;
+
+  --color-primary: #c0c1ff;
+  --color-primary-container: #8083ff;
+  --color-on-primary: #1000a9;
+  --color-on-primary-container: #0d0096;
+  --color-primary-fixed: #e1e0ff;
+  --color-primary-fixed-dim: #c0c1ff;
+  --color-inverse-primary: #494bd6;
+
+  --color-secondary: #d0bcff;
+  --color-secondary-container: #571bc1;
+  --color-on-secondary: #3c0091;
+  --color-on-secondary-container: #c4abff;
+  --color-secondary-fixed: #e9ddff;
+  --color-secondary-fixed-dim: #d0bcff;
+
+  --color-tertiary: #4cd7f6;
+  --color-tertiary-container: #009eb9;
+  --color-on-tertiary: #003640;
+  --color-on-tertiary-container: #002f38;
+  --color-tertiary-fixed: #acedff;
+  --color-tertiary-fixed-dim: #4cd7f6;
+
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-on-error: #690005;
+  --color-on-error-container: #ffdad6;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-margin-sm: 1rem;
+  --spacing-margin: 1.5rem;
+  --spacing-margin-lg: 3rem;
+  --spacing-gutter-sm: 1rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-lg: 2rem;
+
+  --font-display-xl: 'Plus Jakarta Sans', sans-serif;
+  --font-headline-lg: 'Plus Jakarta Sans', sans-serif;
+  --font-headline-md: 'Plus Jakarta Sans', sans-serif;
+  --font-headline-sm: 'Plus Jakarta Sans', sans-serif;
+  --font-body-lg: 'Inter', sans-serif;
+  --font-body-md: 'Inter', sans-serif;
+  --font-body-sm: 'Inter', sans-serif;
+  --font-label-md: 'Inter', sans-serif;
+  --font-label-sm: 'Inter', sans-serif;
+  --font-code-inline: 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #0f131c;
+    color: #dfe2ee;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar hiding */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+}

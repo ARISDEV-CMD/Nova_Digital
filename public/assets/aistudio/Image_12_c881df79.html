@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary": "#3c0091", "surface": "#0f131c", "secondary-fixed": "#e9ddff", "surface-container-low": "#181c24", "tertiary-container": "#009eb9", "outline": "#908fa0", "on-secondary-fixed-variant": "#5516be", "primary-fixed": "#e1e0ff", "on-tertiary-container": "#002f38", "on-primary-fixed": "#07006c", "background": "#0f131c", "secondary-fixed-dim": "#d0bcff", "on-surface": "#dfe2ee", "inverse-on-surface": "#2c3039", "on-primary": "#1000a9", "surface-container-lowest": "#0a0e16", "on-tertiary-fixed-variant": "#004e5c", "surface-container": "#1c2028", "on-tertiary-fixed": "#001f26", "on-surface-variant": "#c7c4d7", "tertiary": "#4cd7f6", "surface-tint": "#c0c1ff", "error-container": "#93000a", "primary-container": "#8083ff", "outline-variant": "#464554", "on-secondary-container": "#c4abff", "on-primary-container": "#0d0096", "on-secondary-fixed": "#23005c", "on-error-container": "#ffdad6", "error": "#ffb4ab", "primary": "#c0c1ff", "on-primary-fixed-variant": "#2f2ebe", "surface-dim": "#0f131c", "surface-bright": "#353942", "on-error": "#690005", "tertiary-fixed-dim": "#4cd7f6", "surface-variant": "#31353e", "secondary-container": "#571bc1", "tertiary-fixed": "#acedff", "primary-fixed-dim": "#c0c1ff", "inverse-primary": "#494bd6", "on-background": "#dfe2ee", "inverse-surface": "#dfe2ee", "secondary": "#d0bcff", "on-tertiary": "#003640", "surface-container-highest": "#31353e", "surface-container-high": "#262a33" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "margin-sm": "1rem", "margin": "1.5rem", "space-sm": "0.5rem", "gutter": "1.5rem", "space-xs": "0.25rem", "gutter-lg": "2rem", "space-xl": "2.5rem", "gutter-sm": "1rem", "space-lg": "1.5rem", "margin-lg": "3rem" }, "fontFamily": { "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "code-inline": ["JetBrains Mono"], "display-xl": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "display-xl-mobile": ["Plus Jakarta Sans"], "label-md": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "code-inline": ["13px", { "lineHeight": "18px", "fontWeight": "500" }], "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "800" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }], "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "800" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }] } } } }</script></head><body class="bg-background text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-sm lg:px-margin-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-sm group" data-path="accueil" href="#"><img alt="NovaDigital Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight group-hover:text-primary transition-colors">NovaDigital</span></a><span class="hidden xl:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline">Digital Assets v2.4</span></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="text-on-surface bg-surface-container-high font-semibold rounded-lg"><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="accueil" href="#">Accueil</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="catalogue" href="#">Catalogue</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="templates-and-ui" href="#">Templates &amp; UI</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="formations-and-guides" href="#">Formations &amp; Guides</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="offres-speciales" href="#">Offres Spéciales</a></nav><div class="flex items-center gap-space-sm sm:gap-space-md shrink-0"><div class="hidden sm:flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg"><span class="material-symbols-outlined text-outline text-lg mr-space-xs">payments</span><select class="bg-transparent text-on-surface font-label-sm text-label-sm focus:outline-none cursor-pointer pr-space-xs"><option class="bg-surface-container-high text-on-surface" value="EUR">EUR (€)</option><option class="bg-surface-container-high text-on-surface" value="USD">USD ($)</option><option class="bg-surface-container-high text-on-surface" value="XAF">XAF (FCFA)</option></select></div><button aria-label="Recherche" class="p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined">search</span></button><a aria-label="Panier d'achats" class="relative p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" data-path="panier" href="#"><span class="material-symbols-outlined">shopping_bag</span><span class="absolute top-1.5 right-1.5 w-4 h-4 bg-tertiary text-on-tertiary-container rounded-full flex items-center justify-center font-label-sm text-[10px] font-bold">2</span></a><div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm"><a class="flex items-center gap-space-sm p-space-xs hover:bg-surface-container-high rounded-full transition-colors" data-path="mon-espace-client" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbjLYCH0Mu1qdXRxpc4SdyhwaYINyKT1x4Y7FhYzfWXiaC74k_7y3vHXglNYbaBpwvAbcjaIa29YhIAFaiBtKGksRuPWBASe0emMeqDLh4O0rEHV5C-E0Gub6whkWesIkVNoEZVrFovvpZCTEXG0Mhku94Dl1mUmqpkPKH7OMNIrwKXo33iHXMMue4Cz2OA-h0HWRpUA-Vyygxty3Yi_67ryvPoNcabjGKRB0ET8mK_lRdCjJ-hjF"/><span class="material-symbols-outlined text-on-surface-variant text-base hidden md:inline">expand_more</span></a><a class="hidden xl:inline-flex items-center gap-space-xs px-space-md py-space-sm bg-secondary-container hover:bg-primary-container text-on-surface rounded-lg font-label-sm text-label-sm transition-colors" data-path="admin-dashboard" href="#"><span class="material-symbols-outlined text-sm">admin_panel_settings</span><span>Accès Admin</span></a></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full text-on-surface">
+<div class="max-w-7xl mx-auto w-full px-margin-sm lg:px-margin-lg py-space-lg lg:py-space-xl flex flex-col gap-space-xl">
+<!-- Zone supérieure : Fil d'Ariane & Identité utilisateur -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-space-xs">
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors flex items-center gap-1" data-path="accueil" href="#">
+<span class="material-symbols-outlined text-sm">home</span>
+<span>Accueil</span>
+</a>
+<span class="material-symbols-outlined text-xs text-outline">chevron_right</span>
+<span class="hover:text-on-surface transition-colors">Espace Client</span>
+<span class="material-symbols-outlined text-xs text-outline">chevron_right</span>
+<span class="text-tertiary font-medium">Historique &amp; Factures</span>
+</nav>
+<div class="flex items-baseline gap-space-sm pt-space-xs">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Commandes &amp; Facturation</h1>
+<span class="hidden sm:inline-flex px-2.5 py-0.5 rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline">
+            PRO ACCOUNT
+          </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+          Retrouvez l'historique complet de vos acquisitions d'actifs numériques, les reçus cryptographiques et vos factures officielles conformes avec TVA déductible.
+        </p>
+</div>
+<!-- Badge Client Connecté -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface-container-low/70 backdrop-blur-md shrink-0 shadow-sm">
+<div class="relative">
+<img class="w-11 h-11 rounded-xl object-cover" data-alt="Portrait professionnel de profil pour Alexandre Martin, fondateur technique avec éclairage studio néon indigo doux et vêtements sombres élégants" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA08rqzxa6SSVT_jES92IDNEPbNgyC9ISDUGg_JbSTQvSs67agopwZtJnPNlOnBxLlUkKl1oRcu2CSWN4p2HZDwkcDuTLjqfyzbaCqOU7m9FW14S1EhtWVGvDDDnTdtVOaLQZSifPlt2nOByKxgDgwdKQTt5k3bI_A0reZLrlNZTVaRjYSqPKRlHcHROH1i2m4VMvqYphmqg3Lx_pliJd2mQ1kQXW7XJde_TnsQTYoqSLV0_QWSGI46"/>
+<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Alexandre Martin</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Studio Martin Tech</span>
+<span class="font-code-inline text-[11px] text-tertiary">FR 82 912384910</span>
+</div>
+</div>
+</div>
+<!-- Navigation par Onglets Espace Client -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-2 scrollbar-none">
+<a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors whitespace-nowrap" data-path="mes-telechargements" href="#">
+<span class="material-symbols-outlined text-lg">cloud_download</span>
+<span>Mes Téléchargements &amp; Fichiers</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-xs">8</span>
+</a>
+<button class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md bg-secondary-container text-on-surface shadow-md whitespace-nowrap" type="button">
+<span class="material-symbols-outlined text-lg text-tertiary">receipt_long</span>
+<span>Historique des Commandes &amp; Factures</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest text-tertiary font-code-inline text-xs">5</span>
+</button>
+<a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors whitespace-nowrap" data-path="cles-api" href="#">
+<span class="material-symbols-outlined text-lg">token</span>
+<span>Clés API &amp; Dépôts GitHub</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-xs">3</span>
+</a>
+<a class="flex items-center gap-2 px-space-md py-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors whitespace-nowrap" data-path="parametres-compte" href="#">
+<span class="material-symbols-outlined text-lg">tune</span>
+<span>Paramètres &amp; Sécurité</span>
+</a>
+</div>
+<!-- 3 Cartes Métriques Récapitulatives -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Métrique 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low/70 backdrop-blur-md relative overflow-hidden flex flex-col justify-between shadow-md">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Volume Total Investi</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">account_balance_wallet</span>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">314,00 €</span>
+<span class="font-body-sm text-body-sm text-outline">EUR</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-code-inline text-code-inline">
+<span class="text-tertiary">≈ 205 980 FCFA</span>
+<span class="text-outline">•</span>
+<span>5 transactions validées</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center gap-1.5 text-xs text-emerald-400">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>100% Livraisons instantanées activées</span>
+</div>
+</div>
+<!-- Métrique 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low/70 backdrop-blur-md relative overflow-hidden flex flex-col justify-between shadow-md">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Dernier Règlement</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-lg">schedule</span>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">88,00 €</span>
+<span class="px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 font-label-sm text-xs font-semibold">Récent</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="font-code-inline text-primary">#NOVA-9412</span>
+<span>• 24 Oct 2024</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center gap-1.5 text-xs text-on-surface-variant font-label-sm">
+<span class="material-symbols-outlined text-sm text-tertiary">credit_card</span>
+<span>Stripe • Visa terminant par 8920</span>
+</div>
+</div>
+<!-- Métrique 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low/70 backdrop-blur-md relative overflow-hidden flex flex-col justify-between shadow-md">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Statut Fiscal B2B</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg">corporate_fare</span>
+</div>
+</div>
+<div class="space-y-1">
+<div class="font-headline-sm text-headline-sm text-on-surface truncate font-semibold">Studio Martin Tech</div>
+<div class="font-code-inline text-code-inline text-on-surface-variant">
+            FR 82 912384910
+          </div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-xs">
+<span class="text-tertiary font-label-sm">Auto-liquidation TVA (0%)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-inline text-[11px]">VIES Validé</span>
+</div>
+</div>
+</div>
+<!-- Outils de Recherche, Filtrage & Export Groupé -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md p-space-md rounded-xl bg-surface-container-low/50 shadow-sm">
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<div class="relative flex-1 min-w-[220px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+<input class="w-full bg-surface-container-lowest rounded-lg pl-9 pr-3 py-2 text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" id="orderSearch" placeholder="Rechercher par référence, produit, licence..." type="text"/>
+</div>
+<div class="flex items-center gap-1 p-1 bg-surface-container-lowest rounded-lg">
+<button class="px-3 py-1.5 rounded-md text-xs font-label-sm bg-surface-container-high text-on-surface" type="button">Toutes (5)</button>
+<button class="px-3 py-1.5 rounded-md text-xs font-label-sm text-on-surface-variant hover:text-on-surface transition-colors" type="button">2024 (4)</button>
+<button class="px-3 py-1.5 rounded-md text-xs font-label-sm text-on-surface-variant hover:text-on-surface transition-colors" type="button">2023 (1)</button>
+</div>
+</div>
+<div class="flex items-center gap-space-sm justify-end">
+<button class="flex items-center gap-2 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-label-md font-label-md transition-colors shadow-sm" onclick="exportAllInvoices()" type="button">
+<span class="material-symbols-outlined text-base text-tertiary">folder_zip</span>
+<span class="hidden md:inline">Exporter factures de l'année</span>
+<span class="md:hidden">Export .ZIP</span>
+<span class="font-code-inline text-xs text-outline">(.ZIP)</span>
+</button>
+</div>
+</div>
+<!-- Layout Grille : Historique Principal & Volet de Prévisualisation -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg">
+<!-- Liste des Commandes (Colonne Large: 8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+<!-- COMMANDE 1 (Plus Récente) -->
+<article class="p-space-lg rounded-xl bg-surface-container-low/90 backdrop-blur-md shadow-lg transition-all hover:bg-surface-container-high/60 flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded-md bg-surface-container-highest text-primary font-code-inline text-code-inline font-bold">
+                #NOVA-9412
+              </span>
+<span class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                24 Octobre 2024, 14:32
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/70 text-emerald-400 font-label-sm text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Payé &amp; Confirmé
+              </span>
+<span class="text-xs font-code-inline text-outline px-2 py-0.5 rounded bg-surface-container">Stripe • Visa 8920</span>
+</div>
+</div>
+<!-- Lignes de produits -->
+<div class="flex flex-col gap-space-sm py-space-xs">
+<!-- Article 1.1 -->
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-lowest/60">
+<div class="flex items-center gap-space-md min-w-0">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0" data-alt="Interface dashboard SaaS futuriste sombre avec visualisations de graphiques en néon violet et cyan pour la suite logicielle Nexus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz9TeomTKfWrdzKbNjZoc-BjPiPVQh0fVXQZAVEP3wnDNmdu1rYnZ4AQRPDrGiMIAoCUZhNXzNR3nlV7bs2HVKKEFWGPgJ_uH92Qd2N-etoirWV-1CA6CDylqygpZnpGrBIPb5z_V6VyIL-OG_XnbS9Wz0vP9rmQZCwMIZnGIMaLFgCDYVTub_30D2mK_eIY18eXrYDICKgryoKpDIMS0BbVUTFyIiUFNKs-WN8CteqcTdh-W6Zlmi"/>
+<div class="min-w-0">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">Nexus SaaS Starter Kit</h4>
+<div class="flex items-center gap-space-xs font-body-sm text-xs text-on-surface-variant">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-tertiary font-code-inline text-[11px]">Licence Standard</span>
+<span>• Next.js 15, Tailwind v4, Supabase</span>
+</div>
+</div>
+</div>
+<div class="font-code-inline text-on-surface font-semibold shrink-0">
+                69,00 €
+              </div>
+</div>
+<!-- Article 1.2 -->
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-lowest/60">
+<div class="flex items-center gap-space-md min-w-0">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0" data-alt="Couverture minimaliste d'ebook technique sombre avec typographie holographique géométrique et symboles d'ingénierie moderne" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVYNUCHqReLD6cI1670NJZukwgcBPaGunM9Wtk3FoXoWaLX-ktmR4JQ4qbtAllj9ZOZZcWU_angBY4FsonoaWU_yt_r9sQ_xLuJe05MHn79ZxuOuvGrvb82lAi4QOK7F158NAKq82ORkVyuDywwqSNlBXhLZAsCNsVHKQOFM7yuqNIpMw4FJrnXTn_mSY1kASfjCpayuoow8XmWKb3Klo217_4doy7DCJKMaSPHVBYUOdXKENTolgJ"/>
+<div class="min-w-0">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">L'Art du Solopreneur Tech</h4>
+<div class="flex items-center gap-space-xs font-body-sm text-xs text-on-surface-variant">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-secondary font-code-inline text-[11px]">E-book + Templates Notion</span>
+<span>• 240 Pages + Guides Audio</span>
+</div>
+</div>
+</div>
+<div class="font-code-inline text-on-surface font-semibold shrink-0">
+                29,00 €
+              </div>
+</div>
+</div>
+<!-- Réduction & Total -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-center gap-space-xs text-xs font-code-inline text-emerald-400">
+<span class="material-symbols-outlined text-sm">local_activity</span>
+<span>Code appliqué : WELCOME10 (-10,00 €)</span>
+</div>
+<div class="flex items-baseline justify-end gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total payé TTC :</span>
+<span class="font-headline-sm text-headline-sm text-tertiary font-bold">88,00 €</span>
+<span class="font-code-inline text-xs text-outline">(57 728 FCFA)</span>
+</div>
+</div>
+<!-- Actions de la commande -->
+<div class="flex flex-wrap items-center justify-end gap-space-sm pt-space-xs">
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors" onclick="previewInvoice('FAC-2024-0891', '88,00 €', '24 Oct 2024', '#NOVA-9412', 'Nexus SaaS Starter Kit + E-book Solopreneur')" type="button">
+<span class="material-symbols-outlined text-sm text-tertiary">picture_as_pdf</span>
+<span>Facture PDF (FAC-2024-0891)</span>
+</button>
+<a class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary-container hover:bg-primary-container/80 text-on-primary-container font-label-md text-label-md font-semibold transition-colors shadow-sm" data-path="mes-telechargements" href="#">
+<span class="material-symbols-outlined text-sm">folder_open</span>
+<span>Voir les fichiers &amp; Clés</span>
+</a>
+</div>
+</article>
+<!-- COMMANDE 2 -->
+<article class="p-space-lg rounded-xl bg-surface-container-low/70 backdrop-blur-md shadow-md transition-all hover:bg-surface-container-high/50 flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-primary font-code-inline text-code-inline font-bold">
+                #NOVA-8720
+              </span>
+<span class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                12 Septembre 2024, 09:15
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-950/60 text-emerald-400 font-label-sm text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Payé
+              </span>
+<span class="text-xs font-code-inline text-tertiary px-2 py-0.5 rounded bg-surface-container">MTN MoMo</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-lowest/50">
+<div class="flex items-center gap-space-md min-w-0">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0" data-alt="Vignette de composant UI Kit Figma avec des palettes de dégradés froids et des éléments d'interface Web3 ultramodernes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqO2QKB9wFGEXwNU-ZMCob4bM06MA1HChfu_dnR7srh3tMUJ4ixBZeyr206QAK2iopFe9p3zJLTbpLKcV3xYN10c6DkfCM0PrOdZRU5cso8PMkarjxqT9yrI33x3HRi7WNZTIqSIEGirg3huk-VveVzy1Cz_Aqm5DGqaEA75tJvTU80Vg2LpuAZcxF3rLYNmto1OZKcq_C7cpZBkk9W0MLZpt-QT_e5cGo6OuTLuH9Mlcy0ekUXdB9"/>
+<div class="min-w-0">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">Figma Pro UI Kit &amp; Design System 2025</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Variables globales, Auto-Layout 5.0, 320+ composants</p>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-code-inline text-on-surface font-semibold">49,00 €</div>
+<div class="font-code-inline text-xs text-tertiary">32 000 FCFA</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<span class="text-xs text-on-surface-variant">Réf Passerelle : <span class="font-code-inline">MOMO-CI-998124</span></span>
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors" onclick="previewInvoice('FAC-2024-0715', '49,00 €', '12 Sep 2024', '#NOVA-8720', 'Figma Pro UI Kit &amp; Design System 2025')" type="button">
+<span class="material-symbols-outlined text-sm text-tertiary">picture_as_pdf</span>
+<span>Facture PDF</span>
+</button>
+<a class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors" data-path="mes-telechargements" href="#">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Fichiers</span>
+</a>
+</div>
+</div>
+</article>
+<!-- COMMANDE 3 -->
+<article class="p-space-lg rounded-xl bg-surface-container-low/70 backdrop-blur-md shadow-md transition-all hover:bg-surface-container-high/50 flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-primary font-code-inline text-code-inline font-bold">
+                #NOVA-7105
+              </span>
+<span class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                03 Août 2024, 18:40
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-950/60 text-emerald-400 font-label-sm text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Payé
+              </span>
+<span class="text-xs font-code-inline text-outline px-2 py-0.5 rounded bg-surface-container">PayPal Express</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-lowest/50">
+<div class="flex items-center gap-space-md min-w-0">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0" data-alt="Plateforme de formation vidéo en ligne avec studio d'enregistrement professionnel et schémas d'architecture microservices sur grand écran" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD05RgbdlEx0yT_4tflMHU_8ZC5Opf9H5o6AI9To3uESaAITFcNUwQeNtU4B4OVlhPzrQZ3pVJofaLhNe4-Gbzz9wX3xTwXdNNUhiQsd0bYOTg4bRrE1IOJzmTGP9Q4hj_TxdxbEqjfdqFAT5Kk4jDrXaPsmTpa6abmx3L6ExisNVELVSSHF3Vp9FX8SGsjbFzY6st7SnEQCg7eQb22zjYzm9eItLyXHOYPyDbbMoyuhidHjBt7WxE6"/>
+<div class="min-w-0">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">Masterclass Vidéo Fullstack Architect</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Accès à vie, 18 modules 4K + Projets GitHub réels</p>
+</div>
+</div>
+<div class="font-code-inline text-on-surface font-semibold shrink-0">
+              119,00 €
+            </div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<span class="text-xs text-on-surface-variant">Licence Équipe : <span class="text-emerald-400">Activée (3 sièges)</span></span>
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors" onclick="previewInvoice('FAC-2024-0589', '119,00 €', '03 Août 2024', '#NOVA-7105', 'Masterclass Vidéo Fullstack Architect')" type="button">
+<span class="material-symbols-outlined text-sm text-tertiary">picture_as_pdf</span>
+<span>Facture PDF</span>
+</button>
+<a class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-tertiary font-label-sm text-label-sm transition-colors" data-path="masterclass" href="#">
+<span class="material-symbols-outlined text-sm">play_circle</span>
+<span>Accéder à la formation</span>
+</a>
+</div>
+</div>
+</article>
+<!-- COMMANDE 4 -->
+<article class="p-space-lg rounded-xl bg-surface-container-low/70 backdrop-blur-md shadow-md transition-all hover:bg-surface-container-high/50 flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-primary font-code-inline text-code-inline font-bold">
+                #NOVA-5921
+              </span>
+<span class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                15 Juin 2024, 11:05
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-950/60 text-emerald-400 font-label-sm text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Payé
+              </span>
+<span class="text-xs font-code-inline text-outline px-2 py-0.5 rounded bg-surface-container">Stripe • Mastercard</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-md p-space-sm rounded-lg bg-surface-container-lowest/50">
+<div class="flex items-center gap-space-md min-w-0">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0" data-alt="Rendu 3D abstrait d'icônes holographiques et cybernétiques brillantes sur fond noir obsidienne" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU94h4ymT0nL_DfYV-YFPna02sL05fv7MSBVDRexUL_wBdvZbGb6QKPMUwiPF-P_B7qLJLc73i93Qf8rv2-haE3L-QaFFglF3x2eBsXO-4-Gdah2jIK2toQMOlzqO8yNAG0PjxlttkQj-rdlSzARjRexq33t6fIcXbNDDCMFBdkEk1Sb-r1f9H022tABd9yrB9QugHoWe1L1BXSJ_6Gyb8WqLZhNWYzTmbBPr16CaFgcuqpJp7vjrF"/>
+<div class="min-w-0">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">CyberGlyph — 120 Icônes 3D Holographiques &amp; Web3</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Fichiers Blender, GLTF, Cinema 4D et PNG transparent 4K</p>
+</div>
+</div>
+<div class="font-code-inline text-on-surface font-semibold shrink-0">
+              58,00 €
+            </div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<span class="text-xs text-on-surface-variant">Licence Commerciale Illimitée</span>
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors" onclick="previewInvoice('FAC-2024-0412', '58,00 €', '15 Juin 2024', '#NOVA-5921', 'CyberGlyph - 120 Icônes 3D Holographiques')" type="button">
+<span class="material-symbols-outlined text-sm text-tertiary">picture_as_pdf</span>
+<span>Facture PDF</span>
+</button>
+<a class="flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors" data-path="mes-telechargements" href="#">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Fichiers</span>
+</a>
+</div>
+</div>
+</article>
+</div>
+<!-- Volet Latéral Droit : Prévisualiseur Fiscal Conforme & Certificat (Colonne 4 cols) -->
+<aside class="lg:col-span-4 flex flex-col gap-space-md">
+<!-- Bloc Carte Fiscale Dynamique -->
+<div class="p-space-lg rounded-xl bg-surface-container-low/95 backdrop-blur-xl shadow-xl flex flex-col gap-space-md relative overflow-hidden" id="invoiceViewer">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">verified_user</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Facture Fiscale</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-code-inline text-xs font-semibold" id="activeInvRef">
+              FAC-2024-0891
+            </span>
+</div>
+<!-- Aperçu Document Ticket / Facture -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest/80 text-xs font-body-sm space-y-space-md shadow-inner">
+<!-- Émetteur -->
+<div class="space-y-0.5">
+<div class="font-label-sm text-label-sm text-primary font-bold">ÉMETTEUR LÉGAL :</div>
+<p class="font-semibold text-on-surface">NovaDigital Inc. SAS</p>
+<p class="text-on-surface-variant">128 Rue de la Boétie, 75008 Paris, France</p>
+<p class="text-outline font-code-inline">SIRET : 912 345 678 00012</p>
+<p class="text-outline font-code-inline">N° TVA Intracom. : FR 45 912345678</p>
+</div>
+<div class="w-full h-px bg-surface-container-highest"></div>
+<!-- Destinataire -->
+<div class="space-y-0.5">
+<div class="font-label-sm text-label-sm text-tertiary font-bold">CLIENT FACTURÉ :</div>
+<p class="font-semibold text-on-surface" id="invClient">Alexandre Martin (Studio Martin Tech)</p>
+<p class="text-on-surface-variant">alexandre.martin@techfounder.io</p>
+<p class="text-outline">France (Union Européenne)</p>
+<p class="text-outline font-code-inline" id="invVat">N° TVA : FR 82 912384910</p>
+</div>
+<div class="w-full h-px bg-surface-container-highest"></div>
+<!-- Détail du montant -->
+<div class="space-y-1">
+<div class="flex justify-between text-on-surface-variant">
+<span>Article principal :</span>
+<span class="font-medium text-on-surface text-right truncate max-w-[140px]" id="invItemLabel">Nexus Starter Kit</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Date d'émission :</span>
+<span class="font-code-inline text-on-surface" id="invDate">24/10/2024</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Taux TVA appliqué :</span>
+<span class="font-code-inline text-emerald-400">0% (B2B Intracomm.)</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md pt-2 text-on-surface font-bold">
+<span>Montant Net Total :</span>
+<span class="text-tertiary font-headline-sm" id="invTotal">88,00 €</span>
+</div>
+</div>
+<!-- Signature SHA-256 & QR Code -->
+<div class="pt-2 flex items-center justify-between gap-space-sm bg-surface-container p-space-sm rounded-lg">
+<div class="space-y-1 min-w-0">
+<span class="text-[10px] text-outline uppercase font-bold tracking-wider block">Empreinte SHA-256</span>
+<p class="font-code-inline text-[10px] text-on-surface-variant truncate">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</p>
+<div class="flex items-center gap-1 text-[11px] text-emerald-400">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span>Certifié conforme Chorus Pro</span>
+</div>
+</div>
+<div class="w-14 h-14 bg-surface-bright rounded-lg p-1 shrink-0 flex items-center justify-center">
+<!-- SVG QR Code Iconographique Compact -->
+<svg class="w-full h-full text-on-surface" fill="currentColor" viewbox="0 0 40 40">
+<path d="M4,4 h12 v12 h-12 z M6,6 v8 h8 v-8 z M8,8 h4 v4 h-4 z"></path>
+<path d="M24,4 h12 v12 h-12 z M26,6 v8 h8 v-8 z M28,8 h4 v4 h-4 z"></path>
+<path d="M4,24 h12 v12 h-12 z M6,26 v8 h8 v-8 z M8,28 h4 v4 h-4 z"></path>
+<rect height="4" width="4" x="24" y="24"></rect>
+<rect height="4" width="4" x="32" y="24"></rect>
+<rect height="4" width="4" x="28" y="28"></rect>
+<rect height="4" width="4" x="24" y="32"></rect>
+<rect height="4" width="4" x="32" y="32"></rect>
+</svg>
+</div>
+</div>
+</div>
+<!-- Bouton de téléchargement direct PDF -->
+<button class="w-full py-space-sm px-space-md rounded-lg bg-secondary-container hover:bg-primary-container text-on-surface font-label-md text-label-md font-semibold transition-all flex items-center justify-center gap-space-xs shadow-md" onclick="triggerDownloadPDF()" type="button">
+<span class="material-symbols-outlined text-lg">download_for_offline</span>
+<span id="btnDownloadLabel">Télécharger FAC-2024-0891 (PDF)</span>
+</button>
+<!-- Mentions légales comptabilité -->
+<p class="font-body-sm text-[11px] text-outline text-center leading-relaxed">
+            Document justificatif conforme aux articles 289 et 289-0 du CGI français. Conservation légale garantie 10 ans sur coffre-fort numérique NovaVault.
+          </p>
+</div>
+<!-- Assistance Facturation & Demande de modification -->
+<div class="p-space-md rounded-xl bg-surface-container-low/60 shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-base text-primary">support_agent</span>
+<span>Besoin d'adapter une facture ?</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Pour modifier une raison sociale, ajouter un numéro de bon de commande (PO) interne ou scinder des écritures comptables :
+          </p>
+<a class="inline-flex items-center gap-1 text-xs text-tertiary hover:underline font-code-inline pt-1" href="mailto:billing@novadigital.io">
+<span>billing@novadigital.io</span>
+<span class="material-symbols-outlined text-xs">arrow_outward</span>
+</a>
+</div>
+</aside>
+</div>
+<!-- Notification Toast d'Action (Cachée par défaut) -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none p-space-md rounded-xl bg-surface-container-highest shadow-2xl flex items-center gap-space-sm text-on-surface" id="toastNotification">
+<span class="material-symbols-outlined text-tertiary text-xl" id="toastIcon">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold" id="toastTitle">Document généré</span>
+<span class="font-body-sm text-xs text-on-surface-variant" id="toastMessage">La facture PDF a été préparée et téléchargée.</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function showToast(title, message, icon = 'check_circle') {
+    const toast = document.getElementById('toastNotification');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+
+    if (!toast) return;
+
+    toastTitle.innerText = title;
+    toastMessage.innerText = message;
+    toastIcon.innerText = icon;
+
+    toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    setTimeout(() => {
+      toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 3800);
+  }
+
+  function previewInvoice(ref, total, date, orderRef, itemLabel) {
+    document.getElementById('activeInvRef').innerText = ref;
+    document.getElementById('invTotal').innerText = total;
+    document.getElementById('invDate').innerText = date;
+    document.getElementById('invItemLabel').innerText = itemLabel;
+    document.getElementById('btnDownloadLabel').innerText = `Télécharger ${ref} (PDF)`;
+
+    showToast("Aperçu actualisé", `Facture ${ref} sélectionnée pour visualisation`, "receipt");
+    
+    // Smooth scroll to invoice viewer on mobile devices
+    if (window.innerWidth < 1024) {
+      document.getElementById('invoiceViewer').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function triggerDownloadPDF() {
+    const currentRef = document.getElementById('activeInvRef').innerText;
+    showToast("Téléchargement initié", `Le document ${currentRef}.pdf est prêt.`, "download_done");
+  }
+
+  function exportAllInvoices() {
+    showToast("Archive Générée", "Le fichier 'NovaDigital_Factures_2024.zip' est en cours de téléchargement.", "folder_zip");
+  }
+
+  // Filtrage interactif client-side pour la barre de recherche
+  document.getElementById('orderSearch')?.addEventListener('input', function(e) {
+    const val = e.target.value.toLowerCase();
+    const articles = document.querySelectorAll('article');
+    articles.forEach(article => {
+      const text = article.innerText.toLowerCase();
+      article.style.display = text.includes(val) ? 'flex' : 'none';
+    });
+  });
+</script></main><footer class="w-full bg-surface-container-lowest text-on-surface shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg pb-space-xl"><div class="space-y-space-md"><div class="flex items-center gap-space-sm"><img alt="NovaDigital Brand Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">NovaDigital</span></div><p class="text-on-surface-variant font-body-sm text-body-sm leading-relaxed">La place de marché d'actifs numériques premium pour concepteurs, développeurs et bâtisseurs d'exception. Livraison instantanée 24/7.</p><div class="flex items-center gap-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-tertiary text-base">verified_user</span><span class="font-label-sm text-label-sm text-on-surface">Licences Authentifiées &amp; Prêtes à Déployer</span></div></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Catalogues &amp; Outils</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors" data-path="catalogue" href="#">Tous les Produits</a></li><li><a class="hover:text-primary transition-colors" data-path="templates-and-ui" href="#">Templates Next.js &amp; UI Kits</a></li><li><a class="hover:text-primary transition-colors" data-path="formations-and-guides" href="#">Guides &amp; Ebooks Techniques</a></li><li><a class="hover:text-primary transition-colors" data-path="offres-speciales" href="#">Packs &amp; Bundles Exclusifs</a></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Confiance &amp; Garanties</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">bolt</span><span>Téléchargement 100% Instantané</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-sm">security</span><span>Paiement Chiffré SSL 256-bit</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-sm">assignment_return</span><span>Garantie Sérénité 30 Jours</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">support_agent</span><span>Support Technique Réactif</span></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Restez à la Pointe</h3><p class="text-on-surface-variant font-body-sm text-body-sm">Recevez les nouveaux templates chaque semaine directement dans votre boîte mail.</p><form class="flex flex-col gap-space-xs"><div class="flex items-center rounded-lg bg-surface-container-high px-space-sm py-space-xs"><span class="material-symbols-outlined text-outline text-sm mr-space-xs">mail</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none w-full" placeholder="votre.email@domaine.com" type="email"/></div><button class="w-full py-space-xs px-space-md rounded-lg bg-secondary-container hover:bg-primary-container text-on-surface font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs" type="submit"><span>S'inscrire</span><span class="material-symbols-outlined text-sm">arrow_forward</span></button></form></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex flex-wrap items-center gap-space-sm text-xs"><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Stripe</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">MTN MoMo</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Orange Money</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">PayPal</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Visa / Mastercard</span></div><div class="flex items-center gap-space-lg font-label-sm text-label-sm"><a class="hover:text-on-surface transition-colors" data-path="cgv" href="#">CGV</a><a class="hover:text-on-surface transition-colors" data-path="politique-de-confidentialite" href="#">Confidentialité</a><a class="hover:text-on-surface transition-colors" data-path="mentions-legales" href="#">Mentions Légales</a></div><div class="text-xs text-outline">© 2025 NovaDigital Inc. Tous droits réservés.</div></div></div></footer></body></html>

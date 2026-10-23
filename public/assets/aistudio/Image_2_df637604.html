@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary": "#3c0091", "surface": "#0f131c", "secondary-fixed": "#e9ddff", "surface-container-low": "#181c24", "tertiary-container": "#009eb9", "outline": "#908fa0", "on-secondary-fixed-variant": "#5516be", "primary-fixed": "#e1e0ff", "on-tertiary-container": "#002f38", "on-primary-fixed": "#07006c", "background": "#0f131c", "secondary-fixed-dim": "#d0bcff", "on-surface": "#dfe2ee", "inverse-on-surface": "#2c3039", "on-primary": "#1000a9", "surface-container-lowest": "#0a0e16", "on-tertiary-fixed-variant": "#004e5c", "surface-container": "#1c2028", "on-tertiary-fixed": "#001f26", "on-surface-variant": "#c7c4d7", "tertiary": "#4cd7f6", "surface-tint": "#c0c1ff", "error-container": "#93000a", "primary-container": "#8083ff", "outline-variant": "#464554", "on-secondary-container": "#c4abff", "on-primary-container": "#0d0096", "on-secondary-fixed": "#23005c", "on-error-container": "#ffdad6", "error": "#ffb4ab", "primary": "#c0c1ff", "on-primary-fixed-variant": "#2f2ebe", "surface-dim": "#0f131c", "surface-bright": "#353942", "on-error": "#690005", "tertiary-fixed-dim": "#4cd7f6", "surface-variant": "#31353e", "secondary-container": "#571bc1", "tertiary-fixed": "#acedff", "primary-fixed-dim": "#c0c1ff", "inverse-primary": "#494bd6", "on-background": "#dfe2ee", "inverse-surface": "#dfe2ee", "secondary": "#d0bcff", "on-tertiary": "#003640", "surface-container-highest": "#31353e", "surface-container-high": "#262a33" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "margin-sm": "1rem", "margin": "1.5rem", "space-sm": "0.5rem", "gutter": "1.5rem", "space-xs": "0.25rem", "gutter-lg": "2rem", "space-xl": "2.5rem", "gutter-sm": "1rem", "space-lg": "1.5rem", "margin-lg": "3rem" }, "fontFamily": { "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "code-inline": ["JetBrains Mono"], "display-xl": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "display-xl-mobile": ["Plus Jakarta Sans"], "label-md": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "code-inline": ["13px", { "lineHeight": "18px", "fontWeight": "500" }], "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "800" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }], "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "800" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }] } } } }</script></head><body class="bg-background text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-sm lg:px-margin-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-sm group" data-path="accueil" href="#"><img alt="NovaDigital Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight group-hover:text-primary transition-colors">NovaDigital</span></a><span class="hidden xl:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline">Digital Assets v2.4</span></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="text-on-surface bg-surface-container-high font-semibold rounded-lg"><a aria-current="page" class="px-space-md py-space-sm transition-colors text-on-surface bg-surface-container-high font-semibold rounded-lg" data-path="accueil" href="#">Accueil</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="catalogue" href="#">Catalogue</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="templates-and-ui" href="#">Templates &amp; UI</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="formations-and-guides" href="#">Formations &amp; Guides</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="offres-speciales" href="#">Offres Spéciales</a></nav><div class="flex items-center gap-space-sm sm:gap-space-md shrink-0"><div class="hidden sm:flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg"><span class="material-symbols-outlined text-outline text-lg mr-space-xs">payments</span><select class="bg-transparent text-on-surface font-label-sm text-label-sm focus:outline-none cursor-pointer pr-space-xs"><option class="bg-surface-container-high text-on-surface" value="EUR">EUR (€)</option><option class="bg-surface-container-high text-on-surface" value="USD">USD ($)</option><option class="bg-surface-container-high text-on-surface" value="XAF">XAF (FCFA)</option></select></div><button aria-label="Recherche" class="p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined">search</span></button><a aria-label="Panier d'achats" class="relative p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" data-path="panier" href="#"><span class="material-symbols-outlined">shopping_bag</span><span class="absolute top-1.5 right-1.5 w-4 h-4 bg-tertiary text-on-tertiary-container rounded-full flex items-center justify-center font-label-sm text-[10px] font-bold">2</span></a><div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm"><a class="flex items-center gap-space-sm p-space-xs hover:bg-surface-container-high rounded-full transition-colors" data-path="mon-espace-client" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbjLYCH0Mu1qdXRxpc4SdyhwaYINyKT1x4Y7FhYzfWXiaC74k_7y3vHXglNYbaBpwvAbcjaIa29YhIAFaiBtKGksRuPWBASe0emMeqDLh4O0rEHV5C-E0Gub6whkWesIkVNoEZVrFovvpZCTEXG0Mhku94Dl1mUmqpkPKH7OMNIrwKXo33iHXMMue4Cz2OA-h0HWRpUA-Vyygxty3Yi_67ryvPoNcabjGKRB0ET8mK_lRdCjJ-hjF"/><span class="material-symbols-outlined text-on-surface-variant text-base hidden md:inline">expand_more</span></a><a class="hidden xl:inline-flex items-center gap-space-xs px-space-md py-space-sm bg-secondary-container hover:bg-primary-container text-on-surface rounded-lg font-label-sm text-label-sm transition-colors" data-path="admin-dashboard" href="#"><span class="material-symbols-outlined text-sm">admin_panel_settings</span><span>Accès Admin</span></a></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest">
+<!-- Atmospheric lighting effects -->
+<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-primary/20 blur-[130px] rounded-full pointer-events-none"></div>
+<div class="absolute top-48 -right-20 w-[420px] h-[420px] bg-tertiary/10 blur-[140px] rounded-full pointer-events-none"></div>
+<div class="absolute -bottom-24 -left-20 w-[400px] h-[400px] bg-secondary-container/30 blur-[130px] rounded-full pointer-events-none"></div>
+<div class="relative max-w-7xl mx-auto px-margin-sm lg:px-margin-lg pt-16 pb-20 lg:pt-24 lg:pb-28 flex flex-col items-center text-center">
+<!-- Live Status Pill -->
+<div class="inline-flex items-center gap-space-sm px-space-md py-1.5 rounded-full bg-surface-container-high/70 backdrop-blur-md mb-space-lg shadow-sm">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-code-inline text-code-inline text-tertiary">NOVA CATALOGUE 2025</span>
+<span class="text-outline">/</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">1 420+ Composants &amp; Boilerplates prêts</span>
+</div>
+<!-- Main Headline -->
+<h1 class="font-display-xl text-display-xl text-on-surface max-w-4xl tracking-tight leading-none mb-space-md">
+        Accélérez vos projets tech avec des assets digitaux d’élite
+      </h1>
+<!-- Subtitle -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-space-xl">
+        Templates Next.js &amp; Figma, formations avancées, presets créatifs et outils conçus par des experts. Téléchargement instantané et licence commerciale étendue incluse.
+      </p>
+<!-- Search Console Bar -->
+<div class="w-full max-w-2xl bg-surface-container/90 backdrop-blur-xl p-space-xs rounded-xl shadow-xl mb-space-md">
+<div class="flex items-center gap-space-sm px-space-sm py-space-xs">
+<span class="material-symbols-outlined text-outline text-xl">terminal</span>
+<input autocomplete="off" class="w-full bg-transparent text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none" id="hero-search-input" placeholder="Rechercher un starter kit, design system, guide..." type="text"/>
+<span class="hidden sm:inline-flex px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-code-inline text-[11px]">⌘K</span>
+<button class="shrink-0 px-space-lg py-space-sm rounded-lg bg-gradient-to-r from-primary-container to-secondary-container hover:opacity-95 text-on-surface font-label-md text-label-md font-semibold transition-all shadow-md flex items-center gap-space-xs">
+<span>Rechercher</span>
+<span class="material-symbols-outlined text-base">search</span>
+</button>
+</div>
+</div>
+<!-- Popular Tags -->
+<div class="flex flex-wrap items-center justify-center gap-space-xs mb-space-xl text-body-sm">
+<span class="text-outline font-label-sm text-label-sm mr-1">Populaire :</span>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-code-inline text-code-inline transition-colors">SaaS Starter</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-code-inline text-code-inline transition-colors">Figma Design System</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-code-inline text-code-inline transition-colors">Masterclass Next.js</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-code-inline text-code-inline transition-colors">Prompt Packs</button>
+</div>
+<!-- Call to Action Buttons -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto">
+<a class="w-full sm:w-auto px-space-xl py-space-md rounded-lg bg-gradient-to-r from-primary-container via-secondary-container to-tertiary-container hover:brightness-110 text-on-surface font-label-md text-label-md font-semibold transition-all shadow-lg flex items-center justify-center gap-space-sm" href="#catalogue">
+<span>Explorer le Catalogue</span>
+<span class="material-symbols-outlined text-base">north_east</span>
+</a>
+<a class="w-full sm:w-auto px-space-xl py-space-md rounded-lg bg-surface-container-high/60 hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-sm" href="#bundles">
+<span class="material-symbols-outlined text-tertiary text-base">local_offer</span>
+<span>Voir les Bundles Promo</span>
+</a>
+</div>
+<!-- Reassurance Strip -->
+<div class="mt-space-xl pt-space-lg w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="flex items-center justify-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low/40">
+<span class="material-symbols-outlined text-tertiary text-xl">groups</span>
+<div class="text-left">
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight">14 000+</p>
+<p class="font-body-sm text-body-sm text-outline">Créateurs &amp; Devs Actifs</p>
+</div>
+</div>
+<div class="flex items-center justify-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low/40">
+<span class="material-symbols-outlined text-tertiary text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="text-left">
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight">4.9 / 5</p>
+<p class="font-body-sm text-body-sm text-outline">+2 800 Avis Vérifiés</p>
+</div>
+</div>
+<div class="flex items-center justify-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low/40">
+<span class="material-symbols-outlined text-primary text-xl">lock</span>
+<div class="text-left">
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight">Stripe &amp; MoMo</p>
+<p class="font-body-sm text-body-sm text-outline">MTN / Orange &amp; Cartes</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Grid -->
+<section class="w-full max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-space-sm">
+<div>
+<span class="font-code-inline text-code-inline text-tertiary tracking-wider uppercase">Architecture d’actifs</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Catégories Populaires</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">
+        Une collection rigoureusement testée, nettoyée et mise à jour pour accélérer chaque étape de votre pipeline tech.
+      </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Category 1 -->
+<a class="group p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all shadow-sm flex flex-col justify-between min-h-[220px]" href="#">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">layers</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Templates &amp; UI Kits</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Next.js 15, Tailwind, React &amp; Figma</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md">
+<span class="font-code-inline text-code-inline text-outline">320 assets</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface group-hover:translate-x-1 transition-all text-base">arrow_forward</span>
+</div>
+</a>
+<!-- Category 2 -->
+<a class="group p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all shadow-sm flex flex-col justify-between min-h-[220px]" href="#">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">smart_display</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Formations &amp; Vidéos</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Masterclasses pratiques &amp; code-alongs</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md">
+<span class="font-code-inline text-code-inline text-outline">85 heures</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface group-hover:translate-x-1 transition-all text-base">arrow_forward</span>
+</div>
+</a>
+<!-- Category 3 -->
+<a class="group p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all shadow-sm flex flex-col justify-between min-h-[220px]" href="#">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">menu_book</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-secondary transition-colors">E-books &amp; Guides</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Playbooks d’ingénierie &amp; solopreneuriat</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md">
+<span class="font-code-inline text-code-inline text-outline">48 manuels</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface group-hover:translate-x-1 transition-all text-base">arrow_forward</span>
+</div>
+</a>
+<!-- Category 4 -->
+<a class="group p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all shadow-sm flex flex-col justify-between min-h-[220px]" href="#">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-fixed group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">rocket_launch</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Boilerplates SaaS</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Auth, Stripe, Emailing prêt en 1h</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md">
+<span class="font-code-inline text-code-inline text-outline">19 stacks</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface group-hover:translate-x-1 transition-all text-base">arrow_forward</span>
+</div>
+</a>
+<!-- Category 5 -->
+<a class="group p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container transition-all shadow-sm flex flex-col justify-between min-h-[220px]" href="#">
+<div class="space-y-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl">graphic_eq</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-tertiary transition-colors">Presets &amp; Audio</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Shaders 3D, UI SFX &amp; assets motion</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md">
+<span class="font-code-inline text-code-inline text-outline">140 packs</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface group-hover:translate-x-1 transition-all text-base">arrow_forward</span>
+</div>
+</a>
+</div>
+</section>
+<!-- Featured Products Section -->
+<section class="w-full bg-surface-container-lowest/60 py-space-xl" id="catalogue">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between mb-space-xl gap-space-md">
+<div>
+<div class="inline-flex items-center gap-space-xs text-tertiary font-code-inline text-code-inline uppercase mb-1">
+<span class="material-symbols-outlined text-sm">verified</span> Sélection Éditeur
+          </div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Produits Vedettes de la Semaine</h2>
+</div>
+<a class="inline-flex items-center gap-space-xs text-primary hover:text-on-surface font-label-md text-label-md font-semibold transition-colors" href="#">
+<span>Voir tout le catalogue</span>
+<span class="material-symbols-outlined text-base">arrow_right_alt</span>
+</a>
+</div>
+<!-- 4 High Detail Product Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<!-- Product 1 -->
+<article class="flex flex-col rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md overflow-hidden group">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern dark mode developer dashboard UI mockup displayed on a sleek laptop screen. High tech violet and cyan neon interfaces, clean code blocks in JetBrains Mono font, minimalist layout against an obsidian dark glass table." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChyjSUycIHB-YD4xSVlGpBeONahaGJKbx9dmB1X4DIUKkWXWGEK6Z8XaoGBSWvouPibmK8VRC-wqxq1sRi3aEbnrayuUcs_4hn1NFbNJKerRu4eWOgG-EEBh_qyZhr8JVCbf14hgjXqTZHIXRhRX9eryv11NyD6q_VUx_tgV_pMibrxzFpMVlgRjXrhWrsfTmmJ3YnRwC3Hnc8ONRDeTSHO-qFNu9HJkeGxfCuJSpk7mc4oFauufhj"/>
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-container text-on-surface font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm">Best Seller</span>
+</div>
+<div class="absolute top-space-sm right-space-sm flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-tertiary font-code-inline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Instant</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-outline text-xs mb-space-xs font-code-inline">
+<span>NEXT.JS • SUPABASE</span>
+<span class="text-tertiary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.9 (142)
+                </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
+                Nexus SaaS Starter Kit
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Stack complète Next.js 14, Stripe Billing, Supabase Auth, Emails React et dashboards prêts à builder.
+              </p>
+</div>
+<div class="pt-space-md mt-space-md">
+<div class="flex items-baseline justify-between mb-space-sm">
+<div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">69 €</span>
+<span class="font-body-sm text-body-sm text-outline line-through ml-1">119 €</span>
+</div>
+<span class="font-code-inline text-[12px] text-tertiary">45 000 FCFA</span>
+</div>
+<div class="grid grid-cols-5 gap-space-xs">
+<button class="col-span-4 py-space-sm rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Achat Rapide</span>
+</button>
+<button aria-label="Ajouter au panier" class="col-span-1 py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 2 -->
+<article class="flex flex-col rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md overflow-hidden group">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Figma design system component library canvas in dark theme. Floating mobile design cards, typography guidelines, sleek glassmorphic widgets in cyan and indigo palette, crisp vector UI elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxcxzcs_2w-9QoBsryUQDqp-w1Sc8klDaSQoGX9cq7S5pG3-Uf49yd-7amEthXaLswjirBY6Mgfa0-3BU9UdB84pdgbLedMbdyzWq7uEDCzKMwPxw9BwDVqrJ9A2FTDkCs0Bk4fEgdROGQva2tb7hWpljkCfwQRepmKSSwkeuKdkM3Z-Yt2cl7oefCp-cRWk-TW4C06v72xSMNxqm-K6T1Ionyj4gbnwckH0_m8-5719EVIGcRD3I0"/>
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm">Nouveau</span>
+</div>
+<div class="absolute top-space-sm right-space-sm flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-tertiary font-code-inline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Instant</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-outline text-xs mb-space-xs font-code-inline">
+<span>FIGMA • TOKENS 2024</span>
+<span class="text-tertiary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                  5.0 (64)
+                </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
+                Figma Pro UI Kit &amp; Design System
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Plus de 3 500 variants, auto-layout 5.0, variables multi-modes et documentation pour designers avancés.
+              </p>
+</div>
+<div class="pt-space-md mt-space-md">
+<div class="flex items-baseline justify-between mb-space-sm">
+<div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">49 €</span>
+<span class="font-body-sm text-body-sm text-outline line-through ml-1">89 €</span>
+</div>
+<span class="font-code-inline text-[12px] text-tertiary">32 000 FCFA</span>
+</div>
+<div class="grid grid-cols-5 gap-space-xs">
+<button class="col-span-4 py-space-sm rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Achat Rapide</span>
+</button>
+<button aria-label="Ajouter au panier" class="col-span-1 py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 3 -->
+<article class="flex flex-col rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md overflow-hidden group">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic developer workspace setting with an ultra wide curved monitor displaying full stack code in React and Node.js. Warm ambient low-key studio lighting with indigo and violet backlight, coffee mug and mechanical keyboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCER-ey3mu-soEmcUuhMpz5Hh2o1KAgaoTDT7rdegMij9_gPX0vDuPvJUwWb9tD74CBB9AVYX2SWeaZUv_Z4wcJPWOFQf61ju8u0awx5Pz62V5ilKYv41a-OgCe8KoV4QB3FMnr5Ie_cMSxHhJxayBdwDpakRIJLrxSGbEP1OB6hbTuHD58OaTCj6e4L3tZ1V81mO7uAy41uhABKTICuoh6EwzA59RhlXRGhq9dGx0fo8EnUtuXW_ao"/>
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm">Top Noté</span>
+</div>
+<div class="absolute top-space-sm right-space-sm flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-tertiary font-code-inline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Instant</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-outline text-xs mb-space-xs font-code-inline">
+<span>MASTERCLASS • 24H 4K</span>
+<span class="text-tertiary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.95 (289)
+                </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
+                Développeur Full-Stack Moderne
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Concevez, déployez et scalez des microservices réels avec Node, TypeScript, Docker et architecture cloud.
+              </p>
+</div>
+<div class="pt-space-md mt-space-md">
+<div class="flex items-baseline justify-between mb-space-sm">
+<div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">89 €</span>
+<span class="font-body-sm text-body-sm text-outline line-through ml-1">149 €</span>
+</div>
+<span class="font-code-inline text-[12px] text-tertiary">58 000 FCFA</span>
+</div>
+<div class="grid grid-cols-5 gap-space-xs">
+<button class="col-span-4 py-space-sm rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Achat Rapide</span>
+</button>
+<button aria-label="Ajouter au panier" class="col-span-1 py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product 4 -->
+<article class="flex flex-col rounded-xl bg-surface-container-low hover:bg-surface-container transition-all duration-300 shadow-md overflow-hidden group">
+<div class="relative w-full aspect-video overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Digital 3D minimalist tech book cover mockup standing angled on a dark marble surface. Indigo metallic foil typography reading Tech Solopreneur, surrounding floating translucent Notion database cards and analytics charts." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8gpPZyIuS9_Ha2A0mSTPTS57y9XWlAyQX4xJL6K9R60YgbXUx4SmOcRCOrweReqKVzbZP8ZqxaYOxFhTEEZwX1b6wEnPKPKCbD-U2S-GVaLr0tOHjnfe1wPANH5lEOj2cxeHpRttJLlN-sJf3JDDuxs52212Nm5VKY2263qy5yMlltDGDBtIr9VdKCsGGCgwwBrUAFEqBk8zZKjkQL6RMPY9NcTz-x0QxuULza2d4DwUuw4E1u7ep"/>
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-[11px] font-bold uppercase tracking-wider shadow-sm">Guide Pro</span>
+</div>
+<div class="absolute top-space-sm right-space-sm flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-tertiary font-code-inline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Instant</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between text-outline text-xs mb-space-xs font-code-inline">
+<span>E-BOOK • 50 TEMPLATES</span>
+<span class="text-tertiary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.85 (193)
+                </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold group-hover:text-primary transition-colors line-clamp-1">
+                L’Art du Solopreneur Tech
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
+                Stratégies concrètes pour passer de développeur salaried à 10k€/mois avec ses propres micro-produits digitaux.
+              </p>
+</div>
+<div class="pt-space-md mt-space-md">
+<div class="flex items-baseline justify-between mb-space-sm">
+<div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">29 €</span>
+<span class="font-body-sm text-body-sm text-outline line-through ml-1">45 €</span>
+</div>
+<span class="font-code-inline text-[12px] text-tertiary">19 000 FCFA</span>
+</div>
+<div class="grid grid-cols-5 gap-space-xs">
+<button class="col-span-4 py-space-sm rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Achat Rapide</span>
+</button>
+<button aria-label="Ajouter au panier" class="col-span-1 py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-base">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Special Bundle Offer Showcase -->
+<section class="w-full max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl" id="bundles">
+<div class="relative rounded-2xl bg-gradient-to-r from-surface-container to-surface-container-low p-space-lg lg:p-space-xl overflow-hidden shadow-xl">
+<div class="absolute -right-20 -bottom-20 w-96 h-96 bg-primary-container/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+<div class="lg:col-span-7 space-y-space-md">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-secondary-container text-on-surface font-code-inline text-code-inline">
+<span class="material-symbols-outlined text-sm text-tertiary">redeem</span>
+<span>MEGA BUNDLE LIMITÉ</span>
+</div>
+<h3 class="font-display-xl text-headline-lg lg:text-display-xl text-on-surface font-extrabold leading-tight">
+            Le Pack Ultime « Founder 360° »
+          </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Réunissez le SaaS Starter Nexus, le Design System Figma 2024, la Masterclass Full-Stack et les 50 playbooks Notion dans un bundle clés en main à tarif unique.
+          </p>
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface text-body-sm font-medium">
+<span class="material-symbols-outlined text-tertiary text-base">check_circle</span>
+<span>Licence Commerciale Illimitée</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface text-body-sm font-medium">
+<span class="material-symbols-outlined text-tertiary text-base">check_circle</span>
+<span>Mises à jour à vie (v2 &amp; v3)</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface text-body-sm font-medium">
+<span class="material-symbols-outlined text-tertiary text-base">check_circle</span>
+<span>Canal Discord VIP Inclus</span>
+</div>
+</div>
+<div class="pt-space-md flex flex-col sm:flex-row items-center gap-space-md">
+<div>
+<span class="font-display-xl text-headline-lg lg:text-display-xl text-on-surface font-extrabold">129 €</span>
+<span class="font-body-lg text-body-lg text-outline line-through ml-2">236 €</span>
+<span class="block font-code-inline text-code-inline text-tertiary">ou 84 500 FCFA</span>
+</div>
+<button class="w-full sm:w-auto px-space-xl py-space-md rounded-lg bg-gradient-to-r from-primary-container to-secondary-container hover:brightness-110 text-on-surface font-label-md text-label-md font-semibold transition-all shadow-lg flex items-center justify-center gap-space-sm">
+<span class="material-symbols-outlined text-base">shopping_cart_checkout</span>
+<span>Débloquer le Pack Ultime (-45%)</span>
+</button>
+</div>
+</div>
+<div class="lg:col-span-5 flex justify-center">
+<div class="relative w-full max-w-sm rounded-xl bg-surface-container-high/80 p-space-md backdrop-blur-md shadow-2xl">
+<!-- Graphical Visualizer of the bundle content -->
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary">code</span>
+<span class="font-label-md text-label-md text-on-surface">Nexus Starter Kit</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">69 €</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary">draw</span>
+<span class="font-label-md text-label-md text-on-surface">Design System 2024</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">49 €</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary">videocam</span>
+<span class="font-label-md text-label-md text-on-surface">Masterclass Full-Stack</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">89 €</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-fixed">menu_book</span>
+<span class="font-label-md text-label-md text-on-surface">E-book Solopreneur</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">29 €</span>
+</div>
+<div class="pt-space-xs flex items-center justify-between font-label-md text-label-md text-on-surface">
+<span>Réduction Bundle (-45%)</span>
+<span class="text-tertiary">-107 €</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose NovaDigital (3 Value Pillars) -->
+<section class="w-full bg-surface-container-low py-space-xl">
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg">
+<div class="text-center max-w-2xl mx-auto mb-space-xl">
+<span class="font-code-inline text-code-inline text-tertiary uppercase">Standards d’Excellence</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Pourquoi choisir NovaDigital ?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">
+          Nous supprimons les frictions techniques et financières afin que vous puissiez lancer vos idées à la vitesse de la lumière.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Pillar 1 -->
+<div class="p-space-xl rounded-xl bg-surface-container/70 shadow-sm flex flex-col items-start text-left">
+<div class="w-14 h-14 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-3xl">cloud_sync</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Accès instantané &amp; à vie</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Téléchargez vos archives zip et vos accès Git dès la validation du paiement. Vos liens restent disponibles à vie sur votre espace client avec chaque mise à jour future sans frais.
+          </p>
+</div>
+<!-- Pillar 2 -->
+<div class="p-space-xl rounded-xl bg-surface-container/70 shadow-sm flex flex-col items-start text-left">
+<div class="w-14 h-14 rounded-xl bg-tertiary-container/20 text-tertiary flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-3xl">forum</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Support direct Discord privé</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Pas de tickets perdus. Échangez directement avec les auteurs de chaque template sur notre Discord réservé aux acquéreurs pour résoudre vos bugs ou demander des extensions.
+          </p>
+</div>
+<!-- Pillar 3 -->
+<div class="p-space-xl rounded-xl bg-surface-container/70 shadow-sm flex flex-col items-start text-left">
+<div class="w-14 h-14 rounded-xl bg-secondary-container/20 text-secondary flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-3xl">currency_exchange</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Paiement local &amp; multi-devises</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Réglez sans barrière géographique par Carte Bancaire internationale, Apple Pay, Google Pay ou Mobile Money local (MTN MoMo, Orange Money) en FCFA, EUR et USD.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Verified Testimonials Section -->
+<section class="w-full max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-sm">
+<div>
+<span class="font-code-inline text-code-inline text-tertiary tracking-wider uppercase">Communauté Élite</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Ce que disent nos créateurs</h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md text-tertiary font-bold">4.9/5</span>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline ml-1">sur 2 800+ transactions</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Review 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+            « Le starter kit Nexus m’a épargné au bas mot 3 semaines de setup fastidieux. Le code TypeScript est impeccable, les règles Supabase RLS sont blindées et le paiement MTN a fonctionné du premier coup depuis Abidjan. »
+          </p>
+</div>
+<div class="flex items-center gap-space-sm pt-space-lg mt-space-md">
+<img class="w-11 h-11 rounded-full object-cover" data-alt="Professional portrait headshot of a Black male software engineer with short hair, confident smile, dark turtleneck sweater, softly blurred modern tech studio background with indigo light accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm-ELTvethu8hSzx-_XEQBKkCf7UAWomspvjJVgUm3nabpk2qU9xzHX4ciftR0Rw_OABD-PKXVD2aGealnfjwri_3OvVwtgnAR0AQdjDrEqfSUM3A2MLt8dL6LJOmRMkT137z6-XcNtlf5tkv2bYgFRc5b-xtOf3VreINB7SQAabTqRVAxMX0udT6w3jx-ZYMpDJfIk-RJpoNQYfxo3tFBjVsyWcbS5Zd4YRt2FI3xQrnh2OB653hi"/>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Marc-Aurèle K.</h4>
+<p class="font-body-sm text-body-sm text-outline">Lead Dev SaaS • Côte d’Ivoire</p>
+</div>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+            « En tant que designer freelance pour des startups fintech, le kit Figma 2024 est une masterclass d’organisation. Tout est variable-tokenized, adaptable en 2 clics pour mes clients. La qualité dépasse de loin la moyenne du marché. »
+          </p>
+</div>
+<div class="flex items-center gap-space-sm pt-space-lg mt-space-md">
+<img class="w-11 h-11 rounded-full object-cover" data-alt="Close up portrait photograph of a European female product designer with glasses and creative aesthetic, natural studio lighting, smiling gently, minimalist dark environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSAxOoZk5IWrVyw-LY0WRhsbPLp5lEYACi__zCkvOa4q4iZYp6uYKyQTKzydcn-0CGQCQbtmB4AE8CylGgGQ2qJiV-fuhueHJHzvt8qROW1r6YJXS84cgO2MjXYeVq5DSW5hXCxzpVI9B8lac3Oh3FTaz2eKCHvgFKle_7UlnxF9T85u_EPPLeICwjLd7xaHPdiwGxMuF4BSMqiiEROkTJFgQszcbjTwQi5grdpFW7PCZkh4R0Jc8g"/>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Éléonore V.</h4>
+<p class="font-body-sm text-body-sm text-outline">Product Designer • Paris</p>
+</div>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+            « J’ai acheté le Guide du Solopreneur et suivi la formation Full-Stack. Deux mois plus tard, mon premier outil d’automatisation génère déjà 1 800 € de MRR. Le support sur Discord est d’une réactivité déconcertante. »
+          </p>
+</div>
+<div class="flex items-center gap-space-sm pt-space-lg mt-space-md">
+<img class="w-11 h-11 rounded-full object-cover" data-alt="Contemporary portrait of a young North African creative technologist with headphones around neck, dark casual shirt, warm subtle neon highlights in blue and violet." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeNcpmqdC8VT-22FGI08FMtbKv_w6WLkItLSDzqTGMYLmHc4WD8Y-mKkFYvUiyi93gqn-xUG-LvMMy-YA_fGnwqpi1rtwk9dqq5m6FzgxtVLs3gMADPWyY46Ye40wReEx_fYqB7aUAJrrjs23ei91K6Vpmc7L6sg61MwshIhBcRNl1y5JhySb3Shs_3UjFEvfqX9veJX3ZDLupbGm5gIlz39mK8yZ1jO1YC1XwMULyeHYYvaNs6Doa"/>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Tarik B.</h4>
+<p class="font-body-sm text-body-sm text-outline">Solopreneur • Casablanca</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive FAQ Section -->
+<section class="w-full bg-surface-container-lowest/80 py-space-xl">
+<div class="max-w-4xl mx-auto px-margin-sm lg:px-margin-lg">
+<div class="text-center mb-space-xl">
+<span class="font-code-inline text-code-inline text-tertiary uppercase">Transparence &amp; Réponses</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Questions Fréquentes</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-xs">
+          Tout ce que vous devez savoir sur nos licences, livraisons et garanties.
+        </p>
+</div>
+<div class="space-y-space-sm" id="faq-accordion">
+<!-- Item 1 -->
+<div class="rounded-xl bg-surface-container-low overflow-hidden">
+<button class="faq-toggle w-full px-space-lg py-space-md text-left flex items-center justify-between text-on-surface font-headline-sm text-headline-sm hover:text-primary transition-colors">
+<span>Comment se déroule le téléchargement immédiat après achat ?</span>
+<span class="material-symbols-outlined faq-icon transition-transform duration-200">expand_more</span>
+</button>
+<div class="faq-content hidden px-space-lg pb-space-md text-on-surface-variant font-body-md text-body-md">
+            Dès confirmation de votre transaction (par carte ou Mobile Money), votre page de confirmation génère instantanément vos liens de téléchargement directs (fichiers .zip, dépôts GitHub privés et clés de licence). Vous recevez également une copie sécurisée par e-mail et les produits sont liés pour toujours à votre espace client NovaDigital.
+          </div>
+</div>
+<!-- Item 2 -->
+<div class="rounded-xl bg-surface-container-low overflow-hidden">
+<button class="faq-toggle w-full px-space-lg py-space-md text-left flex items-center justify-between text-on-surface font-headline-sm text-headline-sm hover:text-primary transition-colors">
+<span>Quelle est la portée de la licence commerciale incluse ?</span>
+<span class="material-symbols-outlined faq-icon transition-transform duration-200">expand_more</span>
+</button>
+<div class="faq-content hidden px-space-lg pb-space-md text-on-surface-variant font-body-md text-body-md">
+            Tous nos templates et bibliothèques de code incluent une licence commerciale illimitée. Vous pouvez les utiliser pour un nombre indéfini de projets personnels, créer des SaaS monétisés pour vous-même ou livrer des applications clés en main pour vos clients finaux. La seule restriction formelle est la revente directe du template brut tel quel.
+          </div>
+</div>
+<!-- Item 3 -->
+<div class="rounded-xl bg-surface-container-low overflow-hidden">
+<button class="faq-toggle w-full px-space-lg py-space-md text-left flex items-center justify-between text-on-surface font-headline-sm text-headline-sm hover:text-primary transition-colors">
+<span>Puis-je payer avec mon compte Mobile Money (Orange, MTN) ?</span>
+<span class="material-symbols-outlined faq-icon transition-transform duration-200">expand_more</span>
+</button>
+<div class="faq-content hidden px-space-lg pb-space-md text-on-surface-variant font-body-md text-body-md">
+            Oui, absolument. Nous intégrons nativement les passerelles africaines sécurisées pour le règlement en Francs CFA (XOF/XAF) via MTN MoMo, Orange Money, Moov et Wave. La conversion est calculée au taux exact sans frais supplémentaires cachés.
+          </div>
+</div>
+<!-- Item 4 -->
+<div class="rounded-xl bg-surface-container-low overflow-hidden">
+<button class="faq-toggle w-full px-space-lg py-space-md text-left flex items-center justify-between text-on-surface font-headline-sm text-headline-sm hover:text-primary transition-colors">
+<span>Comment bénéficier des futures mises à jour de code ?</span>
+<span class="material-symbols-outlined faq-icon transition-transform duration-200">expand_more</span>
+</button>
+<div class="faq-content hidden px-space-lg pb-space-md text-on-surface-variant font-body-md text-body-md">
+            Toutes les mises à jour correctives et de versions majeures sont gratuites à vie. Si un template Next.js passe à une nouvelle version du framework, vous recevez une notification par mail et le nouveau zip ou pull-request est immédiatement téléchargeable depuis votre compte.
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- VIP Newsletter Section (-15% Offer) -->
+<section class="w-full max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl">
+<div class="relative rounded-2xl bg-surface-container p-space-lg lg:p-space-xl overflow-hidden shadow-2xl">
+<!-- Glow ambient background -->
+<div class="absolute top-0 right-0 w-80 h-80 bg-tertiary/10 rounded-full blur-[90px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-80 h-80 bg-primary/10 rounded-full blur-[90px] pointer-events-none"></div>
+<div class="relative z-10 max-w-3xl mx-auto text-center space-y-space-md">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline">
+<span class="material-symbols-outlined text-sm">percent</span>
+<span>OFFRE DE BIENVENUE VIP</span>
+</div>
+<h3 class="font-display-xl text-headline-lg lg:text-display-xl text-on-surface font-extrabold leading-tight">
+          Obtenez -15% immédiats sur votre première acquisition
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Rejoignez le cercle restreint de nos 14 000 ingénieurs et créateurs. Recevez un code de réduction instantané ainsi que notre curation hebdomadaire des meilleurs composants détachables.
+        </p>
+<form class="pt-space-sm flex flex-col sm:flex-row items-center justify-center gap-space-xs max-w-lg mx-auto" id="newsletter-form">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-lg">alternate_email</span>
+<input class="w-full pl-11 pr-space-md py-space-sm rounded-lg bg-surface-container-low text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest transition-colors shadow-inner" placeholder="votre.email@domaine.com" required="" type="email"/>
+</div>
+<button class="w-full sm:w-auto shrink-0 px-space-lg py-space-sm rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md font-semibold transition-all shadow-md flex items-center justify-center gap-space-xs" type="submit">
+<span>Débloquer -15%</span>
+<span class="material-symbols-outlined text-base">send</span>
+</button>
+</form>
+<p class="font-body-sm text-body-sm text-outline pt-space-xs">
+          Zéro spam. Désinscription en 1 clic à tout instant.
+        </p>
+</div>
+</div>
+</section>
+<!-- Inline Script for Interactions -->
+<script>
+    // FAQ Accordion Behavior
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.faq-icon');
+        const isOpen = !content.classList.contains('hidden');
+        
+        // Close all items
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotate-180'));
+
+        if (!isOpen) {
+          content.classList.remove('hidden');
+          icon.classList.add('rotate-180');
+        }
+      });
+    });
+
+    // Mock quick feedback on newsletter submit
+    const newsletterForm = document.getElementById('newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = newsletterForm.querySelector('button');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="material-symbols-outlined text-base">check</span><span>Code envoyé : NOVA15</span>';
+        submitBtn.classList.replace('bg-primary', 'bg-tertiary-container');
+        submitBtn.classList.replace('text-on-primary', 'text-on-tertiary-container');
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.classList.replace('bg-tertiary-container', 'bg-primary');
+          submitBtn.classList.replace('text-on-tertiary-container', 'text-on-primary');
+          newsletterForm.reset();
+        }, 4000);
+      });
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest text-on-surface shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg pb-space-xl"><div class="space-y-space-md"><div class="flex items-center gap-space-sm"><img alt="NovaDigital Brand Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">NovaDigital</span></div><p class="text-on-surface-variant font-body-sm text-body-sm leading-relaxed">La place de marché d'actifs numériques premium pour concepteurs, développeurs et bâtisseurs d'exception. Livraison instantanée 24/7.</p><div class="flex items-center gap-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-tertiary text-base">verified_user</span><span class="font-label-sm text-label-sm text-on-surface">Licences Authentifiées &amp; Prêtes à Déployer</span></div></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Catalogues &amp; Outils</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors" data-path="catalogue" href="#">Tous les Produits</a></li><li><a class="hover:text-primary transition-colors" data-path="templates-and-ui" href="#">Templates Next.js &amp; UI Kits</a></li><li><a class="hover:text-primary transition-colors" data-path="formations-and-guides" href="#">Guides &amp; Ebooks Techniques</a></li><li><a class="hover:text-primary transition-colors" data-path="offres-speciales" href="#">Packs &amp; Bundles Exclusifs</a></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Confiance &amp; Garanties</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">bolt</span><span>Téléchargement 100% Instantané</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-sm">security</span><span>Paiement Chiffré SSL 256-bit</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-sm">assignment_return</span><span>Garantie Sérénité 30 Jours</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">support_agent</span><span>Support Technique Réactif</span></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Restez à la Pointe</h3><p class="text-on-surface-variant font-body-sm text-body-sm">Recevez les nouveaux templates chaque semaine directement dans votre boîte mail.</p><form class="flex flex-col gap-space-xs"><div class="flex items-center rounded-lg bg-surface-container-high px-space-sm py-space-xs"><span class="material-symbols-outlined text-outline text-sm mr-space-xs">mail</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none w-full" placeholder="votre.email@domaine.com" type="email"/></div><button class="w-full py-space-xs px-space-md rounded-lg bg-secondary-container hover:bg-primary-container text-on-surface font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs" type="submit"><span>S'inscrire</span><span class="material-symbols-outlined text-sm">arrow_forward</span></button></form></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex flex-wrap items-center gap-space-sm text-xs"><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Stripe</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">MTN MoMo</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Orange Money</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">PayPal</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Visa / Mastercard</span></div><div class="flex items-center gap-space-lg font-label-sm text-label-sm"><a class="hover:text-on-surface transition-colors" data-path="cgv" href="#">CGV</a><a class="hover:text-on-surface transition-colors" data-path="politique-de-confidentialite" href="#">Confidentialité</a><a class="hover:text-on-surface transition-colors" data-path="mentions-legales" href="#">Mentions Légales</a></div><div class="text-xs text-outline">© 2025 NovaDigital Inc. Tous droits réservés.</div></div></div></footer></body></html>

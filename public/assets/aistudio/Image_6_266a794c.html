@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary": "#3c0091", "surface": "#0f131c", "secondary-fixed": "#e9ddff", "surface-container-low": "#181c24", "tertiary-container": "#009eb9", "outline": "#908fa0", "on-secondary-fixed-variant": "#5516be", "primary-fixed": "#e1e0ff", "on-tertiary-container": "#002f38", "on-primary-fixed": "#07006c", "background": "#0f131c", "secondary-fixed-dim": "#d0bcff", "on-surface": "#dfe2ee", "inverse-on-surface": "#2c3039", "on-primary": "#1000a9", "surface-container-lowest": "#0a0e16", "on-tertiary-fixed-variant": "#004e5c", "surface-container": "#1c2028", "on-tertiary-fixed": "#001f26", "on-surface-variant": "#c7c4d7", "tertiary": "#4cd7f6", "surface-tint": "#c0c1ff", "error-container": "#93000a", "primary-container": "#8083ff", "outline-variant": "#464554", "on-secondary-container": "#c4abff", "on-primary-container": "#0d0096", "on-secondary-fixed": "#23005c", "on-error-container": "#ffdad6", "error": "#ffb4ab", "primary": "#c0c1ff", "on-primary-fixed-variant": "#2f2ebe", "surface-dim": "#0f131c", "surface-bright": "#353942", "on-error": "#690005", "tertiary-fixed-dim": "#4cd7f6", "surface-variant": "#31353e", "secondary-container": "#571bc1", "tertiary-fixed": "#acedff", "primary-fixed-dim": "#c0c1ff", "inverse-primary": "#494bd6", "on-background": "#dfe2ee", "inverse-surface": "#dfe2ee", "secondary": "#d0bcff", "on-tertiary": "#003640", "surface-container-highest": "#31353e", "surface-container-high": "#262a33" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "margin-sm": "1rem", "margin": "1.5rem", "space-sm": "0.5rem", "gutter": "1.5rem", "space-xs": "0.25rem", "gutter-lg": "2rem", "space-xl": "2.5rem", "gutter-sm": "1rem", "space-lg": "1.5rem", "margin-lg": "3rem" }, "fontFamily": { "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "code-inline": ["JetBrains Mono"], "display-xl": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "display-xl-mobile": ["Plus Jakarta Sans"], "label-md": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "code-inline": ["13px", { "lineHeight": "18px", "fontWeight": "500" }], "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "800" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }], "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "800" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }] } } } }</script></head><body class="bg-background text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-sm lg:px-margin-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-sm group" data-path="accueil" href="#"><img alt="NovaDigital Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight group-hover:text-primary transition-colors">NovaDigital</span></a><span class="hidden xl:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline">Digital Assets v2.4</span></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="text-on-surface bg-surface-container-high font-semibold rounded-lg"><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="accueil" href="#">Accueil</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="catalogue" href="#">Catalogue</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="templates-and-ui" href="#">Templates &amp; UI</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="formations-and-guides" href="#">Formations &amp; Guides</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="offres-speciales" href="#">Offres Spéciales</a></nav><div class="flex items-center gap-space-sm sm:gap-space-md shrink-0"><div class="hidden sm:flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg"><span class="material-symbols-outlined text-outline text-lg mr-space-xs">payments</span><select class="bg-transparent text-on-surface font-label-sm text-label-sm focus:outline-none cursor-pointer pr-space-xs"><option class="bg-surface-container-high text-on-surface" value="EUR">EUR (€)</option><option class="bg-surface-container-high text-on-surface" value="USD">USD ($)</option><option class="bg-surface-container-high text-on-surface" value="XAF">XAF (FCFA)</option></select></div><button aria-label="Recherche" class="p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined">search</span></button><a aria-label="Panier d'achats" class="relative p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" data-path="panier" href="#"><span class="material-symbols-outlined">shopping_bag</span><span class="absolute top-1.5 right-1.5 w-4 h-4 bg-tertiary text-on-tertiary-container rounded-full flex items-center justify-center font-label-sm text-[10px] font-bold">2</span></a><div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm"><a class="flex items-center gap-space-sm p-space-xs hover:bg-surface-container-high rounded-full transition-colors" data-path="mon-espace-client" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbjLYCH0Mu1qdXRxpc4SdyhwaYINyKT1x4Y7FhYzfWXiaC74k_7y3vHXglNYbaBpwvAbcjaIa29YhIAFaiBtKGksRuPWBASe0emMeqDLh4O0rEHV5C-E0Gub6whkWesIkVNoEZVrFovvpZCTEXG0Mhku94Dl1mUmqpkPKH7OMNIrwKXo33iHXMMue4Cz2OA-h0HWRpUA-Vyygxty3Yi_67ryvPoNcabjGKRB0ET8mK_lRdCjJ-hjF"/><span class="material-symbols-outlined text-on-surface-variant text-base hidden md:inline">expand_more</span></a><a class="hidden xl:inline-flex items-center gap-space-xs px-space-md py-space-sm bg-secondary-container hover:bg-primary-container text-on-surface rounded-lg font-label-sm text-label-sm transition-colors" data-path="admin-dashboard" href="#"><span class="material-symbols-outlined text-sm">admin_panel_settings</span><span>Accès Admin</span></a></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<!-- Subtle Ambient Glow Orbs -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-primary-container/10 rounded-full blur-[140px] pointer-events-none"></div>
+<div class="absolute top-96 right-10 w-[420px] h-[420px] bg-tertiary-container/15 rounded-full blur-[160px] pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-lg">
+<!-- 1. Breadcrumbs & Metadata Stream -->
+<nav aria-label="Fil d'Ariane" class="flex flex-wrap items-center justify-between gap-space-sm mb-space-lg text-on-surface-variant font-label-sm text-label-sm">
+<ol class="flex items-center flex-wrap gap-space-xs">
+<li>
+<a class="hover:text-primary transition-colors flex items-center gap-1" data-path="accueil" href="#">
+<span class="material-symbols-outlined text-sm">home</span>
+<span>Accueil</span>
+</a>
+</li>
+<li class="text-outline">/</li>
+<li>
+<a class="hover:text-primary transition-colors" data-path="catalogue" href="#">Catalogue</a>
+</li>
+<li class="text-outline">/</li>
+<li>
+<a class="hover:text-primary transition-colors" data-path="templates-and-ui" href="#">Templates &amp; UI</a>
+</li>
+<li class="text-outline">/</li>
+<li class="text-on-surface font-semibold truncate max-w-xs sm:max-w-md">Nexus SaaS Starter Kit</li>
+</ol>
+<div class="inline-flex items-center gap-space-xs font-code-inline text-code-inline bg-surface-container-high px-space-sm py-1 rounded-full text-tertiary">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span>Dernière release: v2.4 (Il y a 3 jours)</span>
+</div>
+</nav>
+<!-- Main Showcase Grid (2 Col: Gallery vs Sticky Checkout Box) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+<!-- 2. LEFT COLUMN: Media Gallery & Architecture Highlights -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Master Stage -->
+<div class="relative group rounded-xl bg-surface-container-low overflow-hidden shadow-2xl">
+<!-- Top bar indicator inside mockup -->
+<div class="flex items-center justify-between px-space-md py-space-xs bg-surface-container-lowest/80 backdrop-blur-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-error/70"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary/70"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary/70"></span>
+<span class="ml-2 font-code-inline text-code-inline text-outline text-xs">nexus-saas-enterprise.tsx</span>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">bolt</span> Next.js 14 App Router
+              </span>
+</div>
+<!-- Visual Preview Image -->
+<div class="relative aspect-video w-full overflow-hidden bg-surface-container-highest">
+<img alt="Nexus SaaS Starter Kit - Vue Principale Dashboard et Architecture" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" data-alt="Futuristic dark-themed SaaS dashboard UI mockup with sleek financial analytics graphs, serverless architecture diagram, modern glowing cyan and purple telemetry widgets, ultra-crisp typography and code editor split view in hyper-realistic 4K render" id="mainPreviewDisplay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR48kTeJZSudKRgyUf0FGm12Bv08EIPABioG8L33AhP7u2hpoGiXToV18UKdERwodMn2feh3EfodM2CWE7Mnk39siwNj4fjKbGsUa7UuODYvXYVoRQ6_t7xw2R4WSvMSIma5Pu3W31QLG96HJA7qzb4B84yL_uCK1nSQwmDg_Q8ua0Yvv2CcMSGJFMxWvYBfhsIxzaUeDIgJ1AGdbTwPzDL7Gkfw2Hi5b7amAZygLKwMl97wZSe5kK"/>
+<!-- Live Overlay Badge -->
+<div class="absolute bottom-4 left-4 bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-xs rounded-lg flex items-center gap-space-sm shadow-lg">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Production Ready: Multi-tenant &amp; SSR Activé</span>
+</div>
+</div>
+</div>
+<!-- 4 Interactive Miniatures -->
+<div class="grid grid-cols-4 gap-space-sm">
+<button class="gallery-thumb active-thumb relative aspect-video rounded-lg overflow-hidden bg-surface-container-high transition-all text-left p-0.5 group focus:outline-none" data-label="Dashboard Admin" onclick="switchPreview(this, 'Dashboard Admin', 'https://images.unsplash.com/photo-1551288049-bebda4e38f71')" type="button">
+<img alt="Miniature Dashboard Admin" class="w-full h-full object-cover rounded" data-alt="High-density dark analytics SaaS dashboard with data charts and user retention curves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMI6JbvWleGLgfWy6YRRVSJRYqvVXDzihINfilCqIQNt7tXAmmOgLmY3krKQX1oK0nTD8CgdjfU15w-nmmO6NvVeAFJZJXzcH7GiSeo2qNnVHLb8tUvwdvTTW5l38Oe7JatBmfzlf3XSeK0xz7sbnrsGyLZKxQ19WTC3BD3ycqcPdcCnS7XmfeW1I-eZCAu5Xf9DIt76oY1PSYCdQ2lnQfa2SkkiJwj-JpMEaTnGQ0_3qrr2o_lpi8"/>
+<span class="absolute inset-x-0 bottom-0 bg-surface-container-lowest/80 backdrop-blur-xs py-0.5 text-center font-label-sm text-[10px] text-on-surface truncate px-1">Dashboard</span>
+</button>
+<button class="gallery-thumb relative aspect-video rounded-lg overflow-hidden bg-surface-container-high transition-all text-left p-0.5 group focus:outline-none opacity-70 hover:opacity-100" data-label="Auth Supabase" onclick="switchPreview(this, 'Authentification Supabase', 'https://images.unsplash.com/photo-1555066931-4365d14bab8c')" type="button">
+<img alt="Miniature Authentification Supabase" class="w-full h-full object-cover rounded" data-alt="Minimalist dark mode authentication interface with passkeys and magic links" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTooo9Cdyc7x4ELDe6g5VEbOT2aTrYfzztpjNcwhxYYfOI4uZWAy4EjpYdqOeshh9PQlhQ8NUjbstwXpOp8-2DugOdOlwvQJllt52qN2Vdkok7OM3wnlzUJJngxmBdw8ZRUEJxAWMOWmS4N43W6NJ9re9KZpP-5IQl0cg4uTN0fzzaf3GCpaLQUpN_BTd9LkVJuSBA7DJiTqz466oExGCc_bXu0t9WjSzEUGr637n1rAxWwXJbLL9C"/>
+<span class="absolute inset-x-0 bottom-0 bg-surface-container-lowest/80 backdrop-blur-xs py-0.5 text-center font-label-sm text-[10px] text-on-surface truncate px-1">Supabase Auth</span>
+</button>
+<button class="gallery-thumb relative aspect-video rounded-lg overflow-hidden bg-surface-container-high transition-all text-left p-0.5 group focus:outline-none opacity-70 hover:opacity-100" data-label="Bibliothèque UI" onclick="switchPreview(this, 'Architecture des Composants', 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8')" type="button">
+<img alt="Miniature Bibliothèque UI" class="w-full h-full object-cover rounded" data-alt="Component library styleguide layout with dark mode buttons, dialogs, sliders and form inputs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLv2b99SqgWfIVizFRP_iP9NCRzFlfRfXfonQz7DqrjBEQaYCT4LLqyDWUtaVmDJBTN7Ni-WBnBWb71TLEMfXByAwHT-wPYo2JGN1otLDH5xGLtLuyzq8UHsYlSuP6PL2OX84A9ULwxScAWA_u9zyaoGhDajFnV2mDAX56aNthVbhqJIwHeO4GNGFC58i24RdmpfhkMG_xUUBq5Ug58o3JnuarFcJUT38j-YD5IyGbi1n42tFIydVs"/>
+<span class="absolute inset-x-0 bottom-0 bg-surface-container-lowest/80 backdrop-blur-xs py-0.5 text-center font-label-sm text-[10px] text-on-surface truncate px-1">Composants</span>
+</button>
+<button class="gallery-thumb relative aspect-video rounded-lg overflow-hidden bg-surface-container-high transition-all text-left p-0.5 group focus:outline-none opacity-70 hover:opacity-100" data-label="Mobile View" onclick="switchPreview(this, 'Vue Mobile Responsive', 'https://images.unsplash.com/photo-1526498460520-4c246339dccb')" type="button">
+<img alt="Miniature Vue Mobile Responsive" class="w-full h-full object-cover rounded" data-alt="Smartphone mockup rendering the mobile responsive version of Nexus SaaS web app" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZT8fPpXhVysksA-W1xGRbjF-erY62ahL4LjMXJdnCzWNz9Hx12gHNJaAcwCf80yRyF3cY9eP1VLhM4UNSVacxFgvQycc-MXakwELXuR4t-1p7Bk3DgwkY_d2-HbwH5VL2Amn0Vf2_DGBY3hftL5tTgwcvVDUfpMaP1JAlIne4YQkZl6eSlWsjRHZoDInM3F1jt04YpwcSD2riU9F8SrnGOrd1Ym_TytkZM4D8kOefpEHkxkYA4_5x"/>
+<span class="absolute inset-x-0 bottom-0 bg-surface-container-lowest/80 backdrop-blur-xs py-0.5 text-center font-label-sm text-[10px] text-on-surface truncate px-1">Mobile View</span>
+</button>
+</div>
+<!-- Live Preview Trigger Button -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md p-space-md rounded-xl bg-surface-container-low shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">captive_portal</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Environnement de Démo Interactif</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Explorez l'espace client complet avec authentification et Stripe en mode Sandbox.</p>
+</div>
+</div>
+<a class="w-full sm:w-auto shrink-0 px-space-lg py-space-sm rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors group" href="https://demo.novadigital.io/nexus" rel="noopener noreferrer" target="_blank">
+<span>Tester la Démo en Direct</span>
+<span class="material-symbols-outlined text-sm text-tertiary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">open_in_new</span>
+</a>
+</div>
+<!-- Feature Matrix Visual Snapshot (Inline SVG Spark Visuals) -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-code-inline text-code-inline text-xs">Lighthouse</span>
+<span class="material-symbols-outlined text-tertiary text-sm">speed</span>
+</div>
+<div class="mt-2">
+<span class="font-display-xl text-headline-lg font-bold text-on-surface tracking-tight">100/100</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-xs">Performance Web Vitals</p>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-code-inline text-code-inline text-xs">Sécurité</span>
+<span class="material-symbols-outlined text-primary text-sm">shield</span>
+</div>
+<div class="mt-2">
+<span class="font-display-xl text-headline-lg font-bold text-on-surface tracking-tight">RLS Strict</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-xs">Row-Level Security</p>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-code-inline text-code-inline text-xs">Billing</span>
+<span class="material-symbols-outlined text-secondary text-sm">currency_exchange</span>
+</div>
+<div class="mt-2">
+<span class="font-display-xl text-headline-lg font-bold text-on-surface tracking-tight">Multi-Rail</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-xs">Stripe + Mobile Money</p>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline">
+<span class="font-code-inline text-code-inline text-xs">Gain de Temps</span>
+<span class="material-symbols-outlined text-tertiary text-sm">hourglass_bottom</span>
+</div>
+<div class="mt-2">
+<span class="font-display-xl text-headline-lg font-bold text-on-surface tracking-tight">~140h</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-xs">Économisées au lancement</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. RIGHT COLUMN: Sticky Buy & Conversion Module -->
+<div class="lg:col-span-5 lg:sticky lg:top-28">
+<div class="relative rounded-2xl bg-surface-container-low p-space-lg shadow-2xl overflow-hidden">
+<!-- Subtle accent top strip -->
+<div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-container via-tertiary-container to-secondary-container"></div>
+<!-- Badges & Versioning -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs mb-space-sm">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-secondary-container/40 text-secondary font-code-inline text-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Version 2.4 - Mise à jour récente</span>
+</span>
+<span class="font-label-sm text-label-sm text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">verified</span> Actif Officiel Nova
+              </span>
+</div>
+<!-- Product Title -->
+<h1 class="font-headline-lg text-headline-lg text-on-surface leading-tight tracking-tight mb-space-xs">
+              Nexus SaaS Starter Kit
+            </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Next.js 14 App Router, Supabase Auth &amp; Database, Stripe Subscriptions &amp; passerelles Mobile Money intégrées.
+            </p>
+<!-- Social Proof Stream -->
+<div class="flex items-center gap-space-md pb-space-md mb-space-md bg-surface-container/40 p-space-sm rounded-xl">
+<div class="flex items-center gap-1 text-tertiary">
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-headline-sm text-sm font-bold text-on-surface ml-1">4.95</span>
+<span class="text-on-surface-variant text-xs">(142 avis)</span>
+</div>
+<div class="h-3 w-px bg-surface-container-highest"></div>
+<div class="flex items-center gap-1 text-on-surface-variant text-xs font-label-sm">
+<span class="material-symbols-outlined text-xs text-secondary">trending_up</span>
+<span class="text-on-surface font-semibold">1 240+</span> ventes
+              </div>
+</div>
+<!-- Dynamic Price Module -->
+<div class="mb-space-lg">
+<div class="flex items-baseline gap-space-sm">
+<span class="font-display-xl text-headline-lg lg:text-display-xl font-extrabold text-on-surface tracking-tight" id="displayedPriceEur">69 €</span>
+<span class="font-body-md text-body-md line-through text-outline" id="displayedOldPriceEur">119 €</span>
+<span class="px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-xs font-bold uppercase tracking-wider">-42% Économie</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-outline font-code-inline text-code-inline text-xs">
+<span id="displayedPriceXaf">~ 45 000 FCFA</span>
+<span class="text-tertiary">Paiement unique • Zéro abonnement</span>
+</div>
+</div>
+<!-- License Selector Segment -->
+<div class="space-y-space-sm mb-space-lg">
+<label class="font-label-md text-label-md text-on-surface block">Sélectionnez votre type de licence :</label>
+<!-- Option 1: Standard -->
+<label class="flex items-start justify-between p-space-md rounded-xl bg-surface-container cursor-pointer transition-colors shadow-sm" id="labelLicenseStandard" onclick="setLicense('standard', 69, 119, '45 000 FCFA')">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-1 text-primary accent-primary h-4 w-4" name="license_tier" type="radio" value="standard"/>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Licence Standard</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-xs">1 projet commercial ou client unique. Usage illimité en production.</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">69 €</span>
+</div>
+</label>
+<!-- Option 2: Agence -->
+<label class="flex items-start justify-between p-space-md rounded-xl bg-surface-container-high/60 cursor-pointer transition-colors" id="labelLicenseAgency" onclick="setLicense('agency', 179, 299, '117 000 FCFA')">
+<div class="flex items-start gap-space-sm">
+<input class="mt-1 text-primary accent-primary h-4 w-4" name="license_tier" type="radio" value="agency"/>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Licence Agence</span>
+<span class="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-tertiary-container text-on-tertiary-container">Pro</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-xs">Projets illimités, code source complet, accès aux dépôts GitHub privés Nova.</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">179 €</span>
+</div>
+</label>
+</div>
+<!-- Action Buttons -->
+<div class="space-y-space-sm mb-space-lg">
+<!-- Primary Buy Now -->
+<a class="w-full py-space-md px-space-lg rounded-xl bg-gradient-to-r from-primary-container via-inverse-primary to-secondary-container hover:brightness-110 text-on-surface font-label-md text-label-md font-bold tracking-wide shadow-xl flex items-center justify-center gap-space-sm transition-all transform active:scale-[0.99]" data-path="checkout-nexus" href="#">
+<span class="material-symbols-outlined text-lg">bolt</span>
+<span>Acheter &amp; Télécharger Immédiatement</span>
+</a>
+<!-- Secondary Add To Cart -->
+<button class="w-full py-space-sm px-space-lg rounded-xl bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-md text-label-md font-medium transition-colors flex items-center justify-center gap-space-sm" id="btnAddToCart" onclick="handleAddToCart()" type="button">
+<span class="material-symbols-outlined text-sm">shopping_bag</span>
+<span id="btnAddToCartText">Ajouter au Panier</span>
+</button>
+</div>
+<!-- Instant Trust & Guarantee Module -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-base shrink-0 mt-0.5">mark_email_read</span>
+<span>Livré instantanément par email et accessible à vie dans votre <strong>espace client</strong>.</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-base shrink-0 mt-0.5">update</span>
+<span>Mises à jour gratuites à vie incluses (Next.js 15 roadmap ready).</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-base shrink-0 mt-0.5">folder_zip</span>
+<span>Archive ZIP (34 Mo) : Source TypeScript, Migrations SQL Supabase, Configs Tailwind.</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-base shrink-0 mt-0.5">credit_score</span>
+<span>Paiements sécurisés chiffrés SSL : Stripe, MTN MoMo, Orange Money &amp; PayPal.</span>
+</div>
+</div>
+<!-- Guarantee micro-badge -->
+<div class="mt-space-md pt-space-md flex items-center justify-between text-xs text-outline font-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-tertiary">lock</span>
+                Chiffrement SHA-256
+              </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary">verified_user</span>
+                Garantie Code Fonctionnel 30j
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. TAB NAVIGATION & COMPREHENSIVE CONTENT -->
+<section class="mt-space-xl pt-space-lg">
+<!-- Tab Bar -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-sm bg-surface-container-low p-1.5 rounded-xl max-w-2xl mb-space-lg">
+<button class="tab-btn px-space-md py-space-sm rounded-lg font-label-md text-label-md text-on-surface bg-surface-container-high font-semibold transition-all shrink-0 flex items-center gap-space-xs" id="tabBtn-inclus" onclick="switchTab('inclus')" type="button">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+<span>Ce qui est inclus</span>
+</button>
+<button class="tab-btn px-space-md py-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all shrink-0 flex items-center gap-space-xs" id="tabBtn-specs" onclick="switchTab('specs')" type="button">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span>Spécifications &amp; Prérequis</span>
+</button>
+<button class="tab-btn px-space-md py-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all shrink-0 flex items-center gap-space-xs" id="tabBtn-avis" onclick="switchTab('avis')" type="button">
+<span class="material-symbols-outlined text-sm">rate_review</span>
+<span>Avis Clients Vérifiés (142)</span>
+</button>
+</div>
+<!-- TAB PANE 1: CE QUI EST INCLUS -->
+<div class="tab-pane flex flex-col gap-space-lg" id="tabContent-inclus">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Col 1: Tech Stack -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined">layers</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Stack Technologique Pure</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Architecture modulaire sans dépendance superflue, construite pour scaler dès le premier jour.</p>
+<ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Next.js 14.2+ (App Router, Server Actions)</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> TypeScript 5 en mode strict</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Tailwind CSS 3.4 &amp; Shadcn UI Dark Custom</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Lucide Icons &amp; Material Symbols Pro</li>
+</ul>
+</div>
+<!-- Col 2: Supabase Backend -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">database</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Backend Supabase Clé en Main</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Base PostgreSQL prête avec modèles relationnels prédéfinis et politiques de sécurité testées.</p>
+<ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Auth complète : Magic Link, Google, GitHub</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Scripts de migration SQL &amp; Seed data inclus</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Row Level Security (RLS) blindé</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Supabase Storage prêt pour avatars &amp; fichiers</li>
+</ul>
+</div>
+<!-- Col 3: Monetization -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined">point_of_sale</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Système de Facturation Multi-Zone</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Recevez des abonnements mensuels ou paiements à l'acte en Europe, USA et Afrique subsaharienne.</p>
+<ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Stripe Billing Portal &amp; Webhooks sécurisés</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Passerelle Mobile Money (MTN, Orange) pré-câblée</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Génération de factures automatisée</li>
+<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Gestion du churn et emails de relance automatiques</li>
+</ul>
+</div>
+</div>
+<!-- Architecture Blueprint Details -->
+<div class="p-space-lg rounded-xl bg-surface-container-low">
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm font-semibold">Structure de l'Archive Source Décompressée</h4>
+<div class="p-space-md rounded-lg bg-surface-container-lowest font-code-inline text-code-inline text-xs text-on-surface-variant overflow-x-auto leading-relaxed">
+<span class="text-tertiary">nexus-saas-kit/</span><br/>
+              ├── <span class="text-primary">app/</span> <span class="text-outline"># Next.js 14 App Router (Layouts, Parallel Routes, Server Actions)</span><br/>
+              │   ├── (auth)/             <span class="text-outline"># Flux Login, Register, Forgot Password, Verification</span><br/>
+              │   ├── (dashboard)/        <span class="text-outline"># Espace client SaaS, Paramètres, Équipes, Factures</span><br/>
+              │   └── api/                <span class="text-outline"># Webhooks Stripe, Webhooks MoMo, Supabase Webhooks</span><br/>
+              ├── <span class="text-primary">components/</span> <span class="text-outline"># 48+ Composants UI accessibles (Radix primitives)</span><br/>
+              ├── <span class="text-primary">supabase/</span> <span class="text-outline"># Migrations SQL versionnées, schemas, triggers RLS</span><br/>
+              ├── <span class="text-primary">lib/</span> <span class="text-outline"># Client Stripe, Helper Supabase Client &amp; Server, Email Resend</span><br/>
+              ├── <span class="text-secondary">.env.example</span> <span class="text-outline"># Variables pré-configurées avec commentaires explicatifs</span><br/>
+              └── <span class="text-secondary">README.md</span> <span class="text-outline"># Guide d'installation pas-à-pas en 10 minutes chrono</span>
+</div>
+</div>
+</div>
+<!-- TAB PANE 2: SPÉCIFICATIONS & PRÉREQUIS -->
+<div class="tab-pane hidden flex-col gap-space-lg" id="tabContent-specs">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="p-space-lg rounded-xl bg-surface-container-low space-y-space-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">checklist</span>
+<span>Prérequis Système &amp; Environnement</span>
+</h3>
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-base mt-1">check_circle</span>
+<div>
+<strong class="text-on-surface font-label-md text-label-md block">Node.js 18.17+ ou Node.js 20+</strong>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Compatible npm, pnpm (recommandé), yarn et bun.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-base mt-1">check_circle</span>
+<div>
+<strong class="text-on-surface font-label-md text-label-md block">Compte Supabase (Gratuit ou Pro)</strong>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Le palier gratuit Supabase suffit amplement pour débuter le développement et lancer vos 100 premiers utilisateurs.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-base mt-1">check_circle</span>
+<div>
+<strong class="text-on-surface font-label-md text-label-md block">Compte Développeur Stripe</strong>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Clés API test et webhooks configurables en 2 minutes via les scripts CLI inclus.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-base mt-1">check_circle</span>
+<div>
+<strong class="text-on-surface font-label-md text-label-md block">Service Transactionnel Email (Resend ou Brevo)</strong>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Templates d'emails HTML modernes déjà rédigés en français et en anglais.</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-low space-y-space-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">tune</span>
+<span>Fiche Technique du Produit</span>
+</h3>
+<div class="divide-y divide-surface-container-highest">
+<div class="py-space-sm flex justify-between font-body-sm text-body-sm">
+<span class="text-outline">Taille du fichier :</span>
+<span class="text-on-surface font-code-inline">34.2 Mo (.ZIP complet)</span>
+</div>
+<div class="py-space-sm flex justify-between font-body-sm text-body-sm">
+<span class="text-outline">Langage :</span>
+<span class="text-on-surface font-code-inline">TypeScript 100% Type-Safe</span>
+</div>
+<div class="py-space-sm flex justify-between font-body-sm text-body-sm">
+<span class="text-outline">Framework CSS :</span>
+<span class="text-on-surface font-code-inline">Tailwind CSS v3.4</span>
+</div>
+<div class="py-space-sm flex justify-between font-body-sm text-body-sm">
+<span class="text-outline">Déploiement cible :</span>
+<span class="text-on-surface font-code-inline">Vercel, AWS Amplify, Docker VPS</span>
+</div>
+<div class="py-space-sm flex justify-between font-body-sm text-body-sm">
+<span class="text-outline">Support &amp; Mises à jour :</span>
+<span class="text-tertiary font-semibold">Gratuit • Mises à jour à vie</span>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest text-xs text-on-surface-variant font-body-sm">
+<span class="font-bold text-on-surface">Licence commerciale perpétuelle :</span> Vous conservez 100% de la propriété intellectuelle de votre produit SaaS construit à partir de ce template. Zéro royalties.
+              </div>
+</div>
+</div>
+</div>
+<!-- TAB PANE 3: AVIS CLIENTS VÉRIFIÉS -->
+<div class="tab-pane hidden flex-col gap-space-lg" id="tabContent-avis">
+<!-- Rating Overview Bar -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-lg p-space-lg rounded-xl bg-surface-container-low items-center">
+<div class="md:col-span-4 text-center md:text-left space-y-1">
+<span class="font-display-xl text-display-xl font-extrabold text-on-surface tracking-tight">4.95</span>
+<div class="flex items-center justify-center md:justify-start text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Basé sur 142 achats certifiés par la plateforme NovaDigital</p>
+</div>
+<div class="md:col-span-5 space-y-2">
+<div class="flex items-center gap-space-sm text-xs font-label-sm">
+<span class="w-12 text-outline">5 étoiles</span>
+<div class="flex-1 h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 94%"></div>
+</div>
+<span class="w-8 text-on-surface font-semibold text-right">94%</span>
+</div>
+<div class="flex items-center gap-space-sm text-xs font-label-sm">
+<span class="w-12 text-outline">4 étoiles</span>
+<div class="flex-1 h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 5%"></div>
+</div>
+<span class="w-8 text-on-surface font-semibold text-right">5%</span>
+</div>
+<div class="flex items-center gap-space-sm text-xs font-label-sm">
+<span class="w-12 text-outline">3 étoiles</span>
+<div class="flex-1 h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 1%"></div>
+</div>
+<span class="w-8 text-on-surface font-semibold text-right">1%</span>
+</div>
+</div>
+<div class="md:col-span-3 flex justify-center md:justify-end">
+<button class="px-space-md py-space-sm rounded-lg bg-secondary-container hover:bg-primary-container text-on-surface font-label-md text-label-md transition-colors flex items-center gap-space-xs" onclick="toggleReviewForm()" type="button">
+<span class="material-symbols-outlined text-sm">rate_review</span>
+<span>Rédiger un Avis</span>
+</button>
+</div>
+</div>
+<!-- Interactive Review Form (Collapsible) -->
+<div class="hidden p-space-lg rounded-xl bg-surface-container-low space-y-space-md shadow-lg transition-all" id="reviewFormContainer">
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Partagez votre retour d'expérience</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Votre Prénom &amp; Titre</label>
+<input class="w-full px-space-sm py-space-xs rounded-lg bg-surface-container text-on-surface placeholder:text-outline focus:outline-none" placeholder="Ex: Marc L., Développeur Fullstack" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Note globale</label>
+<select class="w-full px-space-sm py-space-xs rounded-lg bg-surface-container text-on-surface focus:outline-none">
+<option value="5">5/5 - Exceptionnel, a dépassé mes attentes</option>
+<option value="4">4/5 - Très bien, très solide</option>
+<option value="3">3/5 - Correct</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Votre commentaire détaillé</label>
+<textarea class="w-full p-space-sm rounded-lg bg-surface-container text-on-surface placeholder:text-outline focus:outline-none" placeholder="Qualité du code, clarté des instructions, temps gagné..." rows="3"></textarea>
+</div>
+<div class="flex justify-end gap-space-sm">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-highest text-on-surface font-label-sm text-label-sm" onclick="toggleReviewForm()" type="button">Annuler</button>
+<button class="px-space-md py-space-xs rounded-lg bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold" onclick="submitSimulatedReview()" type="button">Publier l'Avis</button>
+</div>
+</div>
+<!-- 3 Detailed Reviews from Tech Founders -->
+<div class="space-y-space-md">
+<!-- Review 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center font-bold text-on-surface font-label-md">
+                    AL
+                  </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-base text-on-surface font-semibold">Alexandre Leclerc</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[12px]">verified</span> Acheteur vérifié
+                      </span>
+</div>
+<p class="font-body-sm text-body-sm text-outline text-xs">Fondateur chez SyncMetrics • Licence Agence</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-tertiary text-xs">
+<div class="flex">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-on-surface-variant font-code-inline ml-1">Il y a 6 jours</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                « C’est sans aucun doute le starter kit Next.js 14 le plus propre du marché francophone. Les Server Actions sont impeccablement structurées, la synchronisation des webhooks Stripe fonctionne du premier coup avec la CLI, et le support Supabase RLS est irréprochable. Nous avons déployé notre MVP en 48 heures au lieu de 3 semaines. Remboursé dès le premier abonné. »
+              </p>
+</div>
+<!-- Review 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center font-bold text-on-primary-container font-label-md">
+                    KD
+                  </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-base text-on-surface font-semibold">Kouamé Diallo</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[12px]">verified</span> Acheteur vérifié
+                      </span>
+</div>
+<p class="font-body-sm text-body-sm text-outline text-xs">Tech Lead chez KoriPay Labs • Licence Standard</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-tertiary text-xs">
+<div class="flex">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-on-surface-variant font-code-inline ml-1">Il y a 2 semaines</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                « La compatibilité directe avec les rails de paiement africains (MTN Mobile Money et Orange Money) à côté de Stripe est une pépite rare. Habituellement, il faut tout coder à la main pour adapter les starters américains. Là, tout est documenté, typé en TypeScript et opérationnel immédiatement. »
+              </p>
+</div>
+<!-- Review 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-sm space-y-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-on-surface font-label-md">
+                    SM
+                  </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-base text-on-surface font-semibold">Sarah Moreau</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-container/30 text-tertiary font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[12px]">verified</span> Acheteur vérifié
+                      </span>
+</div>
+<p class="font-body-sm text-body-sm text-outline text-xs">Solopreneuse • Licence Standard</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-tertiary text-xs">
+<div class="flex">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm text-outline" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-on-surface-variant font-code-inline ml-1">Il y a 1 mois</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                « Code hyper lisible et zéro mauvaise surprise. Même en tant que développeuse junior sur le App Router, j'ai pu modifier le layout du dashboard en une matinée. Petit bonus très appréciable : la documentation Markdown intégrée directement à la racine du projet. Bravo NovaDigital. »
+              </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. FREQUENTLY BOUGHT TOGETHER (CROSS-SELL BUNDLE -25%) -->
+<section class="mt-space-xl p-space-lg rounded-2xl bg-surface-container-low shadow-xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-lg">
+<div>
+<div class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-secondary mb-1">
+<span class="material-symbols-outlined text-xs">auto_awesome</span> Pack Booster de Lancement
+            </div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Fréquemment achetés ensemble</h2>
+</div>
+<span class="self-start sm:self-auto px-space-sm py-1 rounded-full bg-secondary-container/40 text-secondary font-label-sm text-xs font-semibold">
+            Offre Bundle Spéciale : -25% immédiats
+          </span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
+<!-- Item Cards Sequence -->
+<div class="lg:col-span-8 flex flex-col md:flex-row items-center gap-space-md">
+<!-- Item 1: This product -->
+<div class="w-full md:w-1/3 p-space-md rounded-xl bg-surface-container flex flex-col justify-between h-full">
+<div class="aspect-video w-full rounded-lg overflow-hidden mb-space-sm bg-surface-container-highest">
+<img alt="Nexus SaaS Starter Kit" class="w-full h-full object-cover" data-alt="Nexus SaaS Starter Kit preview thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc4G9SGR7-s15z2BPq0_3DH0WRWKmvnVW2rMjKZGr1dqJBtCsMw6WPyasDrr3mwNjhChfqv11hONlJHlaIC3BcHhVs6UALgQD8mvQM0s1YgclHWvR1IekvAy8VnOCaPsQEscf_qtwhwRjuURDn41A3bQ_AC2DjEP6ovFXUFoELPNPSqkENL9zczOEnHAf9JHwB0VEWVhqSAsUkxfGImClti8h8Ug3gK0O5b0Kf_GWbZ7kwXtNbHCbj"/>
+</div>
+<div>
+<span class="font-label-sm text-xs text-tertiary">Article principal</span>
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Nexus SaaS Starter Kit</p>
+<span class="font-headline-sm text-sm font-bold text-on-surface">69 €</span>
+</div>
+</div>
+<!-- Plus Sign -->
+<div class="shrink-0 text-outline">
+<span class="material-symbols-outlined text-xl">add</span>
+</div>
+<!-- Item 2: Figma Design System -->
+<div class="w-full md:w-1/3 p-space-md rounded-xl bg-surface-container flex flex-col justify-between h-full">
+<div class="aspect-video w-full rounded-lg overflow-hidden mb-space-sm bg-surface-container-highest">
+<img alt="Nexus UI Figma Kit" class="w-full h-full object-cover" data-alt="Figma design system UI kit screens with typography scales, auto-layout tokens, wireframes and dark components" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHz8lM5sdX96o4Zlrxt0Hl0BG5KMKYmD6B5KistHyFyza5W7ImZ54Is3nYc2169KTudHDmN4SXIfoTwBCaresTFa1aC0PkslzmZiqinexQ28718z8IyDruQxdxrWC7SHmbu28T_QjbjyGSBbi4tv3BDjtliyJAUER5cal6LCedpJj2nePhINLZPJwBS9BHxRQqXqafYrW94wOc6YNEl0Mk_s0xdRpvp72iKrnH2TgFmLgzeOXjO1Rw"/>
+</div>
+<div>
+<span class="font-label-sm text-xs text-secondary">Figma File Pro</span>
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Nexus Figma UI Kit (800+ frames)</p>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-bold text-on-surface">45 €</span>
+<span class="line-through text-outline text-xs">59 €</span>
+</div>
+</div>
+</div>
+<!-- Plus Sign -->
+<div class="shrink-0 text-outline">
+<span class="material-symbols-outlined text-xl">add</span>
+</div>
+<!-- Item 3: Video Masterclass -->
+<div class="w-full md:w-1/3 p-space-md rounded-xl bg-surface-container flex flex-col justify-between h-full">
+<div class="aspect-video w-full rounded-lg overflow-hidden mb-space-sm bg-surface-container-highest">
+<img alt="Formation Video SaaS Architecture" class="w-full h-full object-cover" data-alt="Video course curriculum screen showing Next.js 14 deployment and Supabase architecture modules" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGUQ1VEY2_9Bo8vcWVT4YwtJ9MqX3IETCOm9Mg6bx1kjYOnPNDK2cz15STuWcCQl8Li8HhspR7mC9L94qG8yJ0NAe-aF_ncRWalCLyPLXm8F2-NUf0CCrNF78HgsTIITtOo2E_4pP1C27tIaUGuGVhhF-ewxKefxgjLv6pBYo2HTBvZqwYRA4_bqTg61bqsAvN2czAFDbuWfYjT2Q6QJN_4obFNZeESqalf1GedRjVmHLvvKsjDPwH"/>
+</div>
+<div>
+<span class="font-label-sm text-xs text-tertiary">Masterclass Vidéo (4h)</span>
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">De 0 à 1 000 MRR avec Next.js</p>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-sm font-bold text-on-surface">49 €</span>
+<span class="line-through text-outline text-xs">79 €</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Checkout Bundle Action Box -->
+<div class="lg:col-span-4 p-space-lg rounded-xl bg-surface-container-lowest flex flex-col justify-between h-full">
+<div>
+<span class="font-label-sm text-xs text-outline uppercase tracking-wider block mb-1">Total du Bundle (3 Produits)</span>
+<div class="flex items-baseline gap-space-sm mb-2">
+<span class="font-display-xl text-headline-lg font-black text-on-surface">122 €</span>
+<span class="text-outline line-through text-sm">163 €</span>
+<span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container text-xs font-bold">-25%</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-xs mb-space-md">
+                Recevez le starter kit de code complet, la maquette Figma officielle haute-fidélité, ainsi que la formation vidéo étape-par-étape.
+              </p>
+</div>
+<button class="w-full py-space-sm px-space-md rounded-lg bg-tertiary-container hover:bg-tertiary text-on-tertiary-container font-label-md text-label-md font-bold transition-all flex items-center justify-center gap-space-xs" id="bundleBtn" onclick="handleBundleAdd()" type="button">
+<span class="material-symbols-outlined text-sm">shopping_cart_checkout</span>
+<span>Acheter le Bundle Complet (-25%)</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<script>
+  // Tab Switching Logic
+  function switchTab(tabKey) {
+    const tabs = ['inclus', 'specs', 'avis'];
+    tabs.forEach(key => {
+      const pane = document.getElementById(`tabContent-${key}`);
+      const btn = document.getElementById(`tabBtn-${key}`);
+      if (key === tabKey) {
+        pane.classList.remove('hidden');
+        pane.classList.add('flex');
+        btn.classList.add('bg-surface-container-high', 'text-on-surface', 'font-semibold');
+        btn.classList.remove('text-on-surface-variant');
+      } else {
+        pane.classList.add('hidden');
+        pane.classList.remove('flex');
+        btn.classList.remove('bg-surface-container-high', 'text-on-surface', 'font-semibold');
+        btn.classList.add('text-on-surface-variant');
+      }
+    });
+  }
+
+  // Gallery Thumbnail Switcher
+  function switchPreview(thumbElement, label, fallbackSrc) {
+    // Reset active thumb rings
+    document.querySelectorAll('.gallery-thumb').forEach(el => {
+      el.classList.remove('active-thumb', 'opacity-100');
+      el.classList.add('opacity-70');
+    });
+
+    thumbElement.classList.add('active-thumb', 'opacity-100');
+    thumbElement.classList.remove('opacity-70');
+
+    const mainDisplay = document.getElementById('mainPreviewDisplay');
+    const childImg = thumbElement.querySelector('img');
+    if (childImg && mainDisplay) {
+      mainDisplay.setAttribute('data-alt', `Interface agrandie pour : ${label}. Design dark minimaliste haute résolution.`);
+      // Retain placeholder standard
+      mainDisplay.src = 'placeholder';
+    }
+  }
+
+  // Dynamic License Switching
+  function setLicense(tier, eurPrice, oldEurPrice, xafPrice) {
+    const displayEur = document.getElementById('displayedPriceEur');
+    const displayOldEur = document.getElementById('displayedOldPriceEur');
+    const displayXaf = document.getElementById('displayedPriceXaf');
+    const labelStandard = document.getElementById('labelLicenseStandard');
+    const labelAgency = document.getElementById('labelLicenseAgency');
+
+    displayEur.textContent = `${eurPrice} €`;
+    displayOldEur.textContent = `${oldEurPrice} €`;
+    displayXaf.textContent = `~ ${xafPrice}`;
+
+    if (tier === 'agency') {
+      labelAgency.classList.add('bg-surface-container', 'shadow-sm');
+      labelAgency.classList.remove('bg-surface-container-high/60');
+      labelStandard.classList.remove('bg-surface-container', 'shadow-sm');
+      labelStandard.classList.add('bg-surface-container-high/60');
+    } else {
+      labelStandard.classList.add('bg-surface-container', 'shadow-sm');
+      labelStandard.classList.remove('bg-surface-container-high/60');
+      labelAgency.classList.remove('bg-surface-container', 'shadow-sm');
+      labelAgency.classList.add('bg-surface-container-high/60');
+    }
+  }
+
+  // Cart Micro-interaction
+  function handleAddToCart() {
+    const btn = document.getElementById('btnAddToCart');
+    const text = document.getElementById('btnAddToCartText');
+    btn.classList.add('bg-tertiary-container', 'text-on-tertiary-container');
+    text.textContent = 'Ajouté au Panier ✓';
+    setTimeout(() => {
+      btn.classList.remove('bg-tertiary-container', 'text-on-tertiary-container');
+      text.textContent = 'Ajouter au Panier';
+    }, 2400);
+  }
+
+  // Review Form Toggle
+  function toggleReviewForm() {
+    const form = document.getElementById('reviewFormContainer');
+    form.classList.toggle('hidden');
+  }
+
+  function submitSimulatedReview() {
+    alert("Merci pour votre avis ! Après validation par l'équipe d'assurance qualité NovaDigital, il apparaîtra publiquement.");
+    toggleReviewForm();
+  }
+
+  // Bundle Add
+  function handleBundleAdd() {
+    const btn = document.getElementById('bundleBtn');
+    btn.innerHTML = `<span class="material-symbols-outlined text-sm">done_all</span><span>Pack de 3 articles ajouté !</span>`;
+    btn.classList.add('bg-secondary-container', 'text-on-surface');
+  }
+</script></main><footer class="w-full bg-surface-container-lowest text-on-surface shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg pb-space-xl"><div class="space-y-space-md"><div class="flex items-center gap-space-sm"><img alt="NovaDigital Brand Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">NovaDigital</span></div><p class="text-on-surface-variant font-body-sm text-body-sm leading-relaxed">La place de marché d'actifs numériques premium pour concepteurs, développeurs et bâtisseurs d'exception. Livraison instantanée 24/7.</p><div class="flex items-center gap-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-tertiary text-base">verified_user</span><span class="font-label-sm text-label-sm text-on-surface">Licences Authentifiées &amp; Prêtes à Déployer</span></div></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Catalogues &amp; Outils</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors" data-path="catalogue" href="#">Tous les Produits</a></li><li><a class="hover:text-primary transition-colors" data-path="templates-and-ui" href="#">Templates Next.js &amp; UI Kits</a></li><li><a class="hover:text-primary transition-colors" data-path="formations-and-guides" href="#">Guides &amp; Ebooks Techniques</a></li><li><a class="hover:text-primary transition-colors" data-path="offres-speciales" href="#">Packs &amp; Bundles Exclusifs</a></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Confiance &amp; Garanties</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">bolt</span><span>Téléchargement 100% Instantané</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-sm">security</span><span>Paiement Chiffré SSL 256-bit</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-sm">assignment_return</span><span>Garantie Sérénité 30 Jours</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">support_agent</span><span>Support Technique Réactif</span></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Restez à la Pointe</h3><p class="text-on-surface-variant font-body-sm text-body-sm">Recevez les nouveaux templates chaque semaine directement dans votre boîte mail.</p><form class="flex flex-col gap-space-xs"><div class="flex items-center rounded-lg bg-surface-container-high px-space-sm py-space-xs"><span class="material-symbols-outlined text-outline text-sm mr-space-xs">mail</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none w-full" placeholder="votre.email@domaine.com" type="email"/></div><button class="w-full py-space-xs px-space-md rounded-lg bg-secondary-container hover:bg-primary-container text-on-surface font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs" type="submit"><span>S'inscrire</span><span class="material-symbols-outlined text-sm">arrow_forward</span></button></form></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex flex-wrap items-center gap-space-sm text-xs"><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Stripe</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">MTN MoMo</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Orange Money</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">PayPal</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Visa / Mastercard</span></div><div class="flex items-center gap-space-lg font-label-sm text-label-sm"><a class="hover:text-on-surface transition-colors" data-path="cgv" href="#">CGV</a><a class="hover:text-on-surface transition-colors" data-path="politique-de-confidentialite" href="#">Confidentialité</a><a class="hover:text-on-surface transition-colors" data-path="mentions-legales" href="#">Mentions Légales</a></div><div class="text-xs text-outline">© 2025 NovaDigital Inc. Tous droits réservés.</div></div></div></footer></body></html>

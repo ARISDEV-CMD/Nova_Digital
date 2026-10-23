@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error-container": "#ffdad6", "surface-tint": "#c0c1ff", "on-tertiary-container": "#002f38", "on-tertiary-fixed-variant": "#004e5c", "secondary-fixed": "#e9ddff", "on-primary": "#1000a9", "secondary": "#d0bcff", "on-surface-variant": "#c7c4d7", "surface": "#0f131c", "on-secondary": "#3c0091", "primary": "#c0c1ff", "error-container": "#93000a", "inverse-surface": "#dfe2ee", "primary-fixed": "#e1e0ff", "primary-container": "#8083ff", "inverse-primary": "#494bd6", "tertiary-fixed-dim": "#4cd7f6", "tertiary-fixed": "#acedff", "error": "#ffb4ab", "surface-dim": "#0f131c", "primary-fixed-dim": "#c0c1ff", "surface-container-high": "#262a33", "on-tertiary-fixed": "#001f26", "tertiary": "#4cd7f6", "surface-variant": "#31353e", "background": "#0f131c", "on-primary-fixed": "#07006c", "on-secondary-fixed": "#23005c", "on-secondary-container": "#c4abff", "surface-container-lowest": "#0a0e16", "surface-container": "#1c2028", "on-secondary-fixed-variant": "#5516be", "secondary-container": "#571bc1", "surface-container-highest": "#31353e", "surface-bright": "#353942", "on-error": "#690005", "on-surface": "#dfe2ee", "tertiary-container": "#009eb9", "inverse-on-surface": "#2c3039", "surface-container-low": "#181c24", "on-tertiary": "#003640", "secondary-fixed-dim": "#d0bcff", "on-primary-container": "#0d0096", "on-primary-fixed-variant": "#2f2ebe", "outline": "#908fa0", "on-background": "#dfe2ee", "outline-variant": "#464554" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "1.5rem", "gutter-lg": "2rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "margin-sm": "1rem", "gutter": "1.5rem", "gutter-sm": "1rem", "margin-lg": "3rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem" }, "fontFamily": { "code-inline": [ "JetBrains Mono" ], "body-sm": [ "Inter" ], "headline-lg": [ "Plus Jakarta Sans" ], "label-md": [ "Inter" ], "display-xl": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Plus Jakarta Sans" ], "label-sm": [ "Inter" ], "body-md": [ "Inter" ], "headline-sm": [ "Plus Jakarta Sans" ], "display-xl-mobile": [ "Plus Jakarta Sans" ], "headline-md": [ "Plus Jakarta Sans" ], "body-lg": [ "Inter" ] }, "fontSize": { "code-inline": [ "13px", { "lineHeight": "18px", "fontWeight": "500" } ], "body-sm": [ "13px", { "lineHeight": "20px", "fontWeight": "400" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "fontWeight": "700" } ], "label-md": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "display-xl": [ "56px", { "lineHeight": "64px", "fontWeight": "800" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "34px", "fontWeight": "700" } ], "label-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "500" } ], "body-md": [ "15px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "fontWeight": "600" } ], "display-xl-mobile": [ "36px", { "lineHeight": "44px", "fontWeight": "800" } ], "headline-md": [ "24px", { "lineHeight": "32px", "fontWeight": "600" } ], "body-lg": [ "18px", { "lineHeight": "28px", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-6 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-6"><div class="px-6 flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary shadow-[0_0_16px_rgba(192,193,255,0.15)]"><span class="material-symbols-outlined text-[24px]">terminal</span></div><div><div class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface">NovaDigital</div><div class="font-code-inline text-code-inline tracking-wider text-tertiary uppercase">ADMIN CONSOLE</div></div></div><div class="mx-6 px-3 py-2.5 rounded-lg bg-surface-container flex flex-col gap-1.5"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>Stripe &amp; MoMo</span><span class="font-code-inline text-code-inline text-tertiary">OK</span></div><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span>Supabase RLS</span><span class="font-code-inline text-code-inline text-primary">ACTIF</span></div></div><nav class="px-4 flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(128,131,255,0.25)]"><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="tableau-de-bord" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span>Tableau de bord</a><a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 transition-all bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(128,131,255,0.25)]" data-path="gestion-des-produits-et-assets" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Produits &amp; Assets</a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="commandes-et-transactions" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Commandes &amp; Flux</a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="codes-promo-et-reductions" href="#"><span class="material-symbols-outlined text-[20px]">sell</span>Codes Promo &amp; Rabais</a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="avis-clients-et-moderation" href="#"><span class="material-symbols-outlined text-[20px]">rate_review</span>Avis &amp; Modération</a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all font-label-md text-label-md" data-path="configuration-et-cles-api" href="#"><span class="material-symbols-outlined text-[20px]">key</span>Configuration &amp; API</a></nav></div><div class="px-6 flex flex-col gap-4"><div class="p-3 rounded-xl bg-surface-container flex items-center justify-between"><div class="flex items-center gap-2.5"><div class="w-2 h-2 rounded-full bg-tertiary"></div><span class="font-label-sm text-label-sm text-on-surface-variant">v2.4.1-prod</span></div><span class="font-code-inline text-code-inline text-outline">99.98% SLA</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-8 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-6"><div class="flex items-center gap-2 font-label-sm text-label-sm"><span class="text-outline hover:text-on-surface cursor-pointer transition-colors">Admin</span><span class="material-symbols-outlined text-outline text-[14px]">chevron_right</span><span class="text-on-surface font-semibold">Console</span></div><div class="hidden md:flex items-center bg-surface-container-lowest rounded-lg px-2.5 py-1 gap-1"><button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface bg-surface-container-high" type="button">Aujourd'hui</button><button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" type="button">7 jours</button><button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" type="button">Ce mois</button><button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" type="button">Année</button></div></div><div class="flex items-center gap-4"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-72 bg-surface-container-lowest text-on-surface placeholder:text-outline pl-9 pr-3 py-1.5 rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Rechercher produit, commande, client (⌘K)..." type="text"/></div><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container text-tertiary"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>PROD-LIVE</span><button aria-label="Notifications" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary"></span></button><div class="flex items-center gap-3 pl-3"><div class="text-right hidden xl:block"><div class="font-label-md text-label-md text-on-surface leading-tight">SuperAdmin Alex M.</div><div class="font-code-inline text-code-inline text-outline">alex@novadigital.internal</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 px-8 py-8"><div class="flex flex-col w-full">
+<!-- Dynamic Micro-Glow Canvas Accent -->
+<div class="relative w-full mb-8">
+<div class="absolute -top-12 right-1/4 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-1/2 -left-12 w-80 h-80 bg-tertiary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Header & Orchestration Panel -->
+<div class="relative flex flex-col xl:flex-row xl:items-end justify-between gap-6 pb-2">
+<div class="flex flex-col gap-2 max-w-3xl">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-code-inline text-code-inline bg-surface-container-high text-tertiary shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+            CATALOG_ENGINE :: v3.8.4
+          </span>
+<span class="font-code-inline text-code-inline text-outline">storage-bucket: eu-west-3-vault</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Catalogue &amp; Gestion des Produits Digitaux
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Gérez vos actifs numériques, tarification multi-devises (EUR, USD, XAF), dépôts GitHub privés et buckets de fichiers Supabase protégés par signature HMAC.
+        </p>
+</div>
+<!-- Action Button Group -->
+<div class="flex flex-wrap items-center gap-3">
+<button class="group flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all shadow-sm" id="sync-bucket-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary group-hover:rotate-180 transition-transform duration-500">sync</span>
+<span class="font-label-md text-label-md">Synchroniser Buckets</span>
+</button>
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">upload_file</span>
+<span class="font-label-md text-label-md">Importer CSV</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(128,131,255,0.3)]" id="open-create-modal" type="button">
+<span class="material-symbols-outlined text-[20px] font-bold">bolt</span>
+<span class="font-label-md text-label-md font-bold tracking-tight">+ Nouveau Produit Digital</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Key Metrics Bento Array -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Metric 1 -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-5 shadow-sm group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Total Produits Actifs</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">view_in_ar</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">24</span>
+<span class="font-code-inline text-code-inline text-tertiary">+3 ce mois</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+        100% disponibles sur le CDN Edge
+      </p>
+</div>
+<!-- Metric 2 -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-5 shadow-sm group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Panier Moyen / Asset</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">2 012 €</span>
+<span class="font-code-inline text-code-inline text-primary">+14.2%</span>
+</div>
+<div class="flex items-center justify-between font-code-inline text-code-inline text-outline">
+<span>$ 2 180 USD</span>
+<span>•</span>
+<span>1 320 000 XAF</span>
+</div>
+</div>
+<!-- Metric 3: Top Performer with Micro Sparkline -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-5 shadow-sm group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Top Produit du Mois</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mb-1">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface truncate pr-2">Nexus Starter Kit</span>
+<span class="font-headline-sm text-headline-sm font-bold text-tertiary shrink-0">18 420 €</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">267 commandes ce mois</span>
+<svg class="w-16 h-5 text-tertiary" fill="none" viewbox="0 0 64 20">
+<path d="M0 16L12 12L24 14L36 7L48 9L64 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Metric 4: Dedicated Storage with Linear Bar -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-5 shadow-sm group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Espace Fichiers Sécurisé</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">cloud_sync</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mb-2">
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">
+          12.4 <span class="font-body-md text-body-md text-outline">/ 50 Go</span>
+</div>
+<span class="font-code-inline text-code-inline text-primary">24.8% utilisé</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-700" style="width: 24.8%"></div>
+</div>
+</div>
+</section>
+<!-- Controls & Filter Deck -->
+<section class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-xl bg-surface-container-low mb-6 shadow-sm">
+<!-- Category Quick Filters -->
+<div class="flex flex-wrap items-center gap-1.5">
+<button class="filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-primary-container text-on-primary-container font-semibold transition-all" type="button">
+        Tous (24)
+      </button>
+<button class="filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" type="button">
+        SaaS Boilerplates (8)
+      </button>
+<button class="filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" type="button">
+        Templates &amp; UI Kits (7)
+      </button>
+<button class="filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" type="button">
+        Formations Vidéo (5)
+      </button>
+<button class="filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" type="button">
+        E-books (4)
+      </button>
+</div>
+<!-- Search & Status Selectors -->
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-3">
+<div class="relative flex-1 sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container text-on-surface placeholder:text-outline pl-9 pr-3 py-2 rounded-lg font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-high" id="catalog-search" placeholder="Filtrer SKU, titre, hash..." type="text"/>
+</div>
+<div class="flex items-center gap-1 bg-surface-container p-1 rounded-lg">
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm bg-surface-container-high text-on-surface" type="button">En ligne</button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors" type="button">Brouillon</button>
+<button class="px-2.5 py-1 rounded font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors" type="button">Archivés</button>
+</div>
+</div>
+</section>
+<!-- Interactive Products Table Container -->
+<section class="w-full rounded-2xl bg-surface-container-low shadow-sm overflow-hidden mb-12">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[1040px]">
+<thead>
+<tr class="bg-surface-container text-outline font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3.5 px-5">Produit &amp; Métadonnées</th>
+<th class="py-3.5 px-4">Format / Type</th>
+<th class="py-3.5 px-4">Grille Tarifaire Multi-Devises</th>
+<th class="py-3.5 px-4">Stockage Source &amp; Sécurité</th>
+<th class="py-3.5 px-4 text-center">Ventes &amp; SLA</th>
+<th class="py-3.5 px-4 text-center">Statut Store</th>
+<th class="py-3.5 px-5 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface">
+<!-- Row 1: Nexus SaaS Starter Kit (Selected / Star) -->
+<tr class="product-row hover:bg-surface-container/60 transition-colors group cursor-pointer" data-id="prod-01">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-highest shrink-0 shadow-sm">
+<div class="w-full h-full bg-cover bg-center" data-alt="High tech dark mode software dashboard interface visual with glowing indigo code graphs, minimalist 3d isometric asset preview" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4IgplTnsPtCBSTCopcKYj6s3nJ-ID6dbzrUUp5xDlLZvjBbKCNwjXlPU7tOv-_i-K3h_UmGYE_1vcqvP7cwDNBnyO0zdH0qyyowrfarZohmfwc_lexJbCuTynX3jENP_q7tuNJsDH7Fzx4dvgGlCrHNX-uWgZzw-m8UBuz3LLUkM5GAjBFZL7qlVKlffTM6SqRfl8EhJcZhE46UesEBaiZ3vTYzF3o2it32wZVSkn6mexoCPl33RA')"></div>
+<span class="absolute bottom-1 right-1 px-1 rounded bg-surface-container-lowest/90 font-code-inline text-[10px] text-tertiary">v2.4</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">Nexus SaaS Starter Kit</span>
+<span class="material-symbols-outlined text-tertiary text-[16px]">verified</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-code-inline text-code-inline text-outline truncate">SKU: NX-NEXT15-FULL</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">code</span> novadigital/nexus-saas-enterprise
+                    </span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Next.js 15 AppRouter
+                </span>
+<span class="font-code-inline text-code-inline text-outline">TypeScript + Tailwind v4</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">69 €</span>
+<span class="font-label-sm text-label-sm text-outline">/ 79 $</span>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary font-semibold">45 000 FCFA</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1 max-w-[220px]">
+<div class="flex items-center gap-1.5 text-on-surface font-code-inline text-code-inline truncate">
+<span class="material-symbols-outlined text-tertiary text-[15px] shrink-0">folder_zip</span>
+<span class="truncate">nexus-v2.4.zip</span>
+</div>
+<div class="flex items-center gap-2 font-code-inline text-[11px] text-outline">
+<span>34.2 Mo</span>
+<span>•</span>
+<span class="text-primary">Quota: 5 dl</span>
+<span>•</span>
+<span class="text-tertiary">HMAC-SHA256</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<div class="flex flex-col items-center justify-center">
+<div class="flex items-center gap-1 font-label-md text-label-md font-semibold text-on-surface">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.95 <span class="font-body-sm text-body-sm text-outline">(142)</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">267 commandes</span>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<button aria-checked="true" class="status-toggle relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-primary-container p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-primary-container shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</td>
+<td class="py-4 px-5 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="quick-edit-trigger p-2 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Éditer la ressource" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-tertiary hover:bg-surface-container-high transition-colors" title="Historique versions &amp; Bucket" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error hover:bg-surface-container-high transition-colors" title="Archiver / Supprimer" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Figma Pro UI Kit 2025 -->
+<tr class="product-row hover:bg-surface-container/60 transition-colors group cursor-pointer" data-id="prod-02">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-highest shrink-0 shadow-sm">
+<div class="w-full h-full bg-cover bg-center" data-alt="Figma design system vector artboards organized in dark cyber UI aesthetic, glowing components, design tokens and typography hierarchy" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjWQf8oAqPV8t4oAvIbzIAAkah5HPu3sXIc8-9qk0L6SxhawpEetzNqYMJuV755tG8eTr7ijdCPsoQKKZE_5y1J0aloQm6cT2n_rAnGgR6prbswIUi-DMWqG2yKHVGvFKrsrnFoppPV9BuJCHEwlH6LkQ_03u3cXIyj0vJrfKDl7yDRMhXR0EaDedCqKWEAENYAvKvwtqOSXcOA-lqniL1_n5yxabNgzTv9yki1Bhi_hDYurNZGyUO')"></div>
+<span class="absolute bottom-1 right-1 px-1 rounded bg-surface-container-lowest/90 font-code-inline text-[10px] text-secondary">v3.1</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">Figma Pro UI Kit 2025</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-code-inline text-code-inline text-outline truncate">SKU: FG-DS-ELITE</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">hub</span> 450+ Composants Sync
+                    </span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Figma Community File
+                </span>
+<span class="font-code-inline text-code-inline text-outline">AutoLayout 5.0 + Variables</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">49 €</span>
+<span class="font-label-sm text-label-sm text-outline">/ 55 $</span>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary font-semibold">32 000 FCFA</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1 max-w-[220px]">
+<div class="flex items-center gap-1.5 text-on-surface font-code-inline text-code-inline truncate">
+<span class="material-symbols-outlined text-secondary text-[15px] shrink-0">link</span>
+<span class="truncate">figma.com/@nova/token-ds</span>
+</div>
+<div class="flex items-center gap-2 font-code-inline text-[11px] text-outline">
+<span>Cloud Hook</span>
+<span>•</span>
+<span class="text-primary">Multi-sièges</span>
+<span>•</span>
+<span class="text-outline">Webhook Figma</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<div class="flex flex-col items-center justify-center">
+<div class="flex items-center gap-1 font-label-md text-label-md font-semibold text-on-surface">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.89 <span class="font-body-sm text-body-sm text-outline">(89)</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">310 licences</span>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<button aria-checked="true" class="status-toggle relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-primary-container p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-primary-container shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</td>
+<td class="py-4 px-5 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="quick-edit-trigger p-2 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-tertiary hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Masterclass Vidéo Fullstack Architect -->
+<tr class="product-row hover:bg-surface-container/60 transition-colors group cursor-pointer" data-id="prod-03">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-highest shrink-0 shadow-sm">
+<div class="w-full h-full bg-cover bg-center" data-alt="High tech cinematic video production setup with ultra wide monitor displaying distributed microservices architecture diagrams and terminal stream" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXGIvv5Q2czv2ENM1gwBFxGCyc-Vp3ajgFtcZlWzmYBMU2KwQdSL0dbuUnB0eBBNC0FcF3dfiXnfonfjPu6mg_tRdS-JXH6RZY055fmPfSAf--5pN1GBu-0IoEd-k4IBduCPHi0ihGPBvcZOc388hl2dFtkxdXWtvZr2DXFHRHHmCmp7kabk8H5d3tblXf7Hvn_A3usH54UbnCkxKSQZvymDJxMoHlaxC9esr5IGVXrvE22VG0Uv2M')"></div>
+<span class="absolute bottom-1 right-1 px-1 rounded bg-surface-container-lowest/90 font-code-inline text-[10px] text-tertiary">4K RAW</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">Masterclass Vidéo Fullstack</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-code-inline text-code-inline text-outline truncate">SKU: CRS-ARCH-4K</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">schedule</span> 14h de cours immersif
+                    </span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                  Stream HLS + Bundle MP4
+                </span>
+<span class="font-code-inline text-code-inline text-outline">DRM Tokenisé Cloudflare</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">129 €</span>
+<span class="font-label-sm text-label-sm text-outline">/ 140 $</span>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary font-semibold">85 000 FCFA</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1 max-w-[220px]">
+<div class="flex items-center gap-1.5 text-on-surface font-code-inline text-code-inline truncate">
+<span class="material-symbols-outlined text-tertiary text-[15px] shrink-0">video_library</span>
+<span class="truncate">r2://masterclass-arch/bundle.enc</span>
+</div>
+<div class="flex items-center gap-2 font-code-inline text-[11px] text-outline">
+<span>8.4 Go</span>
+<span>•</span>
+<span class="text-primary">Accès à vie</span>
+<span>•</span>
+<span class="text-tertiary">AES-128</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<div class="flex flex-col items-center justify-center">
+<div class="flex items-center gap-1 font-label-md text-label-md font-semibold text-on-surface">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.98 <span class="font-body-sm text-body-sm text-outline">(64)</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">188 étudiants</span>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<button aria-checked="true" class="status-toggle relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-primary-container p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-primary-container shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</td>
+<td class="py-4 px-5 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="quick-edit-trigger p-2 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-tertiary hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: L'Art du Solopreneur Tech -->
+<tr class="product-row hover:bg-surface-container/60 transition-colors group cursor-pointer" data-id="prod-04">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-highest shrink-0 shadow-sm">
+<div class="w-full h-full bg-cover bg-center" data-alt="Minimalist typography oriented book cover mockup, obsidian black and cyan neon accents, tech entrepreneur handbook aesthetic" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBdVSGB_a-kJpY-j5r_lh5hNc6vLGqYJiaQ1Dq4OaPOblj7AaOJ3_BvC-4_I_Q1bAReiP3ZVtlGyUznfihWpAYvEhDZgdjkKJpcaHnOt8L_xoTmPQfWnvEvDzUY_aq_JsdRBG5iyGVii4_JcdVYFyad1T-Rb1p63sAmiTBPuV5FCgux2XX-yS7q7olRNL5MFhDPz-FNm_EOR-iXKd7M9pjycZzcRzJLrUlkYAxdc7M-pg36WHY3MTV')"></div>
+<span class="absolute bottom-1 right-1 px-1 rounded bg-surface-container-lowest/90 font-code-inline text-[10px] text-outline">PDF/ePub</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">L'Art du Solopreneur Tech</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-code-inline text-code-inline text-outline truncate">SKU: BK-SOLO-2025</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">auto_stories</span> 280 Pages + Checklists Notion
+                    </span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  E-book Digital + Notions
+                </span>
+<span class="font-code-inline text-code-inline text-outline">Watermark dynamique acheteur</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">24 €</span>
+<span class="font-label-sm text-label-sm text-outline">/ 29 $</span>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary font-semibold">15 000 FCFA</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1 max-w-[220px]">
+<div class="flex items-center gap-1.5 text-on-surface font-code-inline text-code-inline truncate">
+<span class="material-symbols-outlined text-outline text-[15px] shrink-0">menu_book</span>
+<span class="truncate">books-vault/art-du-solopreneur.pdf</span>
+</div>
+<div class="flex items-center gap-2 font-code-inline text-[11px] text-outline">
+<span>14.8 Mo</span>
+<span>•</span>
+<span class="text-primary">Tampon Email</span>
+<span>•</span>
+<span class="text-tertiary">PDF-Stamping</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<div class="flex flex-col items-center justify-center">
+<div class="flex items-center gap-1 font-label-md text-label-md font-semibold text-on-surface">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  4.82 <span class="font-body-sm text-body-sm text-outline">(530)</span>
+</div>
+<span class="font-code-inline text-code-inline text-outline">1 420 lecteurs</span>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<button aria-checked="true" class="status-toggle relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-primary-container p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-on-primary-container shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</td>
+<td class="py-4 px-5 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="quick-edit-trigger p-2 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-tertiary hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Velox Store Headless E-commerce (Draft state) -->
+<tr class="product-row hover:bg-surface-container/60 transition-colors group cursor-pointer" data-id="prod-05">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3.5">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-highest shrink-0 shadow-sm opacity-80 group-hover:opacity-100 transition-opacity">
+<div class="w-full h-full bg-cover bg-center" data-alt="Futuristic cyber headless ecommerce checkout screen mockup, ultra fast payment gateway cards, violet and obsidian neon background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKuG-2AX7tTRsLSLOpQBAsV3GXpQ-bs7N1NsrR3iC28I_V5K6DLuPKIBMKGWpT-jkayQhZt_1Yh6Gq58EGBGSC5673R7kOJT2rRhTuNu-5RMq6Qe668o2PlTOxGfyE5fs_JTTPDMIGkiqkv77rfSekf5wIVXape88Ut94fG0xI3w4hpykDDS7jZvgDLwP-_Phn13uZDDBWfNs8O34FFLOvK0zP_ptHwiOzwe-gCYcrzV6SfHmSHL7H')"></div>
+<span class="absolute bottom-1 right-1 px-1 rounded bg-surface-container-lowest/90 font-code-inline text-[10px] text-outline">v1.0-rc</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">Velox Store Headless</span>
+<span class="px-2 py-0.5 rounded font-code-inline text-[10px] bg-surface-container-highest text-outline">BROUILLON</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-code-inline text-code-inline text-outline truncate">SKU: VLX-SHPFY-MEDUSA</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">code</span> novadigital/velox-store-core
+                    </span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  Headless Commerce Stack
+                </span>
+<span class="font-code-inline text-code-inline text-outline">MedusaJS + Astro Storefront</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">89 €</span>
+<span class="font-label-sm text-label-sm text-outline">/ 99 $</span>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary font-semibold">58 000 FCFA</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1 max-w-[220px]">
+<div class="flex items-center gap-1.5 text-on-surface font-code-inline text-code-inline truncate">
+<span class="material-symbols-outlined text-outline text-[15px] shrink-0">inventory_2</span>
+<span class="truncate">builds-temp/velox-candidate.zip</span>
+</div>
+<div class="flex items-center gap-2 font-code-inline text-[11px] text-outline">
+<span>19.1 Mo</span>
+<span>•</span>
+<span class="text-outline">Validation CI requise</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<div class="flex flex-col items-center justify-center">
+<span class="font-code-inline text-code-inline text-outline">—</span>
+<span class="font-code-inline text-code-inline text-outline">0 vente (pré-lancement)</span>
+</div>
+</td>
+<td class="py-4 px-4 text-center whitespace-nowrap">
+<button aria-checked="false" class="status-toggle relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-surface-container-highest p-0.5 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-outline shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</td>
+<td class="py-4 px-5 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="quick-edit-trigger p-2 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-tertiary hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-2 rounded-lg text-outline hover:text-error hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Metadata -->
+<div class="p-4 bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-outline">
+<div class="flex items-center gap-2">
+<span>Affichage de 1 à 5 sur 24 produits actifs</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-code-inline text-code-inline text-on-surface">Page 1 de 5</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-high text-outline opacity-50 cursor-not-allowed" disabled="" type="button">Précédent</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright transition-colors" type="button">1</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">2</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">3</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright transition-colors" type="button">Suivant</button>
+</div>
+</div>
+</section>
+<!-- Slide-Over Drawer: Fast Product Edit / Asset Config -->
+<aside class="fixed inset-y-0 right-0 w-full max-w-2xl bg-surface-container-low shadow-2xl z-50 flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out" id="edit-drawer">
+<!-- Drawer Header -->
+<div class="p-6 bg-surface-container flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[22px]">tune</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface">Configuration Produit</h2>
+<span class="px-2 py-0.5 rounded font-code-inline text-[11px] bg-surface-container-highest text-tertiary">LIVE_SYNC</span>
+</div>
+<p class="font-code-inline text-code-inline text-outline">UUID: prod_9942a4_nexus_saas</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright text-label-sm font-label-sm transition-colors" href="#" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-tertiary">open_in_new</span>
+<span>Aperçu Store</span>
+</a>
+<button class="p-2 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container-high transition-colors" id="close-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+</div>
+<!-- Drawer Content Body -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+<!-- Section: Meta identification -->
+<div class="flex flex-col gap-4">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Informations Principales</span>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1.5">Titre public du produit</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3.5 py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" type="text" value="Nexus SaaS Starter Kit v2.4"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1.5">Slug URL Cannonique</label>
+<div class="flex items-center bg-surface-container-lowest rounded-lg px-3 py-2.5 focus-within:ring-1 focus-within:ring-primary shadow-sm">
+<span class="font-code-inline text-code-inline text-outline select-none">store.nova/</span>
+<input class="bg-transparent font-code-inline text-code-inline text-tertiary w-full focus:outline-none pl-1" type="text" value="nexus-saas-starter-kit"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1.5">Catégorie Marketplace</label>
+<select class="w-full bg-surface-container-lowest text-on-surface px-3.5 py-2.5 rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary shadow-sm cursor-pointer">
+<option selected="">SaaS Boilerplates (Next.js)</option>
+<option>Templates &amp; UI Kits</option>
+<option>Formations Vidéo 4K</option>
+<option>E-books &amp; Ressources</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Section: Pricing Multi-Currency -->
+<div class="p-5 rounded-xl bg-surface-container flex flex-col gap-4 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Matrice Multi-Devises</span>
+<span class="font-code-inline text-[11px] text-tertiary">Conversion Automatique Live (Stripe FX)</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div>
+<label class="block font-label-sm text-label-sm text-outline mb-1">Euro (EUR)</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest text-on-surface font-headline-sm text-headline-sm font-bold pl-3 pr-8 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" type="number" value="69"/>
+<span class="absolute right-3 font-code-inline text-outline">€</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-outline mb-1">Dollar (USD)</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest text-on-surface font-headline-sm text-headline-sm font-bold pl-3 pr-8 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" type="number" value="79"/>
+<span class="absolute right-3 font-code-inline text-outline">$</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-outline mb-1">Franc CFA (XAF)</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest text-on-surface font-headline-sm text-headline-sm font-bold pl-3 pr-14 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary" type="number" value="45000"/>
+<span class="absolute right-3 font-code-inline text-code-inline text-tertiary font-bold">FCFA</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Storage & Digital Delivery Asset Vault -->
+<div class="flex flex-col gap-4">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Bucket Supabase &amp; Fichier de Livraison</span>
+<!-- Dropzone / Asset Path -->
+<div class="p-4 rounded-xl bg-surface-container-lowest flex flex-col gap-3 shadow-inner">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span>
+              Source File Vault
+            </span>
+<span class="font-code-inline text-code-inline text-tertiary">34.2 Mo • Validé</span>
+</div>
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container font-code-inline text-code-inline text-on-surface truncate">
+<span class="material-symbols-outlined text-outline text-[18px]">lock</span>
+<span class="text-tertiary">supabase://</span>
+<span class="text-on-surface truncate">products-vault/releases/nexus-v2.4-enterprise.zip</span>
+</div>
+<!-- Drag and drop zone for updating package -->
+<div class="p-4 rounded-lg bg-surface-container-high/60 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[28px] text-primary mb-1">cloud_upload</span>
+<p class="font-label-md text-label-md text-on-surface">Glissez une nouvelle archive .ZIP ici</p>
+<p class="font-code-inline text-[11px] text-outline mt-0.5">SHA256 checksum calculé automatiquement côté client</p>
+</div>
+</div>
+<!-- GitHub Integration Sync -->
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1.5">Dépôt GitHub Privé lié (Invitation automatique)</label>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-2 rounded-lg">
+<span class="material-symbols-outlined text-outline text-[18px]">code</span>
+<input class="bg-transparent font-code-inline text-code-inline text-on-surface w-full focus:outline-none" type="text" value="novadigital/nexus-saas-enterprise"/>
+<button class="px-2 py-1 rounded bg-surface-container-high text-tertiary font-code-inline text-[11px] hover:bg-surface-bright" type="button">Test API</button>
+</div>
+</div>
+<!-- Security & DRM Controls -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="p-3.5 rounded-xl bg-surface-container flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Clé Licence Requise</span>
+<span class="font-body-sm text-body-sm text-outline">Génère un token HMAC unique</span>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full bg-primary-container p-0.5 transition-colors duration-200" role="switch" type="button">
+<span class="translate-x-5 inline-block h-5 w-5 transform rounded-full bg-on-primary-container shadow transition duration-200"></span>
+</button>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container flex flex-col justify-center">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold mb-1">Limite Téléchargements</label>
+<div class="flex items-center gap-2">
+<input class="w-16 bg-surface-container-lowest text-on-surface font-code-inline text-code-inline text-center py-1 rounded focus:outline-none focus:ring-1 focus:ring-primary" type="number" value="5"/>
+<span class="font-body-sm text-body-sm text-outline">téléchargements / commande</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-6 bg-surface-container flex items-center justify-between shadow-2xl">
+<button class="px-4 py-2.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" id="cancel-drawer-btn" type="button">
+        Annuler
+      </button>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 active:scale-95 font-label-md text-label-md font-bold transition-all shadow-[0_0_16px_rgba(128,131,255,0.3)]" id="save-product-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Enregistrer les modifications</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Notification Toast (System Synchronized) -->
+<div class="fixed bottom-8 right-8 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-surface-container-highest text-on-surface shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-sync">
+<div class="w-8 h-8 rounded-lg bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-[18px]">cloud_done</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm font-semibold">Buckets Supabase Synchronisés</div>
+<div class="font-code-inline text-code-inline text-tertiary">34 actifs vérifiés • CDN Edge purifié</div>
+</div>
+</div>
+<!-- Inline Micro-Interactions Script -->
+<script>
+    (function initAdminCatalog() {
+      const drawer = document.getElementById('edit-drawer');
+      const openTriggers = document.querySelectorAll('.quick-edit-trigger, #open-create-modal');
+      const closeBtn = document.getElementById('close-drawer-btn');
+      const cancelBtn = document.getElementById('cancel-drawer-btn');
+      const saveBtn = document.getElementById('save-product-btn');
+      const syncBtn = document.getElementById('sync-bucket-btn');
+      const toast = document.getElementById('toast-sync');
+      const toggles = document.querySelectorAll('.status-toggle');
+
+      function openDrawer() {
+        drawer.classList.remove('translate-x-full');
+      }
+
+      function closeDrawer() {
+        drawer.classList.add('translate-x-full');
+      }
+
+      openTriggers.forEach(el => el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDrawer();
+      }));
+
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeDrawer);
+      
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          saveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span> Enregistrement...';
+          setTimeout(() => {
+            saveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span> Enregistré !';
+            setTimeout(() => {
+              saveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">save</span> Enregistrer les modifications';
+              closeDrawer();
+            }, 600);
+          }, 800);
+        });
+      }
+
+      // Status switches toggle
+      toggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isChecked = toggle.getAttribute('aria-checked') === 'true';
+          const knob = toggle.querySelector('span');
+          if (isChecked) {
+            toggle.setAttribute('aria-checked', 'false');
+            toggle.classList.remove('bg-primary-container');
+            toggle.classList.add('bg-surface-container-highest');
+            knob.classList.remove('translate-x-5', 'bg-on-primary-container');
+            knob.classList.add('translate-x-0', 'bg-outline');
+          } else {
+            toggle.setAttribute('aria-checked', 'true');
+            toggle.classList.remove('bg-surface-container-highest');
+            toggle.classList.add('bg-primary-container');
+            knob.classList.remove('translate-x-0', 'bg-outline');
+            knob.classList.add('translate-x-5', 'bg-on-primary-container');
+          }
+        });
+      });
+
+      // Synchronize Buckets Toast Trigger
+      if (syncBtn && toast) {
+        syncBtn.addEventListener('click', () => {
+          toast.classList.remove('translate-y-24', 'opacity-0');
+          setTimeout(() => {
+            toast.classList.add('translate-y-24', 'opacity-0');
+          }, 3500);
+        });
+      }
+
+      // Client-side quick filter chips interactive style
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => {
+            c.className = 'filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all';
+          });
+          chip.className = 'filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm bg-primary-container text-on-primary-container font-semibold transition-all';
+        });
+      });
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-outline"><div class="flex items-center gap-4"><span>© 2025 NovaDigital SAS. Espace SuperAdmin sécurisé.</span><span class="hidden md:inline">•</span><span class="hidden md:inline font-code-inline text-code-inline text-on-surface-variant">Datacenter: eu-west-3 (Paris)</span></div><div class="flex items-center gap-6"><a class="hover:text-on-surface transition-colors" href="#">Audits &amp; Logs</a><a class="hover:text-on-surface transition-colors" href="#">Documentation API</a><a class="hover:text-on-surface transition-colors" href="#">Support Infra</a></div></footer></div></body></html>

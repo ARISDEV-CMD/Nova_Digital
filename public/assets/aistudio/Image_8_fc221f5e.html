@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary": "#3c0091", "surface": "#0f131c", "secondary-fixed": "#e9ddff", "surface-container-low": "#181c24", "tertiary-container": "#009eb9", "outline": "#908fa0", "on-secondary-fixed-variant": "#5516be", "primary-fixed": "#e1e0ff", "on-tertiary-container": "#002f38", "on-primary-fixed": "#07006c", "background": "#0f131c", "secondary-fixed-dim": "#d0bcff", "on-surface": "#dfe2ee", "inverse-on-surface": "#2c3039", "on-primary": "#1000a9", "surface-container-lowest": "#0a0e16", "on-tertiary-fixed-variant": "#004e5c", "surface-container": "#1c2028", "on-tertiary-fixed": "#001f26", "on-surface-variant": "#c7c4d7", "tertiary": "#4cd7f6", "surface-tint": "#c0c1ff", "error-container": "#93000a", "primary-container": "#8083ff", "outline-variant": "#464554", "on-secondary-container": "#c4abff", "on-primary-container": "#0d0096", "on-secondary-fixed": "#23005c", "on-error-container": "#ffdad6", "error": "#ffb4ab", "primary": "#c0c1ff", "on-primary-fixed-variant": "#2f2ebe", "surface-dim": "#0f131c", "surface-bright": "#353942", "on-error": "#690005", "tertiary-fixed-dim": "#4cd7f6", "surface-variant": "#31353e", "secondary-container": "#571bc1", "tertiary-fixed": "#acedff", "primary-fixed-dim": "#c0c1ff", "inverse-primary": "#494bd6", "on-background": "#dfe2ee", "inverse-surface": "#dfe2ee", "secondary": "#d0bcff", "on-tertiary": "#003640", "surface-container-highest": "#31353e", "surface-container-high": "#262a33" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "margin-sm": "1rem", "margin": "1.5rem", "space-sm": "0.5rem", "gutter": "1.5rem", "space-xs": "0.25rem", "gutter-lg": "2rem", "space-xl": "2.5rem", "gutter-sm": "1rem", "space-lg": "1.5rem", "margin-lg": "3rem" }, "fontFamily": { "body-md": ["Inter"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "code-inline": ["JetBrains Mono"], "display-xl": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "display-xl-mobile": ["Plus Jakarta Sans"], "label-md": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "code-inline": ["13px", { "lineHeight": "18px", "fontWeight": "500" }], "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "800" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }], "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "800" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }] } } } }</script></head><body class="bg-background text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-sm lg:px-margin-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-sm group" data-path="accueil" href="#"><img alt="NovaDigital Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight group-hover:text-primary transition-colors">NovaDigital</span></a><span class="hidden xl:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline">Digital Assets v2.4</span></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="text-on-surface bg-surface-container-high font-semibold rounded-lg"><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="accueil" href="#">Accueil</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="catalogue" href="#">Catalogue</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="templates-and-ui" href="#">Templates &amp; UI</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="formations-and-guides" href="#">Formations &amp; Guides</a><a class="px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" data-path="offres-speciales" href="#">Offres Spéciales</a></nav><div class="flex items-center gap-space-sm sm:gap-space-md shrink-0"><div class="hidden sm:flex items-center bg-surface-container-low px-space-sm py-space-xs rounded-lg"><span class="material-symbols-outlined text-outline text-lg mr-space-xs">payments</span><select class="bg-transparent text-on-surface font-label-sm text-label-sm focus:outline-none cursor-pointer pr-space-xs"><option class="bg-surface-container-high text-on-surface" value="EUR">EUR (€)</option><option class="bg-surface-container-high text-on-surface" value="USD">USD ($)</option><option class="bg-surface-container-high text-on-surface" value="XAF">XAF (FCFA)</option></select></div><button aria-label="Recherche" class="p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" type="button"><span class="material-symbols-outlined">search</span></button><a aria-label="Panier d'achats" class="relative p-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors flex items-center justify-center" data-path="panier" href="#"><span class="material-symbols-outlined">shopping_bag</span><span class="absolute top-1.5 right-1.5 w-4 h-4 bg-tertiary text-on-tertiary-container rounded-full flex items-center justify-center font-label-sm text-[10px] font-bold">2</span></a><div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm"><a class="flex items-center gap-space-sm p-space-xs hover:bg-surface-container-high rounded-full transition-colors" data-path="mon-espace-client" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbbjLYCH0Mu1qdXRxpc4SdyhwaYINyKT1x4Y7FhYzfWXiaC74k_7y3vHXglNYbaBpwvAbcjaIa29YhIAFaiBtKGksRuPWBASe0emMeqDLh4O0rEHV5C-E0Gub6whkWesIkVNoEZVrFovvpZCTEXG0Mhku94Dl1mUmqpkPKH7OMNIrwKXo33iHXMMue4Cz2OA-h0HWRpUA-Vyygxty3Yi_67ryvPoNcabjGKRB0ET8mK_lRdCjJ-hjF"/><span class="material-symbols-outlined text-on-surface-variant text-base hidden md:inline">expand_more</span></a><a class="hidden xl:inline-flex items-center gap-space-xs px-space-md py-space-sm bg-secondary-container hover:bg-primary-container text-on-surface rounded-lg font-label-sm text-label-sm transition-colors" data-path="admin-dashboard" href="#"><span class="material-symbols-outlined text-sm">admin_panel_settings</span><span>Accès Admin</span></a></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<div class="relative w-full overflow-hidden">
+<!-- Atmospheric Ambient Light Mesh -->
+<div class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-secondary-container/20 blur-[128px] pointer-events-none"></div>
+<div class="absolute top-1/4 -right-40 w-[30rem] h-[30rem] rounded-full bg-tertiary-container/15 blur-[140px] pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-lg lg:py-space-xl relative z-10">
+<!-- Checkout Breadcrumb & Header Ribbon -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-lg">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-sm font-code-inline text-code-inline text-tertiary">
+<span class="flex h-2 w-2 rounded-full bg-tertiary animate-pulse"></span>
+<span>COMMANDE SÉCURISÉE NOVA-9412</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface-variant">FLUX INSTANTANÉ</span>
+</div>
+<h1 class="font-display-xl text-display-xl-mobile md:text-headline-lg text-on-surface font-extrabold tracking-tight">
+            Finaliser votre commande
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+            Achat direct en invité ou avec synchronisation de compte. Accès immédiat aux dépôts GitHub, bundles et clés de licence.
+          </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface shadow-sm">
+<span class="material-symbols-outlined text-tertiary text-sm">lock</span>
+<span class="font-label-sm text-label-sm">Chiffrement SSL 256 bits</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Livraison &lt; 3s</span>
+</div>
+</div>
+</div>
+<!-- Main Layout: 2 Columns Split Screen -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+<!-- LEFT COLUMN: Checkout Form (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Step 1: Digital Identity & Access -->
+<section class="rounded-xl bg-surface-container-low p-space-lg shadow-xl relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-7 h-7 rounded-lg bg-secondary-container text-on-surface font-headline-sm text-sm font-bold">1</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Coordonnées numériques</h2>
+</div>
+<span class="font-code-inline text-code-inline text-tertiary flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-sm">mail</span>
+                Envoi direct
+              </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="sm:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="client-email">
+                  Adresse e-mail de réception <span class="text-tertiary">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg pointer-events-none">alternate_email</span>
+<input class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="client-email" placeholder="alexandre.martin@techfounder.io" required="" type="email"/>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-space-xs flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-xs text-tertiary">info</span>
+                  Le lien de téléchargement permanent et la facture acquittée seront envoyés à cette adresse.
+                </p>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="client-name">
+                  Nom complet ou Studio <span class="text-tertiary">*</span>
+</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="client-name" placeholder="Alexandre Martin" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="client-vat">
+                  Numéro TVA intra-communautaire <span class="text-outline text-xs font-normal">(Optionnel)</span>
+</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="client-vat" placeholder="FR 82 912384910" type="text"/>
+</div>
+</div>
+<!-- Account creation opt-in -->
+<div class="mt-space-md pt-space-md bg-surface-container/60 p-space-md rounded-lg space-y-space-sm">
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input class="mt-1 h-4 w-4 rounded bg-surface-container-lowest text-primary accent-primary cursor-pointer" id="create-account-toggle" type="checkbox"/>
+<div class="flex-1">
+<span class="font-label-md text-label-md text-on-surface block font-semibold">Créer un compte NovaDigital pour synchroniser mes accès à vie</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Conservez l'historique des versions, releases GitHub et vos clés API au même endroit.</span>
+</div>
+</label>
+<div class="hidden pt-space-xs" id="password-field-container">
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="account-password">Mot de passe de sécurité</label>
+<input class="w-full px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="account-password" placeholder="8+ caractères alphanumériques" type="password"/>
+</div>
+</div>
+</section>
+<!-- Step 2: Payment Rail Selector -->
+<section class="rounded-xl bg-surface-container-low p-space-lg shadow-xl relative">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-7 h-7 rounded-lg bg-secondary-container text-on-surface font-headline-sm text-sm font-bold">2</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Moyen de paiement sécurisé</h2>
+</div>
+<span class="font-code-inline text-code-inline text-outline">Protocole 3D Secure 2.0</span>
+</div>
+<!-- Tab Buttons -->
+<div class="grid grid-cols-3 gap-space-xs p-1 rounded-xl bg-surface-container-lowest">
+<button class="payment-tab flex flex-col sm:flex-row items-center justify-center gap-space-xs py-2.5 px-space-sm rounded-lg font-label-md text-label-md text-on-surface bg-surface-container-high transition-all shadow-sm" id="tab-stripe-btn" onclick="switchPayment('card')" type="button">
+<span class="material-symbols-outlined text-primary text-base">credit_card</span>
+<span class="truncate">Carte bancaire</span>
+</button>
+<button class="payment-tab flex flex-col sm:flex-row items-center justify-center gap-space-xs py-2.5 px-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" id="tab-momo-btn" onclick="switchPayment('momo')" type="button">
+<span class="material-symbols-outlined text-tertiary text-base">phone_android</span>
+<span class="truncate">Mobile Money</span>
+</button>
+<button class="payment-tab flex flex-col sm:flex-row items-center justify-center gap-space-xs py-2.5 px-space-sm rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" id="tab-paypal-btn" onclick="switchPayment('paypal')" type="button">
+<span class="material-symbols-outlined text-secondary text-base">account_balance_wallet</span>
+<span class="truncate">PayPal Express</span>
+</button>
+</div>
+<!-- TAB PANEL 1: Stripe Card -->
+<div class="mt-space-md space-y-space-md" id="panel-card">
+<div class="flex items-center justify-between px-space-sm text-on-surface-variant">
+<span class="font-label-sm text-label-sm">Cartes acceptées</span>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container text-[11px] font-code-inline font-bold text-on-surface">VISA</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[11px] font-code-inline font-bold text-on-surface">MASTERCARD</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-[11px] font-code-inline font-bold text-on-surface">AMEX</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="card-num">Numéro de carte</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg">credit_card</span>
+<input class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-code-inline text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="card-num" maxlength="19" placeholder="4532 •••• •••• 8920" type="text"/>
+<span class="material-symbols-outlined absolute right-3 text-primary text-lg">lock</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="card-exp">Date d'expiration</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-code-inline text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="card-exp" maxlength="5" placeholder="MM / AA" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs flex items-center justify-between" for="card-cvc">
+<span>Cryptogramme CVC</span>
+<span class="material-symbols-outlined text-outline text-sm" title="3 chiffres au dos">help</span>
+</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-code-inline text-body-md focus:outline-none focus:ring-1 focus:ring-primary" id="card-cvc" maxlength="4" placeholder="CVC" type="password"/>
+</div>
+</div>
+</div>
+<!-- TAB PANEL 2: Mobile Money (MTN / Orange) -->
+<div class="mt-space-md space-y-space-md hidden" id="panel-momo">
+<div class="p-space-md rounded-lg bg-surface-container/60 space-y-space-xs">
+<div class="flex items-center gap-space-sm text-tertiary">
+<span class="material-symbols-outlined text-base">cell_tower</span>
+<span class="font-label-md text-label-md font-bold">Réseau Afrique Centrale &amp; Ouest (Instant USSD)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Après validation, un message contextuel s'affichera directement sur votre téléphone portable pour autoriser le débit sécurisé.
+                </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="momo-country">Pays du compte</label>
+<select class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-tertiary" id="momo-country" onchange="updateCountryCode(this.value)">
+<option selected="" value="CI">Côte d'Ivoire (+225)</option>
+<option value="CM">Cameroun (+237)</option>
+<option value="SN">Sénégal (+221)</option>
+<option value="BJ">Bénin (+229)</option>
+<option value="TG">Togo (+228)</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs">Opérateur Télécom</label>
+<div class="grid grid-cols-2 gap-space-xs">
+<label class="flex items-center justify-center gap-space-xs p-2 rounded-lg bg-surface-container-lowest cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="accent-tertiary" name="momo-op" type="radio" value="orange"/>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Orange Money</span>
+</label>
+<label class="flex items-center justify-center gap-space-xs p-2 rounded-lg bg-surface-container-lowest cursor-pointer hover:bg-surface-container transition-colors">
+<input class="accent-tertiary" name="momo-op" type="radio" value="mtn"/>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">MTN MoMo</span>
+</label>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface pb-space-xs" for="momo-phone">Numéro de téléphone mobile</label>
+<div class="relative flex items-center">
+<span class="absolute left-3 font-code-inline text-on-surface-variant text-sm" id="momo-prefix">+225</span>
+<input class="w-full pl-16 pr-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-code-inline text-body-md focus:outline-none focus:ring-1 focus:ring-tertiary" id="momo-phone" placeholder="07 00 00 00 00" type="tel"/>
+</div>
+</div>
+</div>
+<!-- TAB PANEL 3: PayPal Express -->
+<div class="mt-space-md space-y-space-md hidden" id="panel-paypal">
+<div class="p-space-lg rounded-xl bg-surface-container text-center space-y-space-sm">
+<div class="w-12 h-12 mx-auto rounded-full bg-secondary-container flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">PayPal Express Checkout</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto">
+                  Vous serez redirigé en toute sécurité vers l'interface PayPal pour valider votre transaction en 1 clic avec votre solde ou compte bancaire relié.
+                </p>
+<div class="pt-space-xs flex justify-center">
+<span class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface-container-highest text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-sm">verified</span> Protection des Achats PayPal
+                  </span>
+</div>
+</div>
+</div>
+<!-- Big Final Call to Action -->
+<div class="mt-space-lg pt-space-md space-y-space-sm">
+<button class="w-full group relative overflow-hidden py-3.5 px-space-lg rounded-lg bg-gradient-to-r from-secondary-container via-primary-container to-secondary-container bg-size-200 text-on-surface font-headline-sm text-headline-sm font-bold flex items-center justify-center gap-space-sm transition-all duration-300 hover:brightness-110 active:scale-[0.99] shadow-lg" id="final-checkout-btn" type="button">
+<span class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-0.5">lock_open</span>
+<span id="cta-action-text">Payer 88,00 € &amp; Télécharger mes fichiers</span>
+<span class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+<div class="flex items-center justify-center gap-space-sm text-center pt-space-xs">
+<span class="material-symbols-outlined text-tertiary text-base shrink-0">speed</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Accès direct au dashboard de téléchargement et aux archives ZIP dès validation bancaire.
+                </p>
+</div>
+</div>
+</section>
+<!-- Reassurance Grid (Bottom Left) -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-lg shrink-0">verified_user</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Licence perpétuelle</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Usage commercial &amp; personnel garanti.</p>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-lg shrink-0">history_edu</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Mises à jour incluses</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Accès direct aux releases futures.</p>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-lg shrink-0">support_agent</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Support réactif</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Assistance Discord &amp; email 7j/7.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Order Summary & Promo Code (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md sticky top-24">
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-xl relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Récapitulatif du panier</h2>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-high text-tertiary font-code-inline text-code-inline font-bold" id="cart-item-count">2 articles</span>
+</div>
+<!-- Cart Items Stack -->
+<div class="space-y-space-md pb-space-md">
+<!-- Item 1 -->
+<div class="p-space-md rounded-xl bg-surface-container/70 flex gap-space-md group transition-colors hover:bg-surface-container" id="cart-item-1">
+<div class="w-16 h-16 rounded-lg bg-surface-container-lowest shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A modern dark tech application dashboard UI preview showing sleek graphs, glowing indigo data visualization components, and code terminal windows on an obsidian backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0NPoiTwtWDkKy-3hoRf2se5XfYh1fzTQlFu8hgZ9kfYf2aVyQMLx4MUsRBQN9AxhaYRasXb4LCxLWoO3JvI0DG_rm2PYuBgW3YzOUcwmdNq4F32i95fKuAPd48zGo5wxtbunIzasG4rTPM9X2go4FSEJecq1DVZNjHO9OIu4FM0hzWXfbXZyJ-Gj3BRC_SKbr6U1RkHkiybileel91RltHBPN1iMfwY_A3UUrn3x6_-GfYjDIyINV"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold truncate">Nexus SaaS Starter Kit</h3>
+<button class="text-outline hover:text-error transition-colors p-0.5" onclick="removeItem('cart-item-1', 69.00)" title="Supprimer du panier" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs pt-0.5 pb-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-code-inline text-xs">Licence Standard</span>
+<span class="inline-flex items-center gap-1 text-tertiary text-xs font-code-inline">
+<span class="h-1.5 w-1.5 rounded-full bg-tertiary animate-ping"></span>
+                      Lien direct
+                    </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-code-inline">Next.js 15 • Tailwind</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">69,00 €</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-space-md rounded-xl bg-surface-container/70 flex gap-space-md group transition-colors hover:bg-surface-container" id="cart-item-2">
+<div class="w-16 h-16 rounded-lg bg-surface-container-lowest shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A sleek minimalist tech book cover with luminous cyan and purple typographic gradients, geometric wireframe spheres, and clean digital publishing layout style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDG2rr6cC_t35SNFPFZojP2XnoTSBcbeR6mJsXnGd_At8VrFUq4b5PHD-ryvxGWePQtyyAI2VzrepklVe0aAbW-X6bGD3grq5YwQ0K-we6CnbRBVbrnLLV0kYbQP87NQlYi8m3N_a9Phhv_nxgZqIknKOQEWacy8q0LFl5R88YZsXktLQDtPsohkBcAES8dux246k5gD_LPyJUzYPQ42IiF5LOhKH8QPhWVqozRXKkEhNbLdQm2_0A"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-label-md text-label-md text-on-surface font-semibold truncate">L'Art du Solopreneur Tech</h3>
+<button class="text-outline hover:text-error transition-colors p-0.5" onclick="removeItem('cart-item-2', 29.00)" title="Supprimer du panier" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs pt-0.5 pb-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-code-inline text-xs">E-book + Templates</span>
+<span class="text-on-surface-variant text-xs font-code-inline">PDF / ePub / Notion</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-code-inline">320 pages • 15 bonus</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">29,00 €</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Discount Code Section -->
+<div class="pt-space-md pb-space-md bg-surface-container/40 -mx-space-lg px-space-lg space-y-space-xs">
+<label class="block font-label-sm text-label-sm text-on-surface font-medium" for="promo-input">Code de réduction ou bon d'achat</label>
+<div class="flex items-center gap-space-xs">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 text-outline text-base">sell</span>
+<input class="w-full pl-9 pr-space-sm py-2 rounded-lg bg-surface-container-lowest text-on-surface font-code-inline text-body-sm uppercase focus:outline-none focus:ring-1 focus:ring-tertiary" id="promo-input" type="text" value="WELCOME10"/>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md font-semibold transition-colors shrink-0" id="apply-promo-btn" onclick="applyPromoCode()" type="button">
+                  Appliquer
+                </button>
+</div>
+<div class="flex items-center gap-space-xs text-xs text-tertiary pt-1" id="promo-badge-alert">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+<span>Code <strong>WELCOME10</strong> activé (-10,00 € offerts)</span>
+</div>
+</div>
+<!-- Total Ledger Computation -->
+<div class="pt-space-md space-y-space-sm">
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Sous-total articles</span>
+<span class="font-code-inline text-on-surface" id="subtotal-val">98,00 €</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-tertiary" id="discount-row">
+<span class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-sm">loyalty</span>
+                  Réduction promo appliquée
+                </span>
+<span class="font-code-inline font-bold" id="discount-val">-10,00 €</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span class="flex items-center gap-space-xs">
+<span>TVA / Taxes numériques</span>
+<span class="material-symbols-outlined text-outline text-xs" title="TVA déjà incluse dans le prix unitaire">help</span>
+</span>
+<span class="font-code-inline text-on-surface">0,00 € (Incluse)</span>
+</div>
+<!-- Main Amount Ledger -->
+<div class="mt-space-md pt-space-md bg-surface-container/70 p-space-md rounded-xl space-y-space-xs">
+<div class="flex items-baseline justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Total net à payer</span>
+<div class="text-right">
+<span class="font-display-xl text-headline-lg text-primary font-black tracking-tight" id="total-val-eur">88,00 €</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-code-inline text-xs text-on-surface-variant pt-1">
+<span>Équivalent franc CFA :</span>
+<span class="text-tertiary font-semibold" id="total-val-xaf">~ 57 724 FCFA</span>
+</div>
+</div>
+</div>
+<!-- Guarantee Box -->
+<div class="mt-space-lg p-space-md rounded-xl bg-surface-container flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-2xl">verified</span>
+</div>
+<div class="space-y-0.5">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Garantie 30 jours sérénité</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Si le template ou l'ebook ne répond pas à vos attentes techniques, remboursement intégral sans friction.
+                </p>
+</div>
+</div>
+<!-- Realtime Trust Proof Mini-badge -->
+<div class="mt-space-md flex items-center justify-between text-xs text-outline px-space-xs">
+<span class="flex items-center gap-1 font-code-inline">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                Serveurs CDN opérationnels
+              </span>
+<span class="font-code-inline">SHA-256 Validated</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple checkout interactions state
+  let currentSubtotal = 98.00;
+  let currentDiscount = 10.00;
+  const eurToXafRate = 655.957;
+
+  // Account creation toggle
+  const createAccountCheckbox = document.getElementById('create-account-toggle');
+  const passwordContainer = document.getElementById('password-field-container');
+
+  if (createAccountCheckbox && passwordContainer) {
+    createAccountCheckbox.addEventListener('change', function () {
+      if (this.checked) {
+        passwordContainer.classList.remove('hidden');
+      } else {
+        passwordContainer.classList.add('hidden');
+      }
+    });
+  }
+
+  // Payment tab switcher
+  function switchPayment(tab) {
+    const panels = {
+      card: document.getElementById('panel-card'),
+      momo: document.getElementById('panel-momo'),
+      paypal: document.getElementById('panel-paypal')
+    };
+    
+    const tabs = {
+      card: document.getElementById('tab-stripe-btn'),
+      momo: document.getElementById('tab-momo-btn'),
+      paypal: document.getElementById('tab-paypal-btn')
+    };
+
+    // Reset styles
+    Object.keys(panels).forEach(key => {
+      if (panels[key]) panels[key].classList.add('hidden');
+      if (tabs[key]) {
+        tabs[key].classList.remove('bg-surface-container-high', 'text-on-surface');
+        tabs[key].classList.add('text-on-surface-variant');
+      }
+    });
+
+    // Activate selected
+    if (panels[tab]) panels[tab].classList.remove('hidden');
+    if (tabs[tab]) {
+      tabs[tab].classList.add('bg-surface-container-high', 'text-on-surface');
+      tabs[tab].classList.remove('text-on-surface-variant');
+    }
+
+    updateCtaLabel();
+  }
+
+  // Country Prefix updater for MoMo
+  function updateCountryCode(countryCode) {
+    const prefixes = {
+      'CI': '+225',
+      'CM': '+237',
+      'SN': '+221',
+      'BJ': '+229',
+      'TG': '+228'
+    };
+    const prefixEl = document.getElementById('momo-prefix');
+    if (prefixEl && prefixes[countryCode]) {
+      prefixEl.textContent = prefixes[countryCode];
+    }
+  }
+
+  // Update Computations
+  function recalculateCart() {
+    const total = Math.max(0, currentSubtotal - currentDiscount);
+    const totalXaf = Math.round(total * eurToXafRate);
+
+    const subtotalEl = document.getElementById('subtotal-val');
+    const discountEl = document.getElementById('discount-val');
+    const totalEurEl = document.getElementById('total-val-eur');
+    const totalXafEl = document.getElementById('total-val-xaf');
+    
+    if (subtotalEl) subtotalEl.textContent = currentSubtotal.toFixed(2).replace('.', ',') + ' €';
+    if (discountEl) discountEl.textContent = '-' + currentDiscount.toFixed(2).replace('.', ',') + ' €';
+    if (totalEurEl) totalEurEl.textContent = total.toFixed(2).replace('.', ',') + ' €';
+    if (totalXafEl) totalXafEl.textContent = '~ ' + totalXaf.toLocaleString('fr-FR') + ' FCFA';
+
+    updateCtaLabel();
+  }
+
+  function updateCtaLabel() {
+    const total = Math.max(0, currentSubtotal - currentDiscount);
+    const ctaText = document.getElementById('cta-action-text');
+    if (!ctaText) return;
+
+    const momoActive = !document.getElementById('panel-momo').classList.contains('hidden');
+
+    if (momoActive) {
+      const totalXaf = Math.round(total * eurToXafRate);
+      ctaText.textContent = 'Valider ' + totalXaf.toLocaleString('fr-FR') + ' FCFA & Télécharger';
+    } else {
+      ctaText.textContent = 'Payer ' + total.toFixed(2).replace('.', ',') + ' € & Télécharger mes fichiers';
+    }
+  }
+
+  // Remove Item
+  function removeItem(itemId, price) {
+    const itemEl = document.getElementById(itemId);
+    if (itemEl) {
+      itemEl.remove();
+      currentSubtotal -= price;
+      
+      const remainingItems = document.querySelectorAll('#cart-item-1, #cart-item-2');
+      const badgeCount = document.getElementById('cart-item-count');
+      if (badgeCount) {
+        badgeCount.textContent = remainingItems.length + (remainingItems.length > 1 ? ' articles' : ' article');
+      }
+
+      recalculateCart();
+    }
+  }
+
+  // Apply promo
+  function applyPromoCode() {
+    const promoInput = document.getElementById('promo-input');
+    const alertBox = document.getElementById('promo-badge-alert');
+    const discountRow = document.getElementById('discount-row');
+
+    if (!promoInput) return;
+
+    if (promoInput.value.trim().toUpperCase() === 'WELCOME10') {
+      currentDiscount = 10.00;
+      if (alertBox) alertBox.classList.remove('hidden');
+      if (discountRow) discountRow.classList.remove('hidden');
+    } else if (promoInput.value.trim().toUpperCase() === 'NOVA20') {
+      currentDiscount = 20.00;
+      if (alertBox) {
+        alertBox.innerHTML = '<span class="material-symbols-outlined text-xs">check_circle</span><span>Code <strong>NOVA20</strong> activé (-20,00 € offerts)</span>';
+        alertBox.classList.remove('hidden');
+      }
+      if (discountRow) discountRow.classList.remove('hidden');
+    } else {
+      currentDiscount = 0.00;
+      if (alertBox) {
+        alertBox.innerHTML = '<span class="material-symbols-outlined text-xs text-error">error</span><span class="text-error">Code promo inexistant ou expiré.</span>';
+        alertBox.classList.remove('hidden');
+      }
+      if (discountRow) discountRow.classList.add('hidden');
+    }
+
+    recalculateCart();
+  }
+</script></main><footer class="w-full bg-surface-container-lowest text-on-surface shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-7xl mx-auto px-margin-sm lg:px-margin-lg py-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg pb-space-xl"><div class="space-y-space-md"><div class="flex items-center gap-space-sm"><img alt="NovaDigital Brand Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WyL1tZ1dyok1aNLWiUNeDFumt-cBPOwMl2Ogr069bKvGFfgDRt_yHMFMcgjCjetG-9vRy41pxEW4NnCpL8xoCpD_6o1VqRXgz1Zv9o1OIoKqSmI5xUaSz4ZL0OUrBVgEHqp7O0npDWXQ7s_stanAq7uAda3mHfq3EMl5UthGcZHqVDCfTzx3kSl2Z8ApQD47RZ1yjw3yfG6RGmGuoUHhYFz0GhcLKNevp285DkrMHhIYhg1Jouy-gJNqQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">NovaDigital</span></div><p class="text-on-surface-variant font-body-sm text-body-sm leading-relaxed">La place de marché d'actifs numériques premium pour concepteurs, développeurs et bâtisseurs d'exception. Livraison instantanée 24/7.</p><div class="flex items-center gap-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-tertiary text-base">verified_user</span><span class="font-label-sm text-label-sm text-on-surface">Licences Authentifiées &amp; Prêtes à Déployer</span></div></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Catalogues &amp; Outils</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-primary transition-colors" data-path="catalogue" href="#">Tous les Produits</a></li><li><a class="hover:text-primary transition-colors" data-path="templates-and-ui" href="#">Templates Next.js &amp; UI Kits</a></li><li><a class="hover:text-primary transition-colors" data-path="formations-and-guides" href="#">Guides &amp; Ebooks Techniques</a></li><li><a class="hover:text-primary transition-colors" data-path="offres-speciales" href="#">Packs &amp; Bundles Exclusifs</a></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Confiance &amp; Garanties</h3><ul class="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">bolt</span><span>Téléchargement 100% Instantané</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-sm">security</span><span>Paiement Chiffré SSL 256-bit</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-sm">assignment_return</span><span>Garantie Sérénité 30 Jours</span></li><li class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-sm">support_agent</span><span>Support Technique Réactif</span></li></ul></div><div class="space-y-space-md"><h3 class="font-headline-sm text-headline-sm text-on-surface">Restez à la Pointe</h3><p class="text-on-surface-variant font-body-sm text-body-sm">Recevez les nouveaux templates chaque semaine directement dans votre boîte mail.</p><form class="flex flex-col gap-space-xs"><div class="flex items-center rounded-lg bg-surface-container-high px-space-sm py-space-xs"><span class="material-symbols-outlined text-outline text-sm mr-space-xs">mail</span><input class="bg-transparent text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none w-full" placeholder="votre.email@domaine.com" type="email"/></div><button class="w-full py-space-xs px-space-md rounded-lg bg-secondary-container hover:bg-primary-container text-on-surface font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-space-xs" type="submit"><span>S'inscrire</span><span class="material-symbols-outlined text-sm">arrow_forward</span></button></form></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex flex-wrap items-center gap-space-sm text-xs"><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Stripe</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">MTN MoMo</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Orange Money</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">PayPal</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface font-code-inline">Visa / Mastercard</span></div><div class="flex items-center gap-space-lg font-label-sm text-label-sm"><a class="hover:text-on-surface transition-colors" data-path="cgv" href="#">CGV</a><a class="hover:text-on-surface transition-colors" data-path="politique-de-confidentialite" href="#">Confidentialité</a><a class="hover:text-on-surface transition-colors" data-path="mentions-legales" href="#">Mentions Légales</a></div><div class="text-xs text-outline">© 2025 NovaDigital Inc. Tous droits réservés.</div></div></div></footer></body></html>

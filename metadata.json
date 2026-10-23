@@ -1,0 +1,7 @@
+{
+  "name": "NovaDigital - Marketplace d'Assets Digitaux & Console",
+  "description": "Place de marché d'actifs numériques premium pour concepteurs et développeurs : templates Next.js, kits Figma, formations, checkout multi-devises (EUR, USD, XAF), espace client et console admin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
