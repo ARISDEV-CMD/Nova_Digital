@@ -53,7 +53,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
         <div className="absolute top-10 right-0 w-80 h-80 bg-[#009eb9]/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 lg:px-6 pt-6 pb-16 w-full">
-          <div role="status" className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-100">Espace de demonstration : profil, commandes, licences, factures et fichiers sont des exemples. Aucun compte ni fichier reel n\u2019est connecte.</div>
+          <div role="status" className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-100">Espace de démonstration : profil, commandes, licences, factures et fichiers sont des exemples. Aucun compte ni fichier réel n’est connecté.</div>
           {/* Section 1: Client Header & Identity */}
           <section className="flex flex-col gap-4 mb-8">
             <nav aria-label="Fil d'Ariane" className="flex items-center gap-2 font-mono text-xs text-[#c7c4d7]">
@@ -699,7 +699,7 @@ export const ClientDashboardView: React.FC<ClientDashboardViewProps> = ({
                     <div className="rounded-xl border border-dashed border-[#31353e] bg-[#181c24] p-8 text-center">
                       <span className="material-symbols-outlined text-3xl text-[#908fa0]">receipt_long</span>
                       <h2 className="mt-3 text-base font-semibold text-white">Aucune commande pour le moment</h2>
-                      <p className="mt-2 text-sm text-[#c7c4d7]">Les commandes de demonstration apparaitront ici apres leur creation.</p>
+                      <p className="mt-2 text-sm text-[#c7c4d7]">Les commandes de démonstration apparaîtront ici après leur création.</p>
                       <button type="button" onClick={() => onNavigate('catalogue')} className="mt-4 min-h-11 rounded-lg bg-[#8083ff] px-4 text-sm font-semibold text-[#0d0096]">Parcourir le catalogue</button>
                     </div>
                   ) : orders.map((ord) => (

@@ -4,6 +4,7 @@ import { UserRoundCheckIcon } from '@animateicons/react/lucide';
 import { isSupabaseConfigured, supabase } from '../lib/supabase.ts';
 import { CourseCurriculumEditor } from './CourseCurriculumEditor.tsx';
 import { PasswordField } from '../components/ui/PasswordField.tsx';
+import { Skeleton, SkeletonStatus } from '../components/feedback/Skeleton.tsx';
 
 type Currency = 'XAF' | 'EUR';
 type Course = {
@@ -289,11 +290,10 @@ export const AdminCoursesView: React.FC = () => {
 
       {error && <Alert message={error} />}
       {notice && <div role="status" className="rounded-lg border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">{notice}</div>}
-      {loading ? <StatusPanel title="Chargement du catalogue…" message="Lecture des formations et de leurs offres dans Supabase." /> : null}
       {!loading && rows.length === 0 && !error ? <StatusPanel title="Aucune formation trouvée" message="Le catalogue apparaîtra après l’application des migrations et du seed Supabase." /> : null}
 
       <div className="space-y-3">
-        {visibleRows.map((course) => {
+        {loading ? <SkeletonStatus label="Chargement des formations" className="space-y-3">{Array.from({ length: 5 }, (_, index) => <div key={index} aria-hidden="true" className="grid gap-4 rounded-xl border border-[#262a33] bg-[#181c24] p-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(260px,1fr)_auto] lg:items-center"><div className="space-y-3"><Skeleton className="h-4 w-40" /><Skeleton className="h-5 w-3/4" /><Skeleton className="h-8 w-48 rounded-lg" /></div><div className="grid grid-cols-2 gap-3"><Skeleton className="h-10 rounded-lg" /><Skeleton className="h-10 rounded-lg" /></div><Skeleton className="h-10 w-28 rounded-lg" /></div>)}</SkeletonStatus> : visibleRows.map((course) => {
           const values = prices[course.id] || { XAF: '', EUR: '' };
           return (
             <article key={course.id} className="grid gap-4 rounded-xl border border-[#262a33] bg-[#181c24] p-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(260px,1fr)_auto] lg:items-center">

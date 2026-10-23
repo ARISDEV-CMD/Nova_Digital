@@ -4,15 +4,19 @@
  */
 
 import React, { useState } from 'react';
+import { motion, type Variants } from 'motion/react';
+import { useReducedMotionPreference } from '../hooks/use-reduced-motion.ts';
 import { Product } from '../utils/shop-logic.ts';
 import {ProductCard} from '../components/products/ProductCard.tsx';import {SectionHeader} from '../components/ui/SectionHeader.tsx';import {Button} from '../components/ui/Button.tsx';
 import { FAQS, TESTIMONIALS } from '../data/mock-data.ts';
+import { ProductGridSkeleton } from '../components/feedback/Skeleton.tsx';
 
 interface HomeViewProps {
   products: Product[];
   onNavigate: (view: string, productId?: string) => void;
   onAddToCart: (product: Product, licenseTier?: 'standard' | 'agency') => void;
   currency: 'EUR' | 'USD' | 'XAF';
+  loading?: boolean;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -20,11 +24,36 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onNavigate,
   onAddToCart,
   currency,
+  loading = false,
 }) => {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [heroSearch, setHeroSearch] = useState('');
+  const prefersReducedMotion = useReducedMotionPreference();
+  const revealVariants: Variants = {
+    hidden: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: prefersReducedMotion ? 0 : 0.55, ease: 'easeOut' },
+    },
+  };
+  const revealStaggerVariants: Variants = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: { delayChildren: prefersReducedMotion ? 0 : 0.04, staggerChildren: prefersReducedMotion ? 0 : 0.08 },
+    },
+  };
+  const revealItemVariants: Variants = {
+    hidden: { opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 14 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: prefersReducedMotion ? 0 : 0.4, ease: 'easeOut' },
+    },
+  };
 
   const featuredProducts = products
     .filter((product) => product.courseStatus === 'published' && product.isAvailable === true)
@@ -53,15 +82,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
   return (
     <div className="flex flex-col w-full bg-[#0f131c]">
       {/* Hero Section */}
-      <section className="relative w-full overflow-hidden bg-[#0a0e16]">
+      <motion.section className="relative w-full overflow-hidden bg-[#0a0e16]" variants={revealVariants} initial="hidden" animate="visible">
         {/* Atmospheric lighting effects */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#8083ff]/20 blur-[130px] rounded-full pointer-events-none"></div>
         <div className="absolute top-48 -right-20 w-[420px] h-[420px] bg-[#4cd7f6]/10 blur-[140px] rounded-full pointer-events-none"></div>
         <div className="absolute -bottom-24 -left-20 w-[400px] h-[400px] bg-[#571bc1]/30 blur-[130px] rounded-full pointer-events-none"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 lg:px-6 pt-16 pb-20 lg:pt-10 lg:pb-28 flex flex-col items-center text-center">
+        <motion.div className="relative max-w-7xl mx-auto px-4 lg:px-6 pt-16 pb-20 lg:pt-10 lg:pb-28 flex flex-col items-center text-center" variants={revealStaggerVariants}>
           {/* Live Status Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#262a33]/80 backdrop-blur-md mb-6 shadow-sm border border-[#31353e]/40">
+          <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#262a33]/80 backdrop-blur-md mb-6 shadow-sm border border-[#31353e]/40" variants={revealItemVariants}>
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4cd7f6] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4cd7f6]"></span>
@@ -73,24 +102,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <span className="text-xs text-[#c7c4d7] font-medium">
               1 420+ Composants & Boilerplates prêts
             </span>
-          </div>
+          </motion.div>
 
           {/* Main Headline */}
-          <h1 className="font-['Plus_Jakarta_Sans'] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#dfe2ee] max-w-4xl tracking-tight leading-none mb-6">
+          <motion.h1 className="font-['Plus_Jakarta_Sans'] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#dfe2ee] max-w-4xl tracking-tight leading-none mb-6" variants={revealItemVariants}>
             Accélérez vos projets tech avec des assets digitaux d’élite
-          </h1>
+          </motion.h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-[#c7c4d7] max-w-2xl mx-auto mb-10 leading-relaxed">
+          <motion.p className="text-base sm:text-lg text-[#c7c4d7] max-w-2xl mx-auto mb-10 leading-relaxed" variants={revealItemVariants}>
             Templates Next.js & Figma, formations avancées, presets créatifs et outils conçus par des experts.
             Téléchargement instantané et licence commerciale étendue incluse.
-          </p>
+          </motion.p>
 
           {/* Search Console Bar */}
-          <form
+          <motion.form
             onSubmit={handleHeroSearch}
             className="w-full max-w-2xl bg-[#1c2028]/90 backdrop-blur-xl p-1 rounded-xl shadow-xl mb-4 border border-[#31353e]/80"
-          >
+           variants={revealItemVariants}>
             <div className="flex items-center gap-2 px-3 py-1.5">
               <span className="material-symbols-outlined text-[#908fa0] text-xl">terminal</span>
               <input
@@ -112,54 +141,54 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <span className="material-symbols-outlined text-sm">search</span>
               </button>
             </div>
-          </form>
+          </motion.form>
 
           {/* Popular Tags */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-10 text-xs">
+          <motion.div className="flex flex-wrap items-center justify-center gap-2 mb-10 text-xs" variants={revealStaggerVariants}>
             <span className="text-[#908fa0] mr-1">Populaire :</span>
             {['SaaS Starter', 'Figma Design System', 'Masterclass Next.js', 'Prompt Packs'].map((tag) => (
-              <button
+              <motion.button
                 key={tag}
                 type="button"
                 onClick={() => onNavigate('catalogue')}
                 className="px-3 py-1 rounded-full bg-[#181c24] hover:bg-[#262a33] text-[#c7c4d7] hover:text-[#c0c1ff] font-['JetBrains_Mono'] transition-colors border border-[#31353e]/50"
-              >
+               variants={revealItemVariants}>
                 {tag}
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           {/* Call to Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-            <button
+          <motion.div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto" variants={revealStaggerVariants}>
+            <motion.button
               onClick={() => onNavigate('catalogue')}
               className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-[#8083ff] via-[#571bc1] to-[#009eb9] hover:brightness-110 text-white text-sm font-semibold transition-all shadow-lg flex items-center justify-center gap-2"
-            >
+             variants={revealItemVariants}>
               <span>Explorer le Catalogue</span>
               <span className="material-symbols-outlined text-base">north_east</span>
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => {
                 const bundleSection = document.getElementById('bundles');
                 bundleSection?.scrollIntoView({ behavior: 'smooth' });
               }}
               className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-[#262a33]/70 hover:bg-[#262a33] text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 border border-[#31353e]"
-            >
+             variants={revealItemVariants}>
               <span className="material-symbols-outlined text-[#4cd7f6] text-base">local_offer</span>
               <span>Voir les Bundles Promo</span>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
           {/* Reassurance Strip */}
-          <div className="mt-14 pt-6 w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-[#1c2028]">
-            <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30">
+          <motion.div className="mt-14 pt-6 w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-[#1c2028]" variants={revealStaggerVariants}>
+            <motion.div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30" variants={revealItemVariants}>
               <span className="material-symbols-outlined text-[#4cd7f6] text-2xl">groups</span>
               <div className="text-left">
                 <p className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white leading-tight">14 000+</p>
                 <p className="text-xs text-[#908fa0]">Créateurs & Devs Actifs</p>
               </div>
-            </div>
-            <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30">
+            </motion.div>
+            <motion.div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30" variants={revealItemVariants}>
               <span className="material-symbols-outlined text-[#4cd7f6] text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
                 star
               </span>
@@ -167,20 +196,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <p className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white leading-tight">4.9 / 5</p>
                 <p className="text-xs text-[#908fa0]">+2 800 Avis Vérifiés</p>
               </div>
-            </div>
-            <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30">
+            </motion.div>
+            <motion.div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30" variants={revealItemVariants}>
               <span className="material-symbols-outlined text-[#c0c1ff] text-2xl">lock</span>
               <div className="text-left">
                 <p className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white leading-tight">Stripe & MoMo</p>
                 <p className="text-xs text-[#908fa0]">MTN / Orange & Cartes</p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
       {/* Categories Grid */}
-      <section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16">
+      <motion.section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <span className="font-['JetBrains_Mono'] text-xs text-[#4cd7f6] tracking-wider uppercase font-semibold">
@@ -195,7 +224,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" variants={revealStaggerVariants}>
           {[
             {
               icon: 'layers',
@@ -238,11 +267,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
               cat: 'presets',
             },
           ].map((cat, idx) => (
-            <button
+            <motion.button
               key={idx}
               onClick={() => onNavigate('catalogue')}
               className="group p-6 rounded-xl bg-[#181c24] hover:bg-[#1c2028] transition-all shadow-sm flex flex-col justify-between min-h-[220px] border border-[#262a33] text-left hover:border-[#8083ff]/40"
-            >
+             variants={revealItemVariants}>
               <div className="space-y-4">
                 <div className={`w-12 h-12 rounded-lg bg-[#262a33] flex items-center justify-center ${cat.color} group-hover:scale-110 transition-transform`}>
                   <span className="material-symbols-outlined text-2xl">{cat.icon}</span>
@@ -260,25 +289,25 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   arrow_forward
                 </span>
               </div>
-            </button>
+            </motion.button>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Featured Products Section */}
-      <section className="w-full bg-[#0a0e16]/60 py-16 border-y border-[#1c2028]" id="catalogue">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <SectionHeader eyebrow="S?lection Nova Digital" title="Ressources pour cr?er et lancer vos projets" description="Une s?lection de ressources num?riques pr?sent?e ? titre de d?monstration." className="mb-10" action={<Button variant="secondary" onClick={()=>onNavigate('catalogue')} trailingIcon={<span aria-hidden="true" className="material-symbols-outlined text-base">arrow_right_alt</span>}>Voir le catalogue</Button>}/>
-          {featuredProducts.length ? <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">{featuredProducts.map(product=><ProductCard key={product.id} product={product} currency={currency} compact onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')} onQuickBuy={selected=>{onAddToCart(selected,'standard');onNavigate('checkout')}}/>)}</div> : <div className="rounded-xl border border-dashed border-[#31353e] bg-[#181c24] p-6 text-center"><p className="text-sm text-[#c7c4d7]">Les formations pilotes sont en cours de préparation. Elles apparaîtront ici après validation de leur contenu et de leur tarif.</p><Button variant="secondary" className="mt-4" onClick={() => onNavigate('catalogue-formations')}>Voir les formations</Button></div>}
-        </div>
-      </section>
+      <motion.section className="w-full bg-[#0a0e16]/60 py-16 border-y border-[#1c2028]" id="catalogue" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <motion.div className="max-w-7xl mx-auto px-4 lg:px-6" variants={revealStaggerVariants}>
+          <motion.div variants={revealItemVariants}><SectionHeader eyebrow="Sélection Nova Digital" title="Ressources pour créer et lancer vos projets" description="Une sélection de ressources numériques présentée à titre de démonstration." className="mb-10" action={<Button variant="secondary" onClick={()=>onNavigate('catalogue')} trailingIcon={<span aria-hidden="true" className="material-symbols-outlined text-base">arrow_right_alt</span>}>Voir le catalogue</Button>}/></motion.div>
+          {loading ? <ProductGridSkeleton count={4} compact /> : featuredProducts.length ? <motion.div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4" variants={revealStaggerVariants}>{featuredProducts.map(product=><motion.div key={product.id} variants={revealItemVariants}><ProductCard product={product} currency={currency} compact onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')} onQuickBuy={selected=>{onAddToCart(selected,'standard');onNavigate('checkout')}}/></motion.div>)}</motion.div> : <div className="rounded-xl border border-dashed border-[#31353e] bg-[#181c24] p-6 text-center"><p className="text-sm text-[#c7c4d7]">Les formations pilotes sont en cours de préparation. Elles apparaîtront ici après validation de leur contenu et de leur tarif.</p><Button variant="secondary" className="mt-4" onClick={() => onNavigate('catalogue-formations')}>Voir les formations</Button></div>}
+        </motion.div>
+      </motion.section>
 
       {/* Special Bundle Offer Showcase */}
-      <section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16" id="bundles">
+      <motion.section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16" id="bundles" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
         <div className="relative rounded-lg bg-gradient-to-r from-[#1c2028] to-[#181c24] p-6 lg:p-10 overflow-hidden shadow-xl border border-[#31353e]">
           <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-[#8083ff]/20 rounded-full blur-[100px] pointer-events-none"></div>
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
+          <motion.div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" variants={revealStaggerVariants}>
+            <motion.div className="lg:col-span-7 space-y-4" variants={revealItemVariants}>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#571bc1] text-white font-['JetBrains_Mono'] text-xs font-semibold">
                 <span className="material-symbols-outlined text-sm text-[#4cd7f6]">redeem</span>
                 <span>MEGA BUNDLE LIMITÉ</span>
@@ -290,20 +319,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 Réunissez le SaaS Starter Nexus, le Design System Figma 2024, la Masterclass Full-Stack et les 50
                 playbooks Notion dans un bundle clés en main à tarif unique.
               </p>
-              <div className="flex flex-wrap items-center gap-4 pt-1">
-                <div className="flex items-center gap-1.5 text-white text-xs font-medium">
+              <motion.div className="flex flex-wrap items-center gap-4 pt-1" variants={revealStaggerVariants}>
+                <motion.div className="flex items-center gap-1.5 text-white text-xs font-medium" variants={revealItemVariants}>
                   <span className="material-symbols-outlined text-[#4cd7f6] text-base">check_circle</span>
                   <span>Licence Commerciale Illimitée</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-white text-xs font-medium">
+                </motion.div>
+                <motion.div className="flex items-center gap-1.5 text-white text-xs font-medium" variants={revealItemVariants}>
                   <span className="material-symbols-outlined text-[#4cd7f6] text-base">check_circle</span>
                   <span>Mises à jour à vie (v2 & v3)</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-white text-xs font-medium">
+                </motion.div>
+                <motion.div className="flex items-center gap-1.5 text-white text-xs font-medium" variants={revealItemVariants}>
                   <span className="material-symbols-outlined text-[#4cd7f6] text-base">check_circle</span>
                   <span>Canal Discord VIP Inclus</span>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
               <div className="pt-4 flex flex-col sm:flex-row items-center gap-6">
                 <div>
                   <div className="flex items-baseline gap-2">
@@ -329,54 +358,54 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <span>{featuredProducts.length < 4 ? 'Pack bientôt disponible' : 'Débloquer le Pack Ultime (-45%)'}</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
 
             {/* Graphical Visualizer */}
-            <div className="lg:col-span-5 flex justify-center">
+            <motion.div className="lg:col-span-5 flex justify-center" variants={revealItemVariants}>
               <div className="relative w-full max-w-sm rounded-xl bg-[#262a33]/80 p-4 backdrop-blur-md shadow-2xl border border-[#31353e]">
-                <div className="space-y-2">
-                  <div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40">
+                <motion.div className="space-y-2" variants={revealStaggerVariants}>
+                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#c0c1ff]">code</span>
                       <span className="text-xs font-semibold text-white">Nexus Starter Kit</span>
                     </div>
                     <span className="font-mono text-xs text-[#908fa0]">69 €</span>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40">
+                  </motion.div>
+                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#4cd7f6]">draw</span>
                       <span className="text-xs font-semibold text-white">Design System 2024</span>
                     </div>
                     <span className="font-mono text-xs text-[#908fa0]">49 €</span>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40">
+                  </motion.div>
+                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#d0bcff]">videocam</span>
                       <span className="text-xs font-semibold text-white">Masterclass Full-Stack</span>
                     </div>
                     <span className="font-mono text-xs text-[#908fa0]">89 €</span>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40">
+                  </motion.div>
+                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#e1e0ff]">menu_book</span>
                       <span className="text-xs font-semibold text-white">E-book Solopreneur</span>
                     </div>
                     <span className="font-mono text-xs text-[#908fa0]">29 €</span>
-                  </div>
-                  <div className="pt-2 flex items-center justify-between text-xs font-semibold text-white border-t border-[#31353e]">
+                  </motion.div>
+                  <motion.div className="pt-2 flex items-center justify-between text-xs font-semibold text-white border-t border-[#31353e]" variants={revealItemVariants}>
                     <span>Réduction Bundle (-45%)</span>
                     <span className="text-[#4cd7f6]">-107 €</span>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 3 Value Pillars */}
-      <section className="w-full bg-[#181c24] py-16 border-y border-[#262a33]">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+      <motion.section className="w-full bg-[#181c24] py-16 border-y border-[#262a33]" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <motion.div className="max-w-7xl mx-auto px-4 lg:px-6" variants={revealStaggerVariants}>
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="font-['JetBrains_Mono'] text-xs text-[#4cd7f6] uppercase font-semibold">
               Standards d’Excellence
@@ -388,8 +417,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
               Nous supprimons les frictions techniques et financières afin que vous puissiez lancer vos idées à la vitesse de la lumière.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-8 rounded-xl bg-[#1c2028]/80 shadow-sm flex flex-col items-start border border-[#31353e]/50">
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" variants={revealStaggerVariants}>
+            <motion.div className="p-8 rounded-xl bg-[#1c2028]/80 shadow-sm flex flex-col items-start border border-[#31353e]/50" variants={revealItemVariants}>
               <div className="w-14 h-14 rounded-xl bg-[#8083ff]/20 text-[#c0c1ff] flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-3xl">cloud_sync</span>
               </div>
@@ -400,9 +429,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 Téléchargez vos archives zip et vos accès Git dès la validation du paiement. Vos liens restent disponibles
                 à vie sur votre espace client avec chaque mise à jour future sans frais.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-xl bg-[#1c2028]/80 shadow-sm flex flex-col items-start border border-[#31353e]/50">
+            <motion.div className="p-8 rounded-xl bg-[#1c2028]/80 shadow-sm flex flex-col items-start border border-[#31353e]/50" variants={revealItemVariants}>
               <div className="w-14 h-14 rounded-xl bg-[#009eb9]/20 text-[#4cd7f6] flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-3xl">forum</span>
               </div>
@@ -413,9 +442,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 Pas de tickets perdus. Échangez directement avec les auteurs de chaque template sur notre Discord réservé
                 aux acquéreurs pour résoudre vos bugs ou demander des extensions.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-xl bg-[#1c2028]/80 shadow-sm flex flex-col items-start border border-[#31353e]/50">
+            <motion.div className="p-8 rounded-xl bg-[#1c2028]/80 shadow-sm flex flex-col items-start border border-[#31353e]/50" variants={revealItemVariants}>
               <div className="w-14 h-14 rounded-xl bg-[#571bc1]/20 text-[#d0bcff] flex items-center justify-center mb-4">
                 <span className="material-symbols-outlined text-3xl">currency_exchange</span>
               </div>
@@ -426,14 +455,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 Réglez sans barrière géographique par Carte Bancaire internationale, Apple Pay, Google Pay ou Mobile Money local
                 (MTN MoMo, Orange Money) en FCFA, EUR et USD.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
       {/* Verified Testimonials Section */}
-      <section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <motion.section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <motion.div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4" variants={revealItemVariants}>
           <div>
             <span className="font-['JetBrains_Mono'] text-xs text-[#4cd7f6] tracking-wider uppercase font-semibold">
               Communauté Élite
@@ -453,14 +482,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
             <span className="text-xs text-[#908fa0] ml-1">sur 2 800+ transactions</span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" variants={revealStaggerVariants}>
           {TESTIMONIALS.map((t) => (
-            <div
+            <motion.div
               key={t.id}
               className="p-6 rounded-xl bg-[#181c24] shadow-sm flex flex-col justify-between border border-[#262a33]"
-            >
+             variants={revealItemVariants}>
               <div className="space-y-4">
                 <div className="flex text-[#4cd7f6]">
                   {[...Array(t.rating)].map((_, i) => (
@@ -478,15 +507,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <p className="text-xs text-[#908fa0]">{t.role}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Interactive FAQ Section */}
-      <section className="w-full bg-[#0a0e16]/80 py-16 border-t border-[#1c2028]">
-        <div className="max-w-4xl mx-auto px-4 lg:px-6">
-          <div className="text-center mb-10">
+      <motion.section className="w-full bg-[#0a0e16]/80 py-16 border-t border-[#1c2028]" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <motion.div className="max-w-4xl mx-auto px-4 lg:px-6" variants={revealStaggerVariants}>
+          <motion.div className="text-center mb-10" variants={revealItemVariants}>
             <span className="font-['JetBrains_Mono'] text-xs text-[#4cd7f6] uppercase font-semibold">
               Transparence & Réponses
             </span>
@@ -496,13 +525,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <p className="text-sm text-[#c7c4d7] mt-2">
               Tout ce que vous devez savoir sur nos licences, livraisons et garanties.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="space-y-3">
+          <motion.div className="space-y-3" variants={revealStaggerVariants}>
             {FAQS.map((faq) => {
               const isOpen = openFaq === faq.id;
               return (
-                <div key={faq.id} className="rounded-xl bg-[#181c24] border border-[#262a33] overflow-hidden">
+                <motion.div key={faq.id} className="rounded-xl bg-[#181c24] border border-[#262a33] overflow-hidden" variants={revealItemVariants}>
                   <button
                     onClick={() => toggleFaq(faq.id)}
                     className="w-full px-6 py-4 text-left flex items-center justify-between text-white font-semibold text-sm sm:text-base hover:text-[#c0c1ff] transition-colors"
@@ -521,20 +550,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
                       {faq.answer}
                     </div>
                   )}
-                </div>
+                </motion.div>
               );
             })}
-          </div>
-        </div>
-      </section>
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
       {/* VIP Newsletter Section (-15% Offer) */}
-      <section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16">
-        <div className="relative rounded-lg bg-[#1c2028] p-6 lg:p-12 overflow-hidden shadow-2xl border border-[#31353e]">
+      <motion.section className="w-full max-w-7xl mx-auto px-4 lg:px-6 py-16" variants={revealVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
+        <motion.div className="relative rounded-lg bg-[#1c2028] p-6 lg:p-12 overflow-hidden shadow-2xl border border-[#31353e]" variants={revealItemVariants}>
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#4cd7f6]/10 rounded-full blur-[90px] pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#8083ff]/10 rounded-full blur-[90px] pointer-events-none"></div>
 
-          <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
+          <motion.div className="relative z-10 max-w-3xl mx-auto text-center space-y-4" variants={revealStaggerVariants}>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#262a33] text-[#4cd7f6] font-['JetBrains_Mono'] text-xs font-semibold">
               <span className="material-symbols-outlined text-sm">percent</span>
               <span>OFFRE DE BIENVENUE VIP</span>
@@ -547,10 +576,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
               ainsi que notre curation hebdomadaire des meilleurs composants détachables.
             </p>
 
-            <form
+            <motion.form
               onSubmit={handleNewsletterSubmit}
               className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2 max-w-lg mx-auto"
-            >
+             variants={revealItemVariants}>
               <div className="relative w-full">
                 <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#908fa0] text-lg">
                   alternate_email
@@ -577,11 +606,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   {newsletterSubmitted ? 'check' : 'send'}
                 </span>
               </button>
-            </form>
+            </motion.form>
             <p className="text-xs text-[#908fa0]">Zéro spam. Désinscription en 1 clic à tout instant.</p>
-          </div>
-        </div>
-      </section>
+          </motion.div>
+        </motion.div>
+      </motion.section>
     </div>
   );
 };

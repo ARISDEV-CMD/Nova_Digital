@@ -6,6 +6,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import {Product,filterCatalogProducts,EUR_TO_XAF_RATE} from '../utils/shop-logic.ts';
 import {ProductCard} from '../components/products/ProductCard.tsx';import {EmptyState} from '../components/feedback/EmptyState.tsx';import {Button} from '../components/ui/Button.tsx';import {Badge} from '../components/ui/Badge.tsx';
+import { ProductGridSkeleton, Skeleton } from '../components/feedback/Skeleton.tsx';
 
 interface CatalogViewProps {
   products: Product[];
@@ -13,6 +14,7 @@ interface CatalogViewProps {
   onAddToCart: (product: Product, licenseTier?: 'standard' | 'agency') => void;
   initialCategory?: string;
   currency: 'EUR' | 'USD' | 'XAF';
+  loading?: boolean;
 }
 
 export const CatalogView: React.FC<CatalogViewProps> = ({
@@ -21,6 +23,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   onAddToCart,
   initialCategory = 'all',
   currency,
+  loading = false,
 }) => {
   const [search,setSearch]=useState('');
   const [selectedCategory,setSelectedCategory]=useState<string>(initialCategory);
@@ -76,7 +79,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
               </p>
             </div>
 
-            <div className="flex items-center gap-4 rounded-xl border border-[#262a33] bg-[#181c24] px-4 py-3"><div><span className="block text-[11px] uppercase tracking-wider text-[#908fa0]">Produits pr?sent?s</span><span className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">{publishedProducts.length}</span></div><div className="h-8 w-px bg-[#31353e]"/><div><span className="block text-[11px] uppercase tracking-wider text-[#908fa0]">Mode</span><span className="font-['Plus_Jakarta_Sans'] text-sm font-semibold text-[#4cd7f6]">D?mo locale</span></div></div>
+            <div className="flex items-center gap-4 rounded-xl border border-[#262a33] bg-[#181c24] px-4 py-3"><div><span className="block text-[11px] uppercase tracking-wider text-[#908fa0]">Produits présentés</span>{loading ? <Skeleton className="mt-1 h-6 w-8" /> : <span className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">{publishedProducts.length}</span>}</div><div className="h-8 w-px bg-[#31353e]"/><div><span className="block text-[11px] uppercase tracking-wider text-[#908fa0]">Mode</span><span className="font-['Plus_Jakarta_Sans'] text-sm font-semibold text-[#4cd7f6]">Démo locale</span></div></div>
           </div>
         </section>
 
@@ -105,7 +108,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
               <div className="text-xs text-[#c7c4d7] flex items-center gap-1.5 px-2">
                 <span className="w-2 h-2 rounded-full bg-[#8083ff]"></span>
                 <span>
-                  {filteredProducts.length} r?sultat{filteredProducts.length>1?'s':''} sur {publishedProducts.length} produit{publishedProducts.length>1?'s':''}
+                  {loading ? <Skeleton className="h-4 w-40" /> : <>{filteredProducts.length} résultat{filteredProducts.length>1?'s':''} sur {publishedProducts.length} produit{publishedProducts.length>1?'s':''}</>}
                 </span>
               </div>
 
@@ -119,7 +122,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                     aria-label="Trier les résultats"
                     className="bg-transparent text-[#dfe2ee] text-xs font-medium focus:outline-none cursor-pointer pr-1"
                   >
-                    <option className="bg-[#1c2028]" value="manual">Ordre du catalogue</option><option className="bg-[#1c2028]" value="price-asc">Prix croissant</option><option className="bg-[#1c2028]" value="price-desc">Prix d?croissant</option></select>
+                    <option className="bg-[#1c2028]" value="manual">Ordre du catalogue</option><option className="bg-[#1c2028]" value="price-asc">Prix croissant</option><option className="bg-[#1c2028]" value="price-desc">Prix décroissant</option></select>
                 </div>
 
                 {/* View Switcher */}
@@ -247,17 +250,17 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 </div>
               </div>
 
-              <div className="space-y-2 border-t border-[#262a33] pt-4"><h3 className="text-xs font-semibold uppercase tracking-wider text-[#908fa0]">Mode de livraison</h3><div className="space-y-1">{[{id:'all',label:'Tous les formats'},{id:'instant',label:'T?l?chargement direct'},{id:'github',label:'D?p?t GitHub'},{id:'video',label:'Formation vid?o'},{id:'book',label:'Ebook'}].map(option=><label key={option.id} className="flex min-h-10 cursor-pointer items-center gap-2 rounded-lg px-2 text-sm text-[#c7c4d7] transition-colors hover:bg-[#1c2028]"><input type="radio" name="delivery" checked={deliveryType===option.id} onChange={()=>setDeliveryType(option.id as Product['deliveryType']|'all')} className="accent-[#8083ff]"/>{option.label}</label>)}</div></div>
+              <div className="space-y-2 border-t border-[#262a33] pt-4"><h3 className="text-xs font-semibold uppercase tracking-wider text-[#908fa0]">Mode de livraison</h3><div className="space-y-1">{[{id:'all',label:'Tous les formats'},{id:'instant',label:'Téléchargement direct'},{id:'github',label:'Dépôt GitHub'},{id:'video',label:'Formation vidéo'},{id:'book',label:'Ebook'}].map(option=><label key={option.id} className="flex min-h-10 cursor-pointer items-center gap-2 rounded-lg px-2 text-sm text-[#c7c4d7] transition-colors hover:bg-[#1c2028]"><input type="radio" name="delivery" checked={deliveryType===option.id} onChange={()=>setDeliveryType(option.id as Product['deliveryType']|'all')} className="accent-[#8083ff]"/>{option.label}</label>)}</div></div>
             </div>
 
-            <div className="rounded-xl border border-[#31353e] bg-[#181c24] p-4"><Badge tone="warning">Catalogue de d?monstration</Badge><p className="mt-2 text-xs leading-5 text-[#c7c4d7]">Les informations et tarifs pr?sent?s sont des exemples ? confirmer avant publication.</p></div>
+            <div className="rounded-xl border border-[#31353e] bg-[#181c24] p-4"><Badge tone="warning">Catalogue de démonstration</Badge><p className="mt-2 text-xs leading-5 text-[#c7c4d7]">Les informations et tarifs présentés sont des exemples à confirmer avant publication.</p></div>
           </aside>
 
           {/* RIGHT COLUMN: Product Grid / List */}
           <main className="lg:col-span-9 space-y-6">
-            {filteredProducts.length===0?<EmptyState icon="search_off" title="Aucun produit trouv?" description="Modifiez la recherche ou les filtres pour afficher d?autres produits." action={<Button variant="secondary" onClick={handleResetFilters}>R?initialiser les filtres</Button>}/>:<div className={viewMode==='grid'?'grid grid-cols-1 gap-5 md:grid-cols-2':'flex flex-col gap-4'}>{visibleProducts.map(product=><ProductCard key={product.id} product={product} currency={currency} layout={viewMode} onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')}/>)}</div>}
-            {totalPages>1&&<nav aria-label="Pagination du catalogue" className="flex flex-col items-center justify-between gap-3 rounded-xl border border-[#262a33] bg-[#0a0e16] p-4 sm:flex-row"><p className="text-xs text-[#c7c4d7]">Page {currentPage} sur {totalPages} ? {filteredProducts.length} r?sultats</p><div className="flex items-center gap-2"><Button size="sm" variant="secondary" disabled={currentPage<=1} onClick={()=>setCurrentPage(p=>Math.max(1,p-1))}>Pr?c?dent</Button><Button size="sm" variant="secondary" disabled={currentPage>=totalPages} onClick={()=>setCurrentPage(p=>Math.min(totalPages,p+1))}>Suivant</Button></div></nav>}
-            <p role="note" className="rounded-xl border border-[#31353e] bg-[#181c24] p-4 text-xs leading-5 text-[#908fa0]">Les indicateurs de confiance seront affich?s lorsqu?ils pourront ?tre v?rifi?s.</p>
+            {loading ? <ProductGridSkeleton count={8} horizontal={viewMode === 'list'} /> : filteredProducts.length===0?<EmptyState icon="search_off" title="Aucun produit trouvé" description="Modifiez la recherche ou les filtres pour afficher d’autres produits." action={<Button variant="secondary" onClick={handleResetFilters}>Réinitialiser les filtres</Button>}/>:<div className={viewMode==='grid'?'grid grid-cols-1 gap-5 md:grid-cols-2':'flex flex-col gap-4'}>{visibleProducts.map(product=><ProductCard key={product.id} product={product} currency={currency} layout={viewMode} onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')}/>)}</div>}
+            {!loading && totalPages>1&&<nav aria-label="Pagination du catalogue" className="flex flex-col items-center justify-between gap-3 rounded-xl border border-[#262a33] bg-[#0a0e16] p-4 sm:flex-row"><p className="text-xs text-[#c7c4d7]">Page {currentPage} sur {totalPages} · {filteredProducts.length} résultats</p><div className="flex items-center gap-2"><Button size="sm" variant="secondary" disabled={currentPage<=1} onClick={()=>setCurrentPage(p=>Math.max(1,p-1))}>Précédent</Button><Button size="sm" variant="secondary" disabled={currentPage>=totalPages} onClick={()=>setCurrentPage(p=>Math.min(totalPages,p+1))}>Suivant</Button></div></nav>}
+            <p role="note" className="rounded-xl border border-[#31353e] bg-[#181c24] p-4 text-xs leading-5 text-[#908fa0]">Les indicateurs de confiance seront affichés lorsqu’ils pourront être vérifiés.</p>
           </main>
         </div>
       </div>

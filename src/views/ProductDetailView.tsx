@@ -254,7 +254,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 {product.subtitle}
               </p>
 
-              <div className="mb-6 rounded-xl border border-amber-300/20 bg-amber-300/10 p-3 text-xs leading-5 text-amber-100">Fiche produit de d?monstration. Avis, ventes, disponibilit? et garanties ne sont pas encore reli?s ? des donn?es v?rifi?es.</div>
+              <div className="mb-6 rounded-xl border border-amber-300/20 bg-amber-300/10 p-3 text-xs leading-5 text-amber-100">Fiche produit de démonstration. Avis, ventes, disponibilité et garanties ne sont pas encore reliés à des données vérifiées.</div>
 
               <div className="mb-6 space-y-2">{product.priceEur > 0 ? <div className="flex flex-wrap items-baseline gap-3"><PriceDisplay amountEur={currentPriceEur} currency={currency} className="font-['Plus_Jakarta_Sans'] text-4xl font-extrabold tracking-tight text-white"/>{typeof currentOldPriceEur==='number'&&currentOldPriceEur>currentPriceEur&&<PriceDisplay amountEur={currentOldPriceEur} currency={currency} className="text-sm text-[#908fa0] line-through"/>}</div> : <p className="text-sm font-semibold text-[#4cd7f6]">Prix à définir</p>}</div>
 
@@ -347,12 +347,12 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                   <span className="material-symbols-outlined text-sm">
                     {addedAnimation ? 'check' : 'shopping_bag'}
                   </span>
-                  <span>{addedAnimation ? 'Ajouté au Panier ✓' : 'Ajouter au Panier'}</span>
+                  <span>{addedAnimation ? 'Ajouté au panier ✓' : 'Ajouter au panier'}</span>
                 </button>
               </div>
               </>}
 
-              <div className="rounded-xl border border-[#31353e] bg-[#0a0e16] p-4 text-xs leading-5 text-[#c7c4d7]">Les informations de livraison et les conditions de licence devront ?tre confirm?es avant mise en ligne. Aucun fichier n?est livr? depuis cette interface.</div>
+              <div className="rounded-xl border border-[#31353e] bg-[#0a0e16] p-4 text-xs leading-5 text-[#c7c4d7]">Les informations de livraison et les conditions de licence devront être confirmées avant mise en ligne. Aucun fichier n’est livré depuis cette interface.</div>
             </div>
           </div>
         </div>
@@ -453,15 +453,15 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 </h4>
                 <div className="p-4 rounded-lg bg-[#0a0e16] font-mono text-xs text-[#c7c4d7] overflow-x-auto leading-relaxed border border-[#262a33]">
                   <span className="text-[#4cd7f6]">nexus-saas-kit/</span><br />
-                  â”œâ”€â”€ <span className="text-[#c0c1ff]">app/</span> <span className="text-[#908fa0]"># Next.js 14/15 App Router (Layouts, Server Actions)</span><br />
-                  â”‚   â”œâ”€â”€ (auth)/             <span className="text-[#908fa0]"># Flux Login, Register, Magic Link, Verification</span><br />
-                  â”‚   â”œâ”€â”€ (dashboard)/        <span className="text-[#908fa0]"># Espace client SaaS, Settings, Équipes, Factures</span><br />
-                  â”‚   â””â”€â”€ api/                <span className="text-[#908fa0]"># Webhooks Stripe, Webhooks MoMo, Supabase Webhooks</span><br />
-                  â”œâ”€â”€ <span className="text-[#c0c1ff]">components/</span> <span className="text-[#908fa0]"># 48+ Composants UI accessibles</span><br />
-                  â”œâ”€â”€ <span className="text-[#c0c1ff]">supabase/</span> <span className="text-[#908fa0]"># Migrations SQL versionnées, schemas, triggers RLS</span><br />
-                  â”œâ”€â”€ <span className="text-[#c0c1ff]">lib/</span> <span className="text-[#908fa0]"># Client Stripe, Supabase Client & Server, Email Resend</span><br />
-                  â”œâ”€â”€ <span className="text-[#d0bcff]">.env.example</span> <span className="text-[#908fa0]"># Variables pré-configurées avec commentaires</span><br />
-                  â””â”€â”€ <span className="text-[#d0bcff]">README.md</span> <span className="text-[#908fa0]"># Guide d'installation pas-à-pas en 10 minutes</span>
+                  |-- <span className="text-[#c0c1ff]">app/</span> <span className="text-[#908fa0]"># Next.js 14/15 App Router (Layouts, Server Actions)</span><br />
+                  |   |-- <span className="text-[#c0c1ff]">(auth)/</span> <span className="text-[#908fa0]"># Flux Login, Register, Magic Link, Verification</span><br />
+                  |   |-- <span className="text-[#c0c1ff]">(dashboard)/</span> <span className="text-[#908fa0]"># Espace client SaaS, Settings, Équipes, Factures</span><br />
+                  |   +-- <span className="text-[#c0c1ff]">api/</span> <span className="text-[#908fa0]"># Webhooks Stripe, Webhooks MoMo, Supabase Webhooks</span><br />
+                  |-- <span className="text-[#c0c1ff]">components/</span> <span className="text-[#908fa0]"># 48+ Composants UI accessibles</span><br />
+                  |-- <span className="text-[#c0c1ff]">supabase/</span> <span className="text-[#908fa0]"># Migrations SQL versionnées, schemas, triggers RLS</span><br />
+                  |-- <span className="text-[#c0c1ff]">lib/</span> <span className="text-[#908fa0]"># Client Stripe, Supabase Client & Server, Email Resend</span><br />
+                  |-- <span className="text-[#d0bcff]">.env.example</span> <span className="text-[#908fa0]"># Variables pré-configurées avec commentaires</span><br />
+                  +-- <span className="text-[#d0bcff]">README.md</span> <span className="text-[#908fa0]"># Guide d'installation pas-à-pas en 10 minutes</span>
                 </div>
               </div>
             </div>
@@ -530,10 +530,10 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
             </div>
           )}
 
-          {activeTab === 'avis' && <EmptyState title="Les avis ne sont pas disponibles" description="Les avis de demonstration ont ete retires. Ils seront affiches lorsque les avis reels seront connectes." icon="rate_review"/>}
+          {activeTab === 'avis' && <EmptyState title="Les avis ne sont pas disponibles" description="Les avis de démonstration ont été retirés. Ils seront affichés lorsque les avis réels seront connectés." icon="rate_review"/>}
         </section>
 
-        <section className="mt-16 rounded-lg border border-[#31353e] bg-[#181c24] p-6 text-sm leading-6 text-[#c7c4d7]"><h2 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">Informations de demonstration</h2><p className="mt-2">Ce catalogue presente des exemples. Tarifs, licences, avis, remises et livraison devront etre valides avant toute connexion au service de vente.</p></section>
+        <section className="mt-16 rounded-lg border border-[#31353e] bg-[#181c24] p-6 text-sm leading-6 text-[#c7c4d7]"><h2 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">Informations de démonstration</h2><p className="mt-2">Ce catalogue présente des exemples. Tarifs, licences, avis, remises et livraison devront être validés avant toute connexion au service de vente.</p></section>
       </div>
     </div>
   );

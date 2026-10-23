@@ -165,7 +165,7 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
               type="button"
             >
               <span className="material-symbols-outlined text-base text-[#4cd7f6]">sync</span>
-              <span>Verifier la connexion des fichiers</span>
+              <span>Vérifier la connexion des fichiers</span>
             </button>
             <button
               onClick={handleOpenCreate}
@@ -550,7 +550,7 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
           </div>
           <div>
             <div className="text-xs font-bold text-white">Synchronisation indisponible</div>
-            <div className="font-mono text-[11px] text-[#4cd7f6]">Backend non connecte : aucun bucket synchronise.</div>
+            <div className="font-mono text-[11px] text-[#4cd7f6]">Backend non connecté : aucun bucket synchronisé.</div>
           </div>
         </div>
       )}

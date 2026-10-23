@@ -80,7 +80,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
     }, 450);
   };
 
-  if (cartItems.length === 0) return <div className="mx-auto max-w-3xl px-4 py-20"><div className="rounded-xl border border-[#31353e] bg-[#181c24] p-6 text-center"><h1 className="text-xl font-bold text-white">Votre panier est vide</h1><p className="mt-2 text-sm text-[#c7c4d7]">Ajoutez un produit au panier pour continuer. Aucun paiement reel n'est possible dans cette demo.</p><button type="button" onClick={()=>onNavigate('catalogue')} className="mt-5 min-h-11 rounded-xl bg-[#8083ff] px-5 text-sm font-semibold text-[#0d0096]">Retour au catalogue</button></div></div>;
+  if (cartItems.length === 0) return <div className="mx-auto max-w-3xl px-4 py-20"><div className="rounded-xl border border-[#31353e] bg-[#181c24] p-6 text-center"><h1 className="text-xl font-bold text-white">Votre panier est vide</h1><p className="mt-2 text-sm text-[#c7c4d7]">Ajoutez un produit au panier pour continuer. Aucun paiement réel n’est possible dans cette démo.</p><button type="button" onClick={()=>onNavigate('catalogue')} className="mt-5 min-h-11 rounded-xl bg-[#8083ff] px-5 text-sm font-semibold text-[#0d0096]">Retour au catalogue</button></div></div>;
 
   return (
     <div className="w-full bg-[#0f131c] text-[#dfe2ee] min-h-screen">
@@ -340,7 +340,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({
                             </span>
                           </div>
                           <div className="flex items-center justify-between pt-1">
-                            <span className="text-[11px] text-[#908fa0] font-mono">{item.product.formatLabel} ? Qt? {item.quantity || 1}</span>
+                            <span className="text-[11px] text-[#908fa0] font-mono">{item.product.formatLabel} · Qté {item.quantity || 1}</span>
                             <span className="text-xs font-bold text-white font-mono">{formatPriceEur(item.priceEur * (item.quantity || 1))}</span>
                           </div>
                         </div>

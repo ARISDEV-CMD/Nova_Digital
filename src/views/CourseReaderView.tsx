@@ -3,6 +3,7 @@ import type { Session } from '@supabase/supabase-js';
 import { UserPlusIcon, UserRoundCheckIcon } from '@animateicons/react/lucide';
 import { supabase } from '../lib/supabase.ts';
 import { PasswordField } from '../components/ui/PasswordField.tsx';
+import { Skeleton, SkeletonStatus } from '../components/feedback/Skeleton.tsx';
 
 type Course = { id: string; title: string; slug: string; status: string; description_md: string; learning_outcomes: string[]; estimated_minutes: number };
 type Chapter = { id: string; position: number; title: string; description: string };
@@ -11,6 +12,28 @@ type LessonPayload = { lesson: Lesson & { locked: boolean }; content: { body_md?
 type QuizResult = { score: number; total: number; answers: { question_id: string; correct_option_ids: string[]; explanation_md: string | null }[] };
 const inputClass = 'w-full rounded-lg border border-[#343a46] bg-[#10141d] px-3 py-2 text-sm text-white outline-none focus:border-[#8083ff]';
 const buttonClass = 'inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50';
+
+function CourseReaderSkeleton() {
+  return (
+    <SkeletonStatus label="Chargement de la formation" className="min-h-[calc(100vh-5rem)] bg-[#0f131c] px-3 py-4 text-[#dfe2ee] sm:px-5 lg:px-8">
+      <div className="mx-auto max-w-[1600px]">
+        <header className="mb-4 space-y-2 border-b border-[#262a33] pb-4">
+          <Skeleton className="h-3 w-28" />
+          <Skeleton className="h-7 w-2/3 max-w-lg" />
+        </header>
+        <div className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)]">
+          <aside aria-hidden="true" className="space-y-3 rounded-xl border border-[#262a33] bg-[#181c24] p-3">
+            <Skeleton className="mx-2 h-5 w-28" />
+            {Array.from({ length: 4 }, (_, chapterIndex) => <section key={chapterIndex} className="space-y-2 rounded-lg border border-[#31353e] p-3"><Skeleton className="h-4 w-3/4" />{Array.from({ length: 3 }, (_, lessonIndex) => <Skeleton key={lessonIndex} className="h-11 w-full rounded-md" />)}</section>)}
+          </aside>
+          <main aria-hidden="true" className="min-w-0 space-y-4">
+            <div className="overflow-hidden rounded-xl border border-[#262a33] bg-[#181c24]"><Skeleton className="aspect-video w-full rounded-none bg-black/60" /><div className="space-y-4 p-5 sm:p-7"><Skeleton className="h-4 w-36" /><Skeleton className="h-7 w-3/4" /><Skeleton className="h-4 w-full max-w-2xl" /><Skeleton className="h-36 w-full rounded-lg" /></div></div>
+          </main>
+        </div>
+      </div>
+    </SkeletonStatus>
+  );
+}
 
 function optionsOf(value: unknown): { id: string; label: string }[] {
   if (!Array.isArray(value)) return [];
@@ -102,16 +125,24 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
       setError('Cette formation est en préparation ou son programme n’est pas encore publié.'); setLoading(false); return;
     }
     setCourse(courseData as Course);
-    const [chapterResult, lessonResult] = await Promise.all([
-      client.from('course_chapters').select('id,position,title,description').eq('course_id', courseId).order('position'),
-      client.from('course_lessons').select('id,chapter_id,position,title,summary,lesson_type,duration_minutes,is_free_preview,preview_requires_login').eq('course_id', courseId).eq('published', true).order('position'),
-    ]);
-    if (chapterResult.error || lessonResult.error) {
-      setError(`Impossible de charger le programme : ${(chapterResult.error || lessonResult.error)?.message}`); setLoading(false); return;
+    const { data: chapterRows, error: chapterError } = await client.from('course_chapters')
+      .select('id,position,title,description').eq('course_id', courseId).order('position');
+    if (chapterError) {
+      setError(`Impossible de charger les chapitres : ${chapterError.message}`); setLoading(false); return;
     }
-    const nextChapters = (chapterResult.data || []) as Chapter[];
-    const nextLessons = (lessonResult.data || []) as Lesson[];
-    setChapters(nextChapters); setLessons(nextLessons);
+    const nextChapters = (chapterRows || []) as Chapter[];
+    setChapters(nextChapters);
+
+    const { data: lessonRows, error: lessonError } = await client.from('course_lessons')
+      .select('id,chapter_id,position,title,summary,lesson_type,duration_minutes,is_free_preview,preview_requires_login')
+      .eq('course_id', courseId).eq('published', true).order('position');
+    if (lessonError) {
+      setLessons([]); setAccess({});
+      setError(`Les chapitres sont visibles, mais les leçons n’ont pas pu être chargées : ${lessonError.message}`);
+      setLoading(false); return;
+    }
+    const nextLessons = (lessonRows || []) as Lesson[];
+    setLessons(nextLessons);
     const accessRows = await Promise.all(nextLessons.map(async (lesson) => {
       const { data, error: accessError } = await client.rpc('can_access_lesson', { p_lesson: lesson.id });
       return [lesson.id, !accessError && data === true] as const;
@@ -207,7 +238,7 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
   const prevLesson = activeIndex > 0 ? lessons[activeIndex - 1] : null;
   const nextLesson = activeIndex >= 0 && activeIndex < lessons.length - 1 ? lessons[activeIndex + 1] : null;
 
-  if (!authReady || loading) return <div role="status" className="mx-auto max-w-7xl px-4 py-16 text-sm text-[#c7c4d7]">Chargement de la formation…</div>;
+  if (!authReady || loading) return <CourseReaderSkeleton />;
   if (!course) return <div className="mx-auto max-w-3xl px-4 py-16"><button type="button" onClick={() => onNavigate('catalogue')} className="mb-5 text-sm text-[#4cd7f6]">← Retour au catalogue</button><div className="rounded-xl border border-[#262a33] bg-[#181c24] p-6"><h1 className="text-xl font-bold text-white">Formation indisponible</h1><p className="mt-2 text-sm text-[#a9afbf]">{error || 'Le programme n’est pas encore publié.'}</p></div></div>;
 
   return (
@@ -225,7 +256,7 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
 
           <main className="min-w-0 space-y-4">
             <section className="overflow-hidden rounded-xl border border-[#262a33] bg-[#181c24]">
-              {lessonLoading ? <div role="status" className="p-10 text-center text-sm text-[#a9afbf]">Chargement de la leçon…</div> : payload?.lesson.locked ? <div className="mx-auto max-w-lg p-8 text-center sm:p-12"><span className="material-symbols-outlined text-4xl text-[#c0c1ff]">lock</span><h2 className="mt-3 text-xl font-bold text-white">Cette leçon est verrouillée</h2><p className="mt-2 text-sm leading-6 text-[#a9afbf]">Connecte-toi avec le compte qui possède l’accès à cette formation. Tu peux aussi commencer par les leçons gratuites.</p>{!session && <form onSubmit={authenticate} className="mt-6 space-y-3 rounded-xl border border-[#31353e] bg-[#10141d] p-4 text-left"><div className="flex gap-2"><button type="button" onClick={() => setRegisterMode(false)} className={`rounded-md px-3 py-2 text-xs ${!registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Connexion</button><button type="button" onClick={() => setRegisterMode(true)} className={`rounded-md px-3 py-2 text-xs ${registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Créer un compte</button></div><div className="flex items-center gap-2 text-sm font-semibold text-white">{registerMode ? <UserPlusIcon size={19} duration={0.75} color="currentColor" /> : <UserRoundCheckIcon size={19} duration={0.75} color="currentColor" />}<span>{registerMode ? 'Cr?er un compte' : 'Connexion'}</span></div><label className="block space-y-1 text-xs text-[#a9afbf]">Courriel<input required type="email" autoComplete="email" className={inputClass} value={email} onChange={(event) => setEmail(event.target.value)} /></label><PasswordField label="Mot de passe" className={inputClass} minLength={8} autoComplete={registerMode ? 'new-password' : 'current-password'} value={password} onChange={setPassword} /><button disabled={authBusy} className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020]`}>{authBusy ? 'Patiente…' : registerMode ? 'Créer mon compte' : 'Se connecter'}</button></form>}</div> : payload && activeLesson ? <>
+              {lessonLoading ? <SkeletonStatus label="Chargement de la leçon" className="space-y-4 p-5 sm:p-7"><Skeleton className="aspect-video w-full rounded-lg bg-black/60" /><Skeleton className="h-4 w-40" /><Skeleton className="h-7 w-3/4" /><div className="space-y-2 pt-2"><Skeleton className="h-4 w-full" /><Skeleton className="h-4 w-full" /><Skeleton className="h-4 w-5/6" /><Skeleton className="h-4 w-2/3" /></div></SkeletonStatus> : payload?.lesson.locked ? <div className="mx-auto max-w-lg p-8 text-center sm:p-12"><span className="material-symbols-outlined text-4xl text-[#c0c1ff]">lock</span><h2 className="mt-3 text-xl font-bold text-white">Cette leçon est verrouillée</h2><p className="mt-2 text-sm leading-6 text-[#a9afbf]">Connecte-toi avec le compte qui possède l’accès à cette formation. Tu peux aussi commencer par les leçons gratuites.</p>{!session && <form onSubmit={authenticate} className="mt-6 space-y-3 rounded-xl border border-[#31353e] bg-[#10141d] p-4 text-left"><div className="flex gap-2"><button type="button" onClick={() => setRegisterMode(false)} className={`rounded-md px-3 py-2 text-xs ${!registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Connexion</button><button type="button" onClick={() => setRegisterMode(true)} className={`rounded-md px-3 py-2 text-xs ${registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Créer un compte</button></div><div className="flex items-center gap-2 text-sm font-semibold text-white">{registerMode ? <UserPlusIcon size={19} duration={0.75} color="currentColor" /> : <UserRoundCheckIcon size={19} duration={0.75} color="currentColor" />}<span>{registerMode ? 'Créer un compte' : 'Connexion'}</span></div><label className="block space-y-1 text-xs text-[#a9afbf]">Courriel<input required type="email" autoComplete="email" className={inputClass} value={email} onChange={(event) => setEmail(event.target.value)} /></label><PasswordField label="Mot de passe" className={inputClass} minLength={8} autoComplete={registerMode ? 'new-password' : 'current-password'} value={password} onChange={setPassword} /><button disabled={authBusy} className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020]`}>{authBusy ? 'Patiente…' : registerMode ? 'Créer mon compte' : 'Se connecter'}</button></form>}</div> : payload && activeLesson ? <>
                 {activeLesson.lesson_type === 'video' && videoUrl ? <video ref={videoRef} key={videoUrl} controls playsInline className="aspect-video w-full bg-black" src={videoUrl} onPlay={() => queueEvent('video_play', activeLesson.id)} onPause={() => queueEvent('video_pause', activeLesson.id)} onTimeUpdate={(event) => { const seconds = Math.floor(event.currentTarget.currentTime); if (session && seconds - lastProgressSave.current >= 20) { lastProgressSave.current = seconds; queueEvent('video_progress', activeLesson.id, undefined, { position_seconds: seconds }); void saveProgress(false, seconds); } }} onEnded={(event) => void saveProgress(true, event.currentTarget.currentTime)} onLoadedMetadata={(event) => { const position = payload.progress?.last_position_seconds || 0; if (position) event.currentTarget.currentTime = position; }} /> : activeLesson.lesson_type === 'video' ? <div className="grid aspect-video place-items-center bg-black/60 p-8 text-center text-sm text-[#a9afbf]">La vidéo de cette leçon n’est pas encore disponible.</div> : null}
                 <div className="space-y-4 p-5 sm:p-7"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs uppercase tracking-wide text-[#4cd7f6]">{activeLesson.lesson_type} · {activeLesson.duration_minutes} min</p><h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">{activeLesson.title}</h2>{activeLesson.summary && <p className="mt-2 max-w-3xl text-sm leading-6 text-[#a9afbf]">{activeLesson.summary}</p>}</div>{session && <button type="button" onClick={() => void saveProgress(true, videoRef.current?.currentTime || 0)} className={`${buttonClass} bg-[#262a33] text-white`}><span className="material-symbols-outlined text-base">check</span>Marquer comme terminée</button>}</div>
                   {payload.content?.body_md && <article className="whitespace-pre-wrap rounded-lg border border-[#31353e] bg-[#10141d] p-4 text-sm leading-7 text-[#dfe2ee]">{payload.content.body_md}</article>}

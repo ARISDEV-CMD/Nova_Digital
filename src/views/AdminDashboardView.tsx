@@ -21,7 +21,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({ onNaviga
 
   return (
     <div className="flex flex-col w-full text-[#dfe2ee]">
-      <div role="status" className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-100">Mode demonstration: chiffres et etats ci-dessous sont des exemples locaux. Aucun paiement ni service cloud n\u2019est connecte.</div>
+      <div role="status" className="mb-6 rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-100">Mode démonstration : les chiffres et états ci-dessous sont des exemples locaux. Aucun paiement ni service cloud n’est connecté.</div>
       {/* Header & Quick Action Buttons */}
       <section className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-[#262a33]">
         <div className="flex flex-col gap-2 max-w-2xl">

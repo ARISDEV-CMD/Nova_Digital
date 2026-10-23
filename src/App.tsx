@@ -7,6 +7,7 @@ import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar.tsx';
 import { Footer } from './components/Footer.tsx';
 import { AdminLayout } from './components/AdminLayout.tsx';
+import { PageSkeleton } from './components/feedback/Skeleton.tsx';
 import { INITIAL_PROMOS, OrderRecord } from './data/mock-data.ts';
 const HomeView = lazy(() => import('./views/HomeView.tsx').then((module) => ({ default: module.HomeView })));
 const CatalogView = lazy(() => import('./views/CatalogView.tsx').then((module) => ({ default: module.CatalogView })));
@@ -159,13 +160,13 @@ export default function App() {
       if (existing < 0) return [...prev, { product, licenseTier, priceEur: price, quantity: 1 }];
       return prev.map((item, index) => index === existing ? { ...item, quantity: (item.quantity || 1) + 1 } : item);
     });
-    setCartToast({ message: `${product.title} a ete ajoute au panier.`, kind: 'added' });
+    setCartToast({ message: `${product.title} a été ajouté au panier.`, kind: 'added' });
   };
 
   const handleRemoveFromCart = (index: number) => {
     const item = cartItems[index];
     setCartItems((prev) => prev.filter((_, i) => i !== index));
-    if (item) setCartToast({ message: `${item.product.title} a ete retire du panier.`, kind: 'removed' });
+    if (item) setCartToast({ message: `${item.product.title} a été retiré du panier.`, kind: 'removed' });
   };
 
   useEffect(() => {
@@ -208,7 +209,7 @@ export default function App() {
   if (isAdminView) {
     return (
       <AdminLayout currentView={currentView} onNavigate={handleNavigate}>
-        <Suspense fallback={<div className="p-8 text-sm text-[#c7c4d7]" role="status">Chargement de la vue...</div>}>
+        <Suspense fallback={<PageSkeleton label="Chargement de la console" />}>
         {currentView === 'admin-dashboard' && (
           <AdminDashboardView onNavigate={handleNavigate} />
         )}
@@ -238,13 +239,13 @@ export default function App() {
       />
 
       <main className="w-full pt-20 flex-1 bg-[#0f131c]">
-        <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-16 text-sm text-[#c7c4d7]" role="status">Chargement de la page...</div>}>
+        <Suspense fallback={<PageSkeleton />}>
         <div key={`${currentView}-${currentView === 'produit' ? selectedProductId : ''}`} className="page-transition">
-        {productsLoading && <div role="status" className="mx-auto max-w-7xl px-4 py-3 text-sm text-[#c7c4d7]">Chargement du catalogue Nova Digital…</div>}
         {productsError && <div role="alert" className="mx-auto max-w-7xl px-4 py-3 text-sm text-amber-100">{productsError}</div>}
         {currentView === 'accueil' && (
           <HomeView
             products={products}
+            loading={productsLoading}
             onNavigate={handleNavigate}
             onAddToCart={handleAddToCart}
             currency={currency}
@@ -256,12 +257,14 @@ export default function App() {
             key={catalogCategory}
             initialCategory={catalogCategory}
             products={products}
+            loading={productsLoading}
             onNavigate={handleNavigate}
             onAddToCart={handleAddToCart}
             currency={currency}
           />
         )}
 
+        {currentView === 'produit' && productsLoading && !selectedProduct && <PageSkeleton label="Chargement de la formation" />}
         {currentView === 'produit' && (
           selectedProduct && (courseCategories.has(selectedProduct.category) ? <CourseOverviewView product={selectedProduct} canPreviewDrafts={authRole === 'admin'} onNavigate={handleNavigate} /> : <ProductDetailView
             product={selectedProduct}
@@ -300,7 +303,7 @@ export default function App() {
       </main>
 
       <Footer onNavigate={handleNavigate} />
-      {cartToast && <div role="status" aria-live="polite" className="fixed bottom-4 left-4 right-4 z-[70] mx-auto flex max-w-sm items-start gap-3 rounded-xl border border-[#4cd7f6]/40 bg-[#181c24] p-4 text-[#dfe2ee] shadow-2xl sm:bottom-6 sm:left-auto sm:right-6"><span className="material-symbols-outlined mt-0.5 text-[#4cd7f6]">{cartToast.kind === 'added' ? 'check_circle' : 'remove_shopping_cart'}</span><span className="min-w-0 flex-1 text-sm"><strong className="block">{cartToast.kind === 'added' ? 'Ajoute au panier !' : 'Retire du panier'}</strong><span className="mt-1 block text-xs text-[#c7c4d7]">{cartToast.message}</span></span><button type="button" aria-label="Fermer la notification" onClick={() => setCartToast(null)} className="text-[#908fa0] hover:text-white"><span className="material-symbols-outlined">close</span></button></div>}
+      {cartToast && <div role="status" aria-live="polite" className="fixed bottom-4 left-4 right-4 z-[70] mx-auto flex max-w-sm items-start gap-3 rounded-xl border border-[#4cd7f6]/40 bg-[#181c24] p-4 text-[#dfe2ee] shadow-2xl sm:bottom-6 sm:left-auto sm:right-6"><span className="material-symbols-outlined mt-0.5 text-[#4cd7f6]">{cartToast.kind === 'added' ? 'check_circle' : 'remove_shopping_cart'}</span><span className="min-w-0 flex-1 text-sm"><strong className="block">{cartToast.kind === 'added' ? 'Ajouté au panier !' : 'Retiré du panier'}</strong><span className="mt-1 block text-xs text-[#c7c4d7]">{cartToast.message}</span></span><button type="button" aria-label="Fermer la notification" onClick={() => setCartToast(null)} className="text-[#908fa0] hover:text-white"><span className="material-symbols-outlined">close</span></button></div>}
     </div>
   );
 }

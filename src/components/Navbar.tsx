@@ -265,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="material-symbols-outlined text-lg">close</span>
               </button>
             </form>
-            <div className="border-b border-[#31353e] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#908fa0]">{searchQuery.trim() ? 'Resultats produits' : 'Produits populaires'}</div>
+            <div className="border-b border-[#31353e] px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#908fa0]">{searchQuery.trim() ? 'Résultats produits' : 'Produits populaires'}</div>
             <div className="max-h-[min(60vh,28rem)] overflow-y-auto p-2">
               {products.filter((product) => {
                 const query = searchQuery.trim().toLocaleLowerCase();
@@ -273,7 +273,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }).slice(0, 5).map((product) => (
                 <button key={product.id} type="button" onClick={() => { onNavigate('produit', product.id); setIsSearchOpen(false); }} className="flex w-full items-center gap-3 rounded-lg p-2 text-left transition-colors hover:bg-[#262a33] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4cd7f6]">
                   <img src={product.image} alt="" className="h-12 w-14 shrink-0 rounded-md object-cover" loading="lazy" />
-                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold text-white">{product.title}</span><span className="mt-0.5 block truncate text-xs text-[#908fa0]">{product.categoryLabel} ? {product.formatLabel}</span></span>
+                  <span className="min-w-0 flex-1"><span className="block truncate text-sm font-semibold text-white">{product.title}</span><span className="mt-0.5 block truncate text-xs text-[#908fa0]">{product.categoryLabel} · {product.formatLabel}</span></span>
                   <PriceDisplay amountEur={product.priceEur} currency={currency} className="shrink-0 text-sm font-semibold text-[#4cd7f6]" />
                   <span aria-hidden="true" className="material-symbols-outlined text-base text-[#908fa0]">visibility</span>
                 </button>
@@ -283,7 +283,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 return !query || `${product.title} ${product.subtitle} ${product.description} ${product.categoryLabel} ${product.tags.join(' ')}`.toLocaleLowerCase().includes(query);
               }).length === 0 && <p className="p-5 text-center text-sm text-[#908fa0]">Aucun produit ne correspond. Essayez un autre terme.</p>}
             </div>
-            <div className="border-t border-[#31353e] p-3 text-right"><button type="button" onClick={handleSearchSubmit} className="text-xs font-semibold text-[#c0c1ff] hover:text-white">Voir tous les resultats <span aria-hidden="true">?</span></button></div>
+            <div className="border-t border-[#31353e] p-3 text-right"><button type="button" onClick={handleSearchSubmit} className="text-xs font-semibold text-[#c0c1ff] hover:text-white">Voir tous les résultats <span aria-hidden="true">?</span></button></div>
           </motion.div>
         </motion.div>
       )}

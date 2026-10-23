@@ -50,6 +50,8 @@ declare
   v_chapter_position integer;
   v_lesson_position integer;
   v_minutes integer;
+  v_expected_lessons integer;
+  v_version_label text;
   v_lesson_type public.lesson_type;
   v_body text;
   v_options jsonb;
@@ -59,13 +61,33 @@ begin
     select id, current_version_id, draft_version_id, status
       into v_course from public.courses where code = v_spec->>'code' for update;
     if not found then raise exception 'Formation pilote introuvable : %', v_spec->>'code'; end if;
-    -- A seed may be reapplied to a database where the pilot courses are already
-    -- published. Keep their published curriculum intact; the test metadata and
-    -- prices are refreshed in the block below.
+    select coalesce(sum(jsonb_array_length(value->'lessons')), 0)::integer
+      into v_expected_lessons from jsonb_array_elements(v_spec->'chapters');
+
+    -- Preserve a complete published curriculum when the seed is reapplied.
+    -- If an earlier test run published the course before adding its chapters,
+    -- create a draft version so the curriculum can be repaired and republished.
     if v_course.status = 'published' and v_course.draft_version_id is null then
-      continue;
+      if (select count(*) from public.course_chapters where version_id = v_course.current_version_id)
+            >= jsonb_array_length(v_spec->'chapters')
+        and (select count(*) from public.course_chapters ch
+          join public.course_lessons l on l.chapter_id = ch.id
+          where ch.version_id = v_course.current_version_id and l.published)
+            >= v_expected_lessons then
+        continue;
+      end if;
+
+      select (count(*) + 1)::text || '.0' into v_version_label
+        from public.course_versions where course_id = v_course.id;
+      insert into public.course_versions(course_id, version_label, changelog_md)
+        values(v_course.id, v_version_label, 'Programme de démonstration')
+        returning id into v_version;
+      update public.courses set draft_version_id = v_version where id = v_course.id;
+    else
+      v_version := coalesce(v_course.draft_version_id, v_course.current_version_id);
     end if;
-    v_version := coalesce(v_course.draft_version_id, v_course.current_version_id);
+
+    v_version := coalesce(v_version, v_course.current_version_id);
     if v_version is null or not exists(select 1 from public.course_versions where id=v_version and course_id=v_course.id and status='draft') then
       raise exception 'Version de travail manquante pour %', v_spec->>'code';
     end if;
