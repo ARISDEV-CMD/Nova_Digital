@@ -57,7 +57,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="absolute top-48 -right-20 w-[420px] h-[420px] bg-[#4cd7f6]/10 blur-[140px] rounded-full pointer-events-none"></div>
         <div className="absolute -bottom-24 -left-20 w-[400px] h-[400px] bg-[#571bc1]/30 blur-[130px] rounded-full pointer-events-none"></div>
 
-        <div className="relative max-w-7xl mx-auto px-4 lg:px-6 pt-16 pb-20 lg:pt-24 lg:pb-28 flex flex-col items-center text-center">
+        <div className="relative max-w-7xl mx-auto px-4 lg:px-6 pt-16 pb-20 lg:pt-10 lg:pb-28 flex flex-col items-center text-center">
           {/* Live Status Pill */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#262a33]/80 backdrop-blur-md mb-6 shadow-sm border border-[#31353e]/40">
             <span className="flex h-2 w-2 relative">

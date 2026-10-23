@@ -54,7 +54,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
     },
   ];
 
-  const currentPriceEur = licenseTier === 'standard' ? product.priceEur : 179;
+  const currentPriceEur = licenseTier === 'standard' ? product.priceEur : (product.agencyPriceEur ?? product.priceEur);
   const currentOldPriceEur = licenseTier === 'standard' ? product.oldPriceEur : undefined;
 
   const handleAddCart = () => {
@@ -256,9 +256,10 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
 
               <div className="mb-6 rounded-xl border border-amber-300/20 bg-amber-300/10 p-3 text-xs leading-5 text-amber-100">Fiche produit de d?monstration. Avis, ventes, disponibilit? et garanties ne sont pas encore reli?s ? des donn?es v?rifi?es.</div>
 
-              <div className="mb-6 space-y-2"><div className="flex flex-wrap items-baseline gap-3"><PriceDisplay amountEur={currentPriceEur} currency={currency} className="font-['Plus_Jakarta_Sans'] text-4xl font-extrabold tracking-tight text-white"/>{typeof currentOldPriceEur==='number'&&currentOldPriceEur>currentPriceEur&&<PriceDisplay amountEur={currentOldPriceEur} currency={currency} className="text-sm text-[#908fa0] line-through"/>}</div><p className="text-xs text-[#908fa0]">Prix indicatif de d?monstration. Le paiement n?est pas connect?.</p></div>
+              <div className="mb-6 space-y-2">{product.priceEur > 0 ? <div className="flex flex-wrap items-baseline gap-3"><PriceDisplay amountEur={currentPriceEur} currency={currency} className="font-['Plus_Jakarta_Sans'] text-4xl font-extrabold tracking-tight text-white"/>{typeof currentOldPriceEur==='number'&&currentOldPriceEur>currentPriceEur&&<PriceDisplay amountEur={currentOldPriceEur} currency={currency} className="text-sm text-[#908fa0] line-through"/>}</div> : <p className="text-sm font-semibold text-[#4cd7f6]">Prix à définir</p>}</div>
 
               {/* License Selector Segment */}
+              {product.isAvailable === false ? <div className="mb-6 rounded-xl border border-[#31353e] bg-[#0a0e16] p-4 text-xs leading-5 text-[#c7c4d7]">Cette formation est en préparation. Son contenu et son tarif seront disponibles lorsqu’ils seront prêts.</div> : <>
               <div className="space-y-3 mb-6">
                 <label className="text-xs font-bold text-white uppercase tracking-wider block">
                   SÃ©lectionnez votre type de licence :
@@ -349,6 +350,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                   <span>{addedAnimation ? 'AjoutÃ© au Panier âœ“' : 'Ajouter au Panier'}</span>
                 </button>
               </div>
+              </>}
 
               <div className="rounded-xl border border-[#31353e] bg-[#0a0e16] p-4 text-xs leading-5 text-[#c7c4d7]">Les informations de livraison et les conditions de licence devront ?tre confirm?es avant mise en ligne. Aucun fichier n?est livr? depuis cette interface.</div>
             </div>

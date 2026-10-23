@@ -51,7 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center gap-2.5 group text-left focus:outline-none"
               aria-label="NovaDigital Accueil"
             >
-              <img src="/assets/images/logo.png" alt="" className="w-8 h-8 object-contain group-hover:scale-105 transition-transform" />
+              <img src="/assets/images/logo.png" alt="" className="w-15 h-15 object-contain group-hover:scale-105 transition-transform" />
               <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-[#dfe2ee] tracking-tight group-hover:text-[#c0c1ff] transition-colors">
                 NovaDigital
               </span>
@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Navigation Principale">
+          <nav className="hidden lg:flex items-between gap-5" aria-label="Navigation Principale">
             <button
               onClick={() => onNavigate('accueil')}
               className={`px-3.5 py-2 rounded-lg text-sm transition-colors ${
@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Catalogue
             </button>
-            <button
+            {/* <button
               onClick={() => onNavigate('catalogue-templates')}
               className="px-3.5 py-2 rounded-lg text-sm text-[#c7c4d7] hover:text-[#dfe2ee] hover:bg-[#262a33]/60 transition-colors"
             >
@@ -100,10 +100,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="px-3.5 py-2 rounded-lg text-sm text-[#c7c4d7] hover:text-[#dfe2ee] hover:bg-[#262a33]/60 transition-colors"
             >
               Offres Spéciales
-            </button>
+            </button> */}
           </nav>
 
-          {/* Actions: Currency, Search, Cart, Profile, Admin */}
+            {/* Actions: Currency, Search, Cart and Profile */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Currency selector */}
             <div className="hidden sm:flex items-center bg-[#181c24] px-2.5 py-1.5 rounded-lg border border-[#31353e]/60">
@@ -158,15 +158,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </span>
             </button>
 
-            {/* Admin Console Switcher */}
-            <button
-              onClick={() => onNavigate('admin-dashboard')}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#571bc1] hover:bg-[#8083ff] text-[#dfe2ee] rounded-lg text-xs font-semibold transition-colors shadow-sm"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-sm">admin_panel_settings</span>
-              <span>Accès Admin</span>
-            </button>
           </div>
         </div>
       </header>

@@ -171,12 +171,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             >
               Espace Client
             </button>
-            <button
-              onClick={() => onNavigate('admin-dashboard')}
-              className="hover:text-[#dfe2ee] transition-colors"
-            >
-              Console Admin
-            </button>
             <span>© 2025 NovaDigital Inc. Tous droits réservés.</span>
           </div>
         </div>

@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Product, formatPriceEur, formatPriceXaf, formatPriceUsd } from '../utils/shop-logic.ts';
 
 interface AdminProductsViewProps {
@@ -404,9 +405,9 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
       </section>
 
       {/* Slide-over Drawer for Edit/Create */}
-      {drawerOpen && (
-        <aside className="fixed inset-y-0 right-0 w-full max-w-xl bg-[#181c24] shadow-2xl z-50 flex flex-col border-l border-[#262a33] animate-in slide-in-from-right">
-          <div className="p-6 bg-[#1c2028] flex items-center justify-between border-b border-[#262a33]">
+      {drawerOpen && createPortal((
+        <aside className="fixed inset-y-0 right-0 z-50 flex h-dvh max-h-dvh w-full flex-col overflow-hidden border-l border-[#262a33] bg-[#181c24] shadow-2xl animate-in slide-in-from-right sm:max-w-xl">
+          <div className="shrink-0 p-6 bg-[#1c2028] flex items-center justify-between border-b border-[#262a33]">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-[#8083ff] text-[#0d0096] flex items-center justify-center font-bold">
                 <span className="material-symbols-outlined text-xl">tune</span>
@@ -426,7 +427,7 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-6 space-y-4 text-xs">
             <div>
               <label className="block text-[#c7c4d7] mb-1 font-semibold">Titre public du produit</label>
               <input
@@ -520,7 +521,7 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
             </div>
           </div>
 
-          <div className="p-4 bg-[#1c2028] flex items-center justify-between border-t border-[#262a33]">
+          <div className="sticky bottom-0 z-10 shrink-0 border-t border-[#262a33] bg-[#1c2028] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] flex items-center justify-between shadow-[0_-8px_20px_rgba(10,14,22,0.35)]">
             <button
               onClick={() => setDrawerOpen(false)}
               className="px-4 py-2 text-[#908fa0] hover:text-white transition-colors"
@@ -539,7 +540,7 @@ export const AdminProductsView: React.FC<AdminProductsViewProps> = ({
             </button>
           </div>
         </aside>
-      )}
+      ), document.body)}
 
       {/* Sync Toast */}
       {syncToast && (

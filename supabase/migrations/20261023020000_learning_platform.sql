@@ -319,7 +319,8 @@ end $$;
 create trigger plan_publication_guard before insert or update of is_published on public.subscription_plans
   for each row execute function public.validate_plan_publication();
 
-create or replace policy pack_items_public_read on public.course_pack_items for select using (
+drop policy if exists pack_items_public_read on public.course_pack_items;
+create policy pack_items_public_read on public.course_pack_items for select using (
   exists(select 1 from public.course_packs p where p.id=pack_id and p.is_published)
   and exists(select 1 from public.courses c where c.id=course_id and c.status='published')
 );

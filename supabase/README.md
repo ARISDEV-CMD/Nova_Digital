@@ -35,9 +35,21 @@ Pour le développement local, installe Docker Desktop, puis lance `npx supabase 
 
 ## Catalogue initial
 
-La migration crée les dix catégories. Les titres exacts des 100 formations n'étaient pas fournis dans le Markdown ni dans le ZIP. Le fichier `seed/catalogue.csv` contient donc un gabarit vide ; ajoute les titres et codes approuvés avant de les importer. Aucune formation de démonstration, note, vente ou certification fictive n'est créée.
+Le catalogue éditorial fourni contient 100 titres répartis dans les dix catégories prévues. `seed/catalogue.csv` conserve les codes, titres et slugs approuvés ; `seed.sql`, exécuté avec les migrations, les insère comme brouillons non publiés. Les descriptions, niveaux, durées, prix et contenus restent à compléter. Aucune note, vente ou certification fictive n'est créée.
 
 Une formation ne peut être publiée que si elle a une version publiée, une couverture, une source de contenu vérifiée, des objectifs, une description, une durée, un aperçu gratuit et une offre tarifée. Les droits de distribution doivent être validés avant publication.
+
+## Console des formations
+
+La vue Admin > Formations & tarifs lit les formations, les offres et les prix directement dans Supabase. Configure `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` dans `.env`, crée un utilisateur dans Supabase Auth, puis attribue-lui le rôle `admin` dans `profiles` depuis le SQL Editor :
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = (select id from auth.users where email = 'admin@exemple.com');
+```
+
+La console accepte les prix XAF (francs entiers) et EUR (deux décimales) ; enregistrer un prix crée une offre de formation inactive, sans publier la formation. La clé `service_role` ne doit jamais être utilisée dans le navigateur.
 
 ## Frontière d'intégration
 

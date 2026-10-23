@@ -8,9 +8,13 @@ export interface Product {
   sku: string;
   title: string;
   subtitle: string;
-  category: 'boilerplates' | 'ui' | 'formations' | 'ebooks' | 'presets';
+  category: 'boilerplates' | 'ui' | 'formations' | 'ebooks' | 'presets'
+    | 'ai_automation' | 'web_development' | 'design_visual' | 'digital_marketing'
+    | 'video_content' | 'productivity' | 'data_bi' | 'cybersecurity'
+    | 'entrepreneurship' | 'career';
   categoryLabel: string;
   priceEur: number;
+  agencyPriceEur?: number;
   oldPriceEur?: number;
   rating: number;
   reviewCount: number;
@@ -24,6 +28,8 @@ export interface Product {
   description: string;
   githubRepo?: string;
   isDraft?: boolean;
+  isAvailable?: boolean;
+  courseStatus?: string;
 }
 
 export interface CartItem {
@@ -157,7 +163,13 @@ export function filterCatalogProducts(
   }
 
   if (options.category && options.category !== 'all') {
-    list = list.filter((p) => p.category === options.category);
+    list = list.filter((p) => options.category === 'formations'
+      ? p.category === 'formations' || [
+        'ai_automation', 'web_development', 'design_visual', 'digital_marketing',
+        'video_content', 'productivity', 'data_bi', 'cybersecurity',
+        'entrepreneurship', 'career',
+      ].includes(p.category)
+      : p.category === options.category);
   }
 
   if (typeof options.maxPrice === 'number') {

@@ -17,11 +17,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   children,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const navigate = (view: string) => { onNavigate(view); setMobileMenuOpen(false); };
   return (
-    <div className="min-h-screen bg-[#0f131c] text-[#dfe2ee] flex">
+    <div className="min-h-screen w-full min-w-0 overflow-x-hidden bg-[#0f131c] text-[#dfe2ee] flex">
       {/* Left Sidebar */}
-      <aside className={`fixed left-0 top-0 h-full w-72 bg-[#181c24] z-50 flex flex-col justify-between py-6 border-r border-[#262a33] shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-transform md:translate-x-0 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
+      <aside className={`fixed left-0 top-0 z-50 flex h-dvh w-72 flex-col justify-between border-r border-[#262a33] bg-[#181c24] py-6 shadow-[0_1px_8px_rgba(0,0,0,0.04)] transition-transform duration-200 ${mobileMenuOpen ? 'translate-x-0' : sidebarCollapsed ? '-translate-x-full' : '-translate-x-full md:translate-x-0'}`}>
         <div className="flex flex-col gap-6">
           {/* Logo & Title */}
           <div className="px-6 flex items-center gap-3">
@@ -41,16 +42,16 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <div className="flex items-center justify-between text-xs">
               <span className="text-[#c7c4d7] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#4cd7f6] animate-pulse"></span>
-                Mode de demonstration
+                Boutique & promotions
               </span>
               <span className="font-['JetBrains_Mono'] text-[#4cd7f6] font-bold">DEMO</span>
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-[#c7c4d7] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#8083ff]"></span>
-                Backend
+                Formations
               </span>
-              <span className="font-['JetBrains_Mono'] text-[#c0c1ff] font-bold">NON CONNECTE</span>
+              <span className="font-['JetBrains_Mono'] text-[#c0c1ff] font-bold">SUPABASE</span>
             </div>
           </div>
 
@@ -92,6 +93,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               Codes Promo & Rabais
             </button>
 
+            <button
+              onClick={() => navigate('admin-formations')}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left ${
+                currentView === 'admin-formations'
+                  ? 'bg-[#8083ff] text-[#0d0096] font-bold shadow-[0_0_12px_rgba(128,131,255,0.25)]'
+                  : 'text-[#c7c4d7] hover:bg-[#262a33] hover:text-white'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">school</span>
+              Formations & tarifs
+            </button>
+
             <div className="h-px bg-[#262a33] my-2"></div>
 
             <button
@@ -117,7 +130,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <div className="p-3 rounded-xl bg-[#1c2028] flex items-center justify-between border border-[#31353e]/60">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 rounded-full bg-[#4cd7f6]"></div>
-              <span className="text-xs text-[#c7c4d7]">Frontend demo</span>
+              <span className="text-xs text-[#c7c4d7]">{currentView === 'admin-formations' ? 'Catalogue formations' : 'Boutique'}</span>
             </div>
             <span className="font-['JetBrains_Mono'] text-xs text-[#908fa0]">DEMO</span>
           </div>
@@ -126,11 +139,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
       {mobileMenuOpen && <button type="button" aria-label="Fermer le menu" onClick={() => setMobileMenuOpen(false)} className="fixed inset-0 z-40 bg-black/60 md:hidden" />}
       {/* Main Content Pane with Fixed Header */}
-      <div className="md:pl-72 flex flex-col flex-1 min-h-screen">
+      <div className={`flex min-h-screen min-w-0 flex-1 flex-col transition-[padding] duration-200 ${sidebarCollapsed ? '' : 'md:pl-72'}`}>
         {/* Admin Top Header */}
-        <header className="fixed top-0 left-0 md:left-72 right-0 h-16 bg-[#0f131c]/80 backdrop-blur-xl z-40 flex items-center justify-between px-3 md:px-8 border-b border-[#262a33]">
+        <header className={`fixed top-0 right-0 z-40 flex h-16 items-center justify-between border-b border-[#262a33] bg-[#0f131c]/80 px-3 backdrop-blur-xl transition-[left] duration-200 md:px-8 ${sidebarCollapsed ? 'left-0' : 'left-0 md:left-72'}`}>
           <div className="flex items-center gap-2 md:gap-6">
-            <button type="button" aria-label="Ouvrir le menu" onClick={() => setMobileMenuOpen(true)} className="md:hidden p-2 rounded-lg hover:bg-[#262a33]"><span className="material-symbols-outlined">menu</span></button>
+            <button type="button" aria-label="Ouvrir le menu" onClick={() => setMobileMenuOpen(true)} className="rounded-lg p-2 hover:bg-[#262a33] md:hidden"><span className="material-symbols-outlined">menu</span></button>
+            <button type="button" aria-label={sidebarCollapsed ? 'Afficher la barre latérale' : 'Masquer la barre latérale'} aria-expanded={!sidebarCollapsed} onClick={() => setSidebarCollapsed((collapsed) => !collapsed)} className="hidden rounded-lg p-2 hover:bg-[#262a33] md:inline-flex"><span className="material-symbols-outlined">{sidebarCollapsed ? 'left_panel_open' : 'left_panel_close'}</span></button>
             <div className="flex items-center gap-2 text-xs">
               <span className="text-[#908fa0]">Admin</span>
               <span className="material-symbols-outlined text-[#908fa0] text-[14px]">chevron_right</span>
@@ -164,7 +178,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         </header>
 
         {/* Content Body */}
-        <main className="w-full pt-16 flex-1 px-3 sm:px-5 md:px-8 py-5 md:py-8">
+        <main className="w-full min-w-0 flex-1 px-3 py-5 pt-16 sm:px-5 md:px-8 md:py-8">
           <div key={currentView} className="page-transition">
             {children}
           </div>

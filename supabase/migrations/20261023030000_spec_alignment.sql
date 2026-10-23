@@ -46,7 +46,7 @@ alter table public.courses
 update public.courses c set category_id=cc.id from public.course_categories cc where cc.code=c.category;
 update public.courses set code=(case courses.category when 'ai_automation' then 'AI' when 'web_development' then 'DEV'
   when 'design_visual' then 'DES' when 'digital_marketing' then 'MKT' when 'video_content' then 'VID'
-  when 'productivity' then 'BUR' when 'data_bi' then 'DAT' when 'cybersecurity' then 'CYB'
+  when 'productivity' then 'BUR' when 'data_bi' then 'DAT' when 'cybersecurity' then 'SEC'
   when 'entrepreneurship' then 'ENT' else 'CAR' end) || '-' || lpad(ranked.row_number::text,2,'0')
 from (select id, category, row_number() over (partition by category order by created_at, id) as row_number from public.courses) ranked
 where courses.id=ranked.id and courses.code is null;
@@ -66,7 +66,7 @@ begin
         when 'ai_automation' then 'AI' when 'web_development' then 'DEV'
         when 'design_visual' then 'DES' when 'digital_marketing' then 'MKT'
         when 'video_content' then 'VID' when 'productivity' then 'BUR'
-        when 'data_bi' then 'DAT' when 'cybersecurity' then 'CYB'
+        when 'data_bi' then 'DAT' when 'cybersecurity' then 'SEC'
         when 'entrepreneurship' then 'ENT' else 'CAR' end;
       select coalesce(max(substring(code from '[0-9]+$')::integer),0)+1 into v_next
         from public.courses where code like v_prefix || '-%';
@@ -173,6 +173,21 @@ create trigger course_lesson_contents_touch before update on public.course_lesso
 insert into public.course_lesson_contents(lesson_id, body_md, video_storage_path, project_instructions)
 select id, text_content, video_storage_path, project_instructions from public.course_lessons
 where text_content is not null or video_storage_path is not null or project_instructions is not null;
+
+-- Preserve legacy quiz JSON outside the learner-visible lesson metadata table.
+create table public.legacy_course_quizzes (
+  lesson_id uuid primary key references public.course_lessons(id) on delete cascade,
+  quiz_data jsonb not null,
+  preserved_at timestamptz not null default now()
+);
+insert into public.legacy_course_quizzes(lesson_id, quiz_data)
+select id, quiz from public.course_lessons where quiz is not null;
+
+-- Remove policies that still reference legacy lesson columns before dropping them.
+drop policy if exists lessons_access_read on public.course_lessons;
+drop policy if exists resources_access_read on public.course_resources;
+drop policy if exists progress_own_all on public.lesson_progress;
+
 alter table public.course_lessons drop column is_free;
 alter table public.course_lessons drop column text_content;
 alter table public.course_lessons drop column video_storage_path;
@@ -291,14 +306,14 @@ create trigger learning_entitlements_touch before update on public.learning_enti
 
 -- Preserve any learning access records created with the earlier draft schema.
 insert into public.learning_entitlements(user_id,scope,course_id,source_order_id,code_license)
-select p.user_id,'course',p.course_id,null,null from public.learning_purchases p
+select p.user_id,'course',p.course_id,null::uuid,null::public.license_tier from public.learning_purchases p
 where p.status='paid' and p.course_id is not null
 union all
-select p.user_id,'course',pi.course_id,null,null from public.learning_purchases p
+select p.user_id,'course',pi.course_id,null::uuid,null::public.license_tier from public.learning_purchases p
 join public.course_pack_items pi on pi.pack_id=p.pack_id
 where p.status='paid' and p.pack_id is not null;
 insert into public.learning_entitlements(user_id,scope,starts_at,ends_at,source_order_id)
-select user_id,'all_courses',coalesce(starts_at,now()),ends_at,null from public.subscriptions
+select user_id,'all_courses',coalesce(starts_at,now()),ends_at,null::uuid from public.subscriptions
 where status='active' and (ends_at is null or ends_at>now());
 
 create table public.course_resume (
@@ -397,6 +412,7 @@ alter table public.media_assets enable row level security;
 alter table public.course_lesson_contents enable row level security;
 alter table public.quiz_questions enable row level security;
 alter table public.quiz_answer_keys enable row level security;
+alter table public.legacy_course_quizzes enable row level security;
 alter table public.offers enable row level security;
 alter table public.offer_courses enable row level security;
 alter table public.offer_prices enable row level security;
@@ -439,6 +455,7 @@ create policy lesson_content_admin_write on public.course_lesson_contents for al
 create policy quiz_questions_access on public.quiz_questions for select using(public.can_access_lesson(lesson_id));
 create policy quiz_questions_admin_write on public.quiz_questions for all using(public.can_manage_catalog()) with check(public.can_manage_catalog());
 create policy quiz_answers_editor_write on public.quiz_answer_keys for all using(public.can_manage_catalog()) with check(public.can_manage_catalog());
+create policy legacy_quizzes_admin_read on public.legacy_course_quizzes for select using(public.can_manage_catalog());
 create policy resources_access_read on public.course_resources for select using (
   public.can_access_lesson(lesson_id) and (requires_license is null or exists(
     select 1 from public.learning_entitlements e where e.user_id=auth.uid() and e.revoked_at is null

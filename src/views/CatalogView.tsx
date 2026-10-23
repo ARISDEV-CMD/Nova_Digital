@@ -32,6 +32,8 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   const [currentPage,setCurrentPage]=useState(1);const pageSize=8;
   const filteredProducts=useMemo(()=>filterCatalogProducts(products,{search,category:selectedCategory,maxPrice,deliveryType:deliveryType==='all'?undefined:deliveryType,sort:sortOrder==='manual'?undefined:sortOrder}),[products,search,selectedCategory,maxPrice,deliveryType,sortOrder]);
   const publishedProducts=products.filter(p=>!p.isDraft);const totalPages=Math.max(1,Math.ceil(filteredProducts.length/pageSize));const visibleProducts=filteredProducts.slice((currentPage-1)*pageSize,currentPage*pageSize);const fcfaPrice=Math.round(maxPrice*EUR_TO_XAF_RATE);
+  const courseCategories=Array.from(new Map(publishedProducts.map(product=>[product.category,{id:product.category,label:product.categoryLabel}])).values());
+  const categories=[{id:'all',label:'Toutes les formations',count:publishedProducts.length},...courseCategories.map(category=>({...category,count:publishedProducts.filter(product=>product.category===category.id).length}))];
   useEffect(()=>{setCurrentPage(1)},[search,selectedCategory,maxPrice,deliveryType,sortOrder]);
   const handleResetFilters=()=>{setSearch('');setSelectedCategory(initialCategory);setMaxPrice(200);setDeliveryType('all');setSortOrder('manual')};
 
@@ -188,9 +190,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                   Catégories d'actifs
                 </h3>
                 <div className="space-y-1 pt-1">
-                  {[
-                    {id:'all',label:'Toutes les cat?gories',count:publishedProducts.length},{id:'boilerplates',label:'Boilerplates SaaS',count:publishedProducts.filter(p=>p.category==='boilerplates').length},{id:'ui',label:'Templates & UI Figma',count:publishedProducts.filter(p=>p.category==='ui').length},{id:'formations',label:'Formations vid?o',count:publishedProducts.filter(p=>p.category==='formations').length},{id:'ebooks',label:'Ebooks & guides PDF',count:publishedProducts.filter(p=>p.category==='ebooks').length},{id:'presets',label:'Presets & audio',count:publishedProducts.filter(p=>p.category==='presets').length},
-                  ].map((cat) => (
+                  {categories.map((cat) => (
                     <label
                       key={cat.id}
                       className="flex items-center justify-between group cursor-pointer p-1.5 rounded-lg hover:bg-[#1c2028] transition-colors"
