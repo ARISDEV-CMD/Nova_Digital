@@ -1,0 +1,3 @@
+-- The ten catalogue categories are inserted by the learning-platform migration.
+-- Course rows are intentionally not fabricated here: import the owner-approved
+-- catalogue CSV after its exact titles, slugs and codes are supplied.

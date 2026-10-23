@@ -1,0 +1,29 @@
+﻿project_id = "nova-digital"
+
+[functions.notchpay-webhook]
+verify_jwt = false
+
+[functions.checkout]
+verify_jwt = false
+
+[functions.verify-payment]
+verify_jwt = false
+[functions.subscription-checkout]
+verify_jwt = true
+
+[functions.course-video]
+verify_jwt = false
+
+[functions.course-purchase-checkout]
+verify_jwt = true
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+[functions.course-resource]
+verify_jwt = false
+
+[functions.course-lesson]
+verify_jwt = false
+
+[functions.lesson-progress]
+verify_jwt = true
