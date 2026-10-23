@@ -23,9 +23,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <div className="flex flex-col gap-6">
           {/* Logo & Title */}
           <div className="px-6 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#31353e] flex items-center justify-center text-[#c0c1ff] shadow-[0_0_16px_rgba(192,193,255,0.15)]">
-              <span className="material-symbols-outlined text-[24px]">terminal</span>
-            </div>
+            <img src="/assets/images/logo.png" alt="" className="w-10 h-10 object-contain" />
             <div>
               <div className="font-['Plus_Jakarta_Sans'] text-lg font-bold tracking-tight text-white">
                 NovaDigital
@@ -163,7 +161,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
         {/* Content Body */}
         <main className="w-full pt-16 flex-1 px-8 py-8">
-          {children}
+          <div key={currentView} className="page-transition">
+            {children}
+          </div>
         </main>
 
         {/* Admin Footer */}

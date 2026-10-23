@@ -150,6 +150,7 @@ export default function App() {
       />
 
       <main className="w-full pt-20 flex-1 bg-[#0f131c]">
+        <div key={`${currentView}-${currentView === 'produit' ? selectedProductId : ''}`} className="page-transition">
         {currentView === 'accueil' && (
           <HomeView
             products={products}
@@ -202,6 +203,7 @@ export default function App() {
             currency={currency}
           />
         )}
+        </div>
       </main>
 
       <Footer onNavigate={handleNavigate} />

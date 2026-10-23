@@ -42,9 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center gap-2.5 group text-left focus:outline-none"
               aria-label="NovaDigital Accueil"
             >
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#8083ff] to-[#571bc1] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-                <span className="material-symbols-outlined text-lg">terminal</span>
-              </div>
+              <img src="/assets/images/logo.png" alt="" className="w-8 h-8 object-contain group-hover:scale-105 transition-transform" />
               <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-[#dfe2ee] tracking-tight group-hover:text-[#c0c1ff] transition-colors">
                 NovaDigital
               </span>
