@@ -1,8 +1,8 @@
 -- Pilot curricula: ten original courses, each with four chapters and twelve
 -- lessons. The first two lessons are free previews; all other lesson content
 -- is protected by can_access_lesson() until a course purchase/subscription.
--- Courses stay in draft until the admin supplies a real price, cover, review,
--- and rights confirmation in the course editor.
+-- TEST DATA ONLY: the final block below assigns placeholder prices and metadata
+-- and publishes these ten pilot courses so the storefront can be exercised.
 do $pilot$
 declare
   v_catalog jsonb := $catalog$
@@ -59,8 +59,11 @@ begin
     select id, current_version_id, draft_version_id, status
       into v_course from public.courses where code = v_spec->>'code' for update;
     if not found then raise exception 'Formation pilote introuvable : %', v_spec->>'code'; end if;
+    -- A seed may be reapplied to a database where the pilot courses are already
+    -- published. Keep their published curriculum intact; the test metadata and
+    -- prices are refreshed in the block below.
     if v_course.status = 'published' and v_course.draft_version_id is null then
-      raise exception 'La formation % est déjà publiée; crée une version de travail avant de la modifier', v_spec->>'code';
+      continue;
     end if;
     v_version := coalesce(v_course.draft_version_id, v_course.current_version_id);
     if v_version is null or not exists(select 1 from public.course_versions where id=v_version and course_id=v_course.id and status='draft') then
@@ -144,3 +147,71 @@ begin
   end loop;
 end
 $pilot$;
+
+-- TEST DATA ONLY. These values are deliberately fictional and make the pilot
+-- courses visible and purchasable in a local/test storefront. Do not seed a
+-- production database with this block.
+do $pilot_test$
+declare
+  v_course record;
+  v_offer_id uuid;
+  v_version_id uuid;
+begin
+  for v_course in
+    select id, code, title, coalesce(draft_version_id, current_version_id) as version_id
+    from public.courses
+    where code in ('AI-01','DEV-01','DES-01','MKT-01','VID-01','BUR-01','DAT-01','SEC-01','ENT-01','CAR-01')
+    order by code
+  loop
+    v_version_id := v_course.version_id;
+    if v_version_id is null then
+      raise exception 'Version manquante pour la formation pilote %', v_course.code;
+    end if;
+
+    update public.courses
+    set cover_image_url = '/assets/images/logo.png',
+        cover_alt = 'Illustration de démonstration Nova Digital',
+        content_source = 'original',
+        license_notes = 'TEST UNIQUEMENT : métadonnées fictives pour le catalogue de démonstration.',
+        reviewed_at = coalesce(reviewed_at, now()),
+        rights_verified_at = coalesce(rights_verified_at, now())
+    where id = v_course.id;
+
+    insert into public.offers(kind, slug, name, description, course_id, active)
+    values (
+      'course',
+      'test-' || lower(v_course.code),
+      'TEST — ' || v_course.title,
+      'Offre fictive de démonstration. Ne pas utiliser en production.',
+      v_course.id,
+      false
+    )
+    on conflict (slug) do update
+      set name = excluded.name,
+          description = excluded.description,
+          course_id = excluded.course_id
+    returning id into v_offer_id;
+
+    insert into public.offer_prices(offer_id, currency, amount_minor)
+    values (v_offer_id, 'EUR', 100), (v_offer_id, 'XAF', 1000)
+    on conflict (offer_id, currency) do update
+      set amount_minor = excluded.amount_minor,
+          compare_at_minor = null;
+
+    update public.course_versions
+    set status = 'published', published_at = coalesce(published_at, now())
+    where id = v_version_id and status <> 'published';
+
+    perform set_config('nova.publish_course', v_course.id::text, true);
+    update public.courses
+    set current_version_id = v_version_id,
+        draft_version_id = null,
+        status = 'published'
+    where id = v_course.id;
+
+    update public.offers set active = true where id = v_offer_id;
+  end loop;
+
+  perform set_config('nova.publish_course', '', true);
+end
+$pilot_test$;

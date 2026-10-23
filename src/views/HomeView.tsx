@@ -26,7 +26,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [heroSearch, setHeroSearch] = useState('');
 
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = products
+    .filter((product) => product.courseStatus === 'published' && product.isAvailable === true)
+    .slice(0, 4);
 
   const toggleFaq = (id: string) => {
     setOpenFaq((prev) => (prev === id ? null : id));
@@ -267,7 +269,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section className="w-full bg-[#0a0e16]/60 py-16 border-y border-[#1c2028]" id="catalogue">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <SectionHeader eyebrow="S?lection Nova Digital" title="Ressources pour cr?er et lancer vos projets" description="Une s?lection de ressources num?riques pr?sent?e ? titre de d?monstration." className="mb-10" action={<Button variant="secondary" onClick={()=>onNavigate('catalogue')} trailingIcon={<span aria-hidden="true" className="material-symbols-outlined text-base">arrow_right_alt</span>}>Voir le catalogue</Button>}/>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">{featuredProducts.map(product=><ProductCard key={product.id} product={product} currency={currency} compact onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')} onQuickBuy={selected=>{onAddToCart(selected,'standard');onNavigate('checkout')}}/>)}</div>
+          {featuredProducts.length ? <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">{featuredProducts.map(product=><ProductCard key={product.id} product={product} currency={currency} compact onOpen={selected=>onNavigate('produit',selected.id)} onAddToCart={selected=>onAddToCart(selected,'standard')} onQuickBuy={selected=>{onAddToCart(selected,'standard');onNavigate('checkout')}}/>)}</div> : <div className="rounded-xl border border-dashed border-[#31353e] bg-[#181c24] p-6 text-center"><p className="text-sm text-[#c7c4d7]">Les formations pilotes sont en cours de préparation. Elles apparaîtront ici après validation de leur contenu et de leur tarif.</p><Button variant="secondary" className="mt-4" onClick={() => onNavigate('catalogue-formations')}>Voir les formations</Button></div>}
         </div>
       </section>
 
@@ -315,15 +317,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   </span>
                 </div>
                 <button
+                  disabled={featuredProducts.length < 4}
                   onClick={() => {
                     // Add all 4 products to cart with discount
                     featuredProducts.forEach((p) => onAddToCart(p, 'standard'));
                     onNavigate('checkout');
                   }}
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-[#8083ff] to-[#571bc1] hover:brightness-110 text-white text-sm font-semibold transition-all shadow-lg flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-[#8083ff] to-[#571bc1] hover:brightness-110 text-white text-sm font-semibold transition-all shadow-lg flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <span className="material-symbols-outlined text-base">shopping_cart_checkout</span>
-                  <span>Débloquer le Pack Ultime (-45%)</span>
+                  <span>{featuredProducts.length < 4 ? 'Pack bientôt disponible' : 'Débloquer le Pack Ultime (-45%)'}</span>
                 </button>
               </div>
             </div>

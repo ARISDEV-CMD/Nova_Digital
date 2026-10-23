@@ -43,6 +43,46 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastProgressSave = useRef(0);
+  const eventQueue = useRef<Record<string, unknown>[]>([]);
+  const recentActivityAt = useRef(Date.now());
+  const sessionRef = useRef(session);
+  sessionRef.current = session;
+
+  const queueEvent = (event_type: string, lesson_id?: string, active_seconds?: number, metadata?: Record<string, unknown>) => {
+    if (!sessionRef.current) return;
+    eventQueue.current.push({ course_id: courseId, lesson_id, event_type, active_seconds, metadata: metadata || {} });
+  };
+
+  const flushEvents = useCallback(async () => {
+    if (!supabase || !eventQueue.current.length) return;
+    const batch = eventQueue.current.splice(0, 50);
+    const { error: eventError } = await supabase.rpc('record_learning_events', { p_events: batch });
+    if (eventError) eventQueue.current.unshift(...batch);
+  }, []);
+
+  useEffect(() => {
+    const markActivity = () => { recentActivityAt.current = Date.now(); };
+    window.addEventListener('pointerdown', markActivity, { passive: true });
+    window.addEventListener('keydown', markActivity);
+    window.addEventListener('scroll', markActivity, { passive: true });
+    const timer = window.setInterval(() => {
+      const video = videoRef.current;
+      if (document.visibilityState === 'visible' && Date.now() - recentActivityAt.current < 120000 && video && !video.paused && session && activeLessonId) {
+        queueEvent('session_heartbeat', activeLessonId, 30);
+      }
+      void flushEvents();
+    }, 30000);
+    const onVisibility = () => { if (document.visibilityState === 'hidden') void flushEvents(); };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('pointerdown', markActivity);
+      window.removeEventListener('keydown', markActivity);
+      window.removeEventListener('scroll', markActivity);
+      document.removeEventListener('visibilitychange', onVisibility);
+      void flushEvents();
+    };
+  }, [activeLessonId, flushEvents, session]);
 
   useEffect(() => {
     if (!supabase) { setAuthReady(true); setLoading(false); setError('Supabase n’est pas configuré.'); return; }
@@ -104,6 +144,10 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
     if (lessonError || !data?.lesson) { setPayload(null); setError(lessonError?.message || 'Impossible de charger cette leçon.'); setLessonLoading(false); return; }
     const nextPayload = data as LessonPayload;
     setPayload(nextPayload);
+    if (nextPayload.lesson && !nextPayload.lesson.locked) {
+      queueEvent('lesson_opened', lessonId);
+      void flushEvents();
+    }
     if (!nextPayload.lesson.locked && nextPayload.content?.video_storage_path) {
       const { data: video, error: videoError } = await supabase.functions.invoke('course-video', { body: { lesson_id: lessonId } });
       if (videoError) setError(`Vidéo indisponible : ${videoError.message}`); else setVideoUrl(video.url);
@@ -123,12 +167,14 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
     if (!supabase || !session || !activeLessonId) return;
     const { error: saveError } = await supabase.functions.invoke('lesson-progress', { body: { lesson_id: activeLessonId, last_position_seconds: Math.floor(seconds), completed: isCompleted } });
     if (saveError) { setError(`Progression non enregistrée : ${saveError.message}`); return; }
-    if (isCompleted) { setCompleted((current) => ({ ...current, [activeLessonId]: true })); setNotice('Leçon terminée. Ta progression est enregistrée.'); }
+    if (isCompleted) { queueEvent('lesson_completed', activeLessonId); void flushEvents(); setCompleted((current) => ({ ...current, [activeLessonId]: true })); setNotice('Leçon terminée. Ta progression est enregistrée.'); }
   };
 
   const submitQuiz = async () => {
     if (!supabase || !activeLessonId || !payload) return;
     setQuizBusy(true); setError('');
+    queueEvent('quiz_submitted', activeLessonId);
+    void flushEvents();
     const { data, error: submitError } = await supabase.functions.invoke('quiz-submit', {
       body: { lesson_id: activeLessonId, answers: payload.quiz_questions.map((question) => ({ question_id: question.id, selected_option_ids: answers[question.id] || [] })) },
     });
@@ -180,7 +226,7 @@ export function CourseReaderView({ courseId, onNavigate }: { courseId: string; o
           <main className="min-w-0 space-y-4">
             <section className="overflow-hidden rounded-xl border border-[#262a33] bg-[#181c24]">
               {lessonLoading ? <div role="status" className="p-10 text-center text-sm text-[#a9afbf]">Chargement de la leçon…</div> : payload?.lesson.locked ? <div className="mx-auto max-w-lg p-8 text-center sm:p-12"><span className="material-symbols-outlined text-4xl text-[#c0c1ff]">lock</span><h2 className="mt-3 text-xl font-bold text-white">Cette leçon est verrouillée</h2><p className="mt-2 text-sm leading-6 text-[#a9afbf]">Connecte-toi avec le compte qui possède l’accès à cette formation. Tu peux aussi commencer par les leçons gratuites.</p>{!session && <form onSubmit={authenticate} className="mt-6 space-y-3 rounded-xl border border-[#31353e] bg-[#10141d] p-4 text-left"><div className="flex gap-2"><button type="button" onClick={() => setRegisterMode(false)} className={`rounded-md px-3 py-2 text-xs ${!registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Connexion</button><button type="button" onClick={() => setRegisterMode(true)} className={`rounded-md px-3 py-2 text-xs ${registerMode ? 'bg-[#262a33] text-white' : 'text-[#8f96a6]'}`}>Créer un compte</button></div><div className="flex items-center gap-2 text-sm font-semibold text-white">{registerMode ? <UserPlusIcon size={19} duration={0.75} color="currentColor" /> : <UserRoundCheckIcon size={19} duration={0.75} color="currentColor" />}<span>{registerMode ? 'Cr?er un compte' : 'Connexion'}</span></div><label className="block space-y-1 text-xs text-[#a9afbf]">Courriel<input required type="email" autoComplete="email" className={inputClass} value={email} onChange={(event) => setEmail(event.target.value)} /></label><PasswordField label="Mot de passe" className={inputClass} minLength={8} autoComplete={registerMode ? 'new-password' : 'current-password'} value={password} onChange={setPassword} /><button disabled={authBusy} className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020]`}>{authBusy ? 'Patiente…' : registerMode ? 'Créer mon compte' : 'Se connecter'}</button></form>}</div> : payload && activeLesson ? <>
-                {activeLesson.lesson_type === 'video' && videoUrl ? <video ref={videoRef} key={videoUrl} controls playsInline className="aspect-video w-full bg-black" src={videoUrl} onTimeUpdate={(event) => { const seconds = Math.floor(event.currentTarget.currentTime); if (session && seconds - lastProgressSave.current >= 20) { lastProgressSave.current = seconds; void saveProgress(false, seconds); } }} onEnded={(event) => void saveProgress(true, event.currentTarget.currentTime)} onLoadedMetadata={(event) => { const position = payload.progress?.last_position_seconds || 0; if (position) event.currentTarget.currentTime = position; }} /> : activeLesson.lesson_type === 'video' ? <div className="grid aspect-video place-items-center bg-black/60 p-8 text-center text-sm text-[#a9afbf]">La vidéo de cette leçon n’est pas encore disponible.</div> : null}
+                {activeLesson.lesson_type === 'video' && videoUrl ? <video ref={videoRef} key={videoUrl} controls playsInline className="aspect-video w-full bg-black" src={videoUrl} onPlay={() => queueEvent('video_play', activeLesson.id)} onPause={() => queueEvent('video_pause', activeLesson.id)} onTimeUpdate={(event) => { const seconds = Math.floor(event.currentTarget.currentTime); if (session && seconds - lastProgressSave.current >= 20) { lastProgressSave.current = seconds; queueEvent('video_progress', activeLesson.id, undefined, { position_seconds: seconds }); void saveProgress(false, seconds); } }} onEnded={(event) => void saveProgress(true, event.currentTarget.currentTime)} onLoadedMetadata={(event) => { const position = payload.progress?.last_position_seconds || 0; if (position) event.currentTarget.currentTime = position; }} /> : activeLesson.lesson_type === 'video' ? <div className="grid aspect-video place-items-center bg-black/60 p-8 text-center text-sm text-[#a9afbf]">La vidéo de cette leçon n’est pas encore disponible.</div> : null}
                 <div className="space-y-4 p-5 sm:p-7"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs uppercase tracking-wide text-[#4cd7f6]">{activeLesson.lesson_type} · {activeLesson.duration_minutes} min</p><h2 className="mt-1 text-xl font-bold text-white sm:text-2xl">{activeLesson.title}</h2>{activeLesson.summary && <p className="mt-2 max-w-3xl text-sm leading-6 text-[#a9afbf]">{activeLesson.summary}</p>}</div>{session && <button type="button" onClick={() => void saveProgress(true, videoRef.current?.currentTime || 0)} className={`${buttonClass} bg-[#262a33] text-white`}><span className="material-symbols-outlined text-base">check</span>Marquer comme terminée</button>}</div>
                   {payload.content?.body_md && <article className="whitespace-pre-wrap rounded-lg border border-[#31353e] bg-[#10141d] p-4 text-sm leading-7 text-[#dfe2ee]">{payload.content.body_md}</article>}
                   {payload.content?.project_instructions && <article className="whitespace-pre-wrap rounded-lg border border-[#5557a8]/40 bg-[#8083ff]/5 p-4 text-sm leading-7 text-[#dfe2ee]"><h3 className="mb-2 font-semibold text-white">Consignes du projet</h3>{payload.content.project_instructions}</article>}

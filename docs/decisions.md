@@ -19,3 +19,15 @@ Les formations utilisent `offers`, `offer_prices`, `learning_orders` et `learnin
 ## Limites du premier socle
 
 Le frontend catalogue/lecteur/espace apprenant/back-office, la soumission et correction de quiz, les rappels d'expiration, la duplication de version et le remboursement chez le fournisseur restent à implémenter. La base contient leurs points d'extension principaux, mais aucun contenu de démonstration ou donnée commerciale fictive n'est créé.
+
+## Addendum apprentissage — V1
+
+La V1 de `nova-digital-spec-addendum-apprentissage.md` s'appuie sur le schéma Supabase en place : `course_lessons`, `course_chapters`, `learning_entitlements` et `lesson_progress` restent les sources de référence (les noms génériques `lessons`, `chapters` et `entitlements` de l'addendum ne sont pas recréés). La migration `20261023060000_learning_experience_v1.sql` ajoute le journal d'activité, les plans et pauses, les réglages configurables et les fonctions serveur de rythme/statistiques.
+
+Les événements sont enregistrés uniquement pour les utilisateurs connectés. Les aperçus peuvent alimenter des événements anonymes à l'avenir, mais aucun identifiant anonyme n'est ajouté en V1. Les heartbeat ne sont envoyés que pendant la lecture vidéo visible avec une activité récente et le serveur les plafonne à 30 secondes, puis à 10 heures par formation et par jour. Le fuseau est lu dans `profiles.timezone`, défaut `Africa/Douala`.
+
+Le compteur public est masqué sous le seuil configurable `min_public_learners` (10 par défaut) ; aucune donnée nominative ni avatar n'est exposé. Les hypothèses d'effort par type de leçon sont centralisées dans `lesson_effort_minutes` et peuvent être ajustées dans la migration. Les seuils de rythme, le plafond journalier et le seuil d'activité sont dans `learning_experience_settings`.
+
+L'addendum demande de valider la V1 avant de commencer la V2. Les graphiques, avatars opt-in, rappels, notes, marque-pages, certificats et analytics formateur restent donc hors de ce jalon. La spécification principale référencée par l'addendum n'est pas présente dans le dépôt ; les migrations existantes ont servi de référence.
+
+Le code de départ permet déjà les QCM attachés aux leçons, corrigés dans `quiz-submit`. Le modèle de tentatives et les examens dédiés aux chapitres ne sont pas encore livrés par cette tranche ; ils sont un point restant avant de considérer tous les critères V1 comme satisfaits. Les tests pgTAP ajoutés vérifient la présence des fonctions et tables, mais nécessitent une base Supabase locale pour s'exécuter.

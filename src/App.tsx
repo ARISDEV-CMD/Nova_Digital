@@ -81,8 +81,8 @@ export default function App() {
           tags: [],
           techStack: [],
           description: row.short_description || '',
-          isDraft: false,
-          isAvailable: false,
+          isDraft: row.status !== 'published',
+          isAvailable: row.status === 'published' && Number(row.price_eur ?? 0) > 0,
           courseStatus: row.status,
         })));
         setProductsError('');

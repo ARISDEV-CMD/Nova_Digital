@@ -18,7 +18,7 @@ Les rôles `admin` et `editor` peuvent gérer le catalogue. Les droits de paieme
 
 1. Crée un projet Supabase et installe la CLI.
 2. Dans le dépôt, exécute `npx supabase login`, puis `npx supabase link --project-ref <project-ref>`.
-3. Applique les migrations avec `npx supabase db push --include-seed`.
+3. Applique les migrations avec `npx supabase db push`. Pour charger les données de démonstration dans un environnement de test lié, utilise `npx supabase db push --include-seed` ; ne passe pas `--include-seed` sur la base de production.
 4. Configure `NOTCHPAY_PUBLIC_KEY`, `NOTCHPAY_WEBHOOK_SECRET` et `SITE_URL` comme secrets des Edge Functions.
 5. Déploie les Edge Functions avec `npx supabase functions deploy`. Le webhook Notch Pay doit cibler `/functions/v1/notchpay-webhook`.
 
@@ -35,9 +35,9 @@ Pour le développement local, installe Docker Desktop, puis lance `npx supabase 
 
 ## Catalogue initial
 
-Le catalogue éditorial fourni contient 100 titres répartis dans les dix catégories prévues. `seed/catalogue.csv` conserve les codes, titres et slugs approuvés ; `seed.sql`, exécuté avec les migrations, les insère comme brouillons non publiés. Les descriptions, niveaux, durées, prix et contenus restent à compléter. Aucune note, vente ou certification fictive n'est créée.
+Le catalogue éditorial fourni contient 100 titres répartis dans les dix catégories prévues. `seed/catalogue.csv` conserve les codes, titres et slugs approuvés ; `seed.sql` les insère comme brouillons. `seed/pilot_curricula.sql` ajoute un programme à dix formations et leur applique des prix, une couverture et des validations fictifs pour faciliter les tests du storefront. Ces dix offres sont actives ; ces données sont réservées au développement et aux environnements de test.
 
-Une formation ne peut être publiée que si elle a une version publiée, une couverture, une source de contenu vérifiée, des objectifs, une description, une durée, un aperçu gratuit et une offre tarifée. Les droits de distribution doivent être validés avant publication.
+Une formation ne peut être publiée que si elle a une version publiée, une couverture, une source de contenu vérifiée, des objectifs, une description, une durée, un aperçu gratuit et une offre tarifée. Les droits de distribution doivent être validés avant une publication réelle. Le seed pilote renseigne ces champs pour les tests uniquement ; ne l'exécute pas sur la production.
 
 ## Console des formations
 
@@ -58,3 +58,11 @@ Les migrations et fonctions forment le socle backend. Les pages Catalogue, Déta
 La fonction `admin_revoke_learning_order` révoque l'accès et marque la commande comme remboursée ; le remboursement monétaire chez Notch Pay doit être effectué et confirmé avant son appel. Le suivi automatisé des rappels, les réponses aux quiz et la duplication guidée des versions ne sont pas encore implémentés.
 
 Ne place jamais une clé secrète Supabase ou un secret de paiement dans une variable `VITE_*`.
+
+## Expérience d'apprentissage V1
+
+La migration `20261023060000_learning_experience_v1.sql` ajoute `learning_events`, `study_plans`, `study_plan_pauses` et `learning_experience_settings`. Les calculs sont exposés par les RPC authentifiées `save_study_plan`, `set_study_plan_paused`, `course_learning_pace` et `record_learning_events`. `course_public_stats` retourne uniquement un compteur agrégé lorsque le nombre réel d'apprenants atteint `min_public_learners`.
+
+Les valeurs de configuration initiales (plafond de 10 heures quotidiennes par formation, seuil public de 10 apprenants, seuils de rythme) sont insérées sans écraser une personnalisation existante. Elles se changent dans `learning_experience_settings`. Le fuseau est `profiles.timezone`, initialisé à `Africa/Douala`.
+
+Pour appliquer la migration en développement : `npx supabase db reset`. Aucun déploiement ni envoi de paiement ou de courriel n'est effectué par les changements V1. Le journal brut doit être agrégé et purgé après 24 mois ; la tâche planifiée correspondante est à configurer avant la mise en production. La V2 (graphiques, rappels, notes, certificats et analytics) attend la validation de la V1.
