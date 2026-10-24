@@ -5,7 +5,19 @@ import { registerEmailAccount } from '../_lib/supabase-admin.ts';
 
 export default createApiHandler((request) => {
   if (!process.env.AUTH_SECRET) return Response.json({ error: 'AUTH_SECRET is not configured.' }, { status: 503 });
-  const pathname = new URL(request.url).pathname;
+  const requestUrl = new URL(request.url);
+  const rewrittenAuthPaths: Record<string, string> = {
+    '/api/auth/signin-google': '/api/auth/signin/google',
+    '/api/auth/signin-email-password': '/api/auth/signin/email-password',
+    '/api/auth/callback-google': '/api/auth/callback/google',
+    '/api/auth/callback-email-password': '/api/auth/callback/email-password',
+  };
+  const pathname = rewrittenAuthPaths[requestUrl.pathname] || requestUrl.pathname;
+  if (pathname !== requestUrl.pathname) {
+    requestUrl.pathname = pathname;
+    request = new Request(requestUrl, request);
+  }
+
   if (pathname === '/api/auth/register') return handleRegistration(request);
   if (pathname.includes('/signin/google') && (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET)) {
     return Response.json({ error: 'Google OAuth credentials are not configured.' }, { status: 503 });

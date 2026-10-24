@@ -2,6 +2,22 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
+      "source": "/api/auth/signin/google",
+      "destination": "/api/auth/signin-google"
+    },
+    {
+      "source": "/api/auth/signin/email-password",
+      "destination": "/api/auth/signin-email-password"
+    },
+    {
+      "source": "/api/auth/callback/google",
+      "destination": "/api/auth/callback-google"
+    },
+    {
+      "source": "/api/auth/callback/email-password",
+      "destination": "/api/auth/callback-email-password"
+    },
+    {
       "source": "/((?!api$|api/|assets$|assets/|favicon.ico$).*)",
       "destination": "/index.html"
     }
