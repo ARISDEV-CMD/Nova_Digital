@@ -21,6 +21,7 @@ const AdminDashboardView = lazy(() => import('./views/AdminDashboardView.tsx').t
 const AdminProductsView = lazy(() => import('./views/AdminProductsView.tsx').then((module) => ({ default: module.AdminProductsView })));
 const AdminPromosView = lazy(() => import('./views/AdminPromosView.tsx').then((module) => ({ default: module.AdminPromosView })));
 const AdminCoursesView = lazy(() => import('./views/AdminCoursesView.tsx').then((module) => ({ default: module.AdminCoursesView })));
+const PrivacyPolicyView = lazy(() => import('./views/PrivacyPolicyView.tsx').then((module) => ({ default: module.PrivacyPolicyView })));
 import { Product, CartItem, PromoCode } from './utils/shop-logic.ts';
 import { isSupabaseConfigured, supabase } from './lib/supabase.ts';
 import { getAppSession } from './lib/auth-client.ts';
@@ -334,6 +335,7 @@ export default function App() {
         {currentView === 'mon-espace-client' && (
           <LearningDashboardView onNavigate={handleNavigate} />
         )}
+        {currentView === 'politique-confidentialite' && <PrivacyPolicyView />}
         {currentView === 'not-found' && (
           <section className="mx-auto max-w-3xl px-4 py-24 text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-[#4cd7f6]">Erreur 404</p>

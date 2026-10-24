@@ -26,7 +26,8 @@ create unique index if not exists profiles_google_subject_unique_idx
   on public.profiles (google_subject) where google_subject is not null;
 
 -- Preserve existing user UUIDs and all linked purchases/progress while
--- removing the foreign-key dependency on Supabase Auth users.
+-- moving application-table foreign keys from Supabase Auth users to profiles.
+-- Keep Supabase-managed auth tables such as auth.identities untouched.
 do $$
 declare
   fk record;
@@ -38,6 +39,7 @@ begin
     from pg_constraint
     where contype = 'f'
       and confrelid = 'auth.users'::regclass
+      and connamespace = 'public'::regnamespace
   loop
     execute format('alter table %s drop constraint %I', fk.table_name, fk.conname);
 

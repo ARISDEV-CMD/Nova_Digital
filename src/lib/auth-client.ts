@@ -14,7 +14,10 @@ export type AppSession = {
 async function parseJsonResponse<T>(response: Response): Promise<T | null> {
   const contentType = response.headers.get('content-type') || '';
   if (!contentType.toLowerCase().includes('application/json')) {
-    throw new Error('Le serveur API a renvoyé une page web au lieu du résultat attendu. Redémarre le serveur de développement pour activer les routes d’authentification.');
+    const hint = import.meta.env.DEV
+      ? 'Redémarre le serveur de développement pour activer les routes API.'
+      : 'Vérifie que les routes API sont bien déployées.';
+    throw new Error(`Le serveur API a renvoyé une page web au lieu du résultat attendu. ${hint}`);
   }
   return response.json().catch(() => null) as Promise<T | null>;
 }

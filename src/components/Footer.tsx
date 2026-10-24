@@ -164,7 +164,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Visa / Mastercard
             </span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <button
+              onClick={() => onNavigate('politique-confidentialite')}
+              className="hover:text-[#dfe2ee] transition-colors"
+            >
+              Politique de confidentialité
+            </button>
             <button
               onClick={() => onNavigate('mon-espace-client')}
               className="hover:text-[#dfe2ee] transition-colors"

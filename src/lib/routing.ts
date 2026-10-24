@@ -78,6 +78,7 @@ export function parseAppRoute(pathname: string): AppRoute {
   if (normalizedPath === '/catalogue') return { view: 'catalogue', productSlug: '', catalogCategory: 'all' };
   if (normalizedPath === '/catalogue/formations') return { view: 'catalogue', productSlug: '', catalogCategory: 'formations' };
   if (normalizedPath === '/catalogue/templates') return { view: 'catalogue', productSlug: '', catalogCategory: 'boilerplates' };
+  if (normalizedPath === '/politique-de-confidentialite') return { view: 'politique-confidentialite', productSlug: '', catalogCategory: 'all' };
 
   if (segments[0] === 'catalogue' && segments[1] === 'categorie' && segments[2]) {
     return { view: 'catalogue', productSlug: '', catalogCategory: segments[2].replace(/-/g, '_') };
@@ -142,6 +143,7 @@ export function getPathForNavigation(
 
   const paths: Record<string, string> = {
     accueil: '/',
+    'politique-confidentialite': '/politique-de-confidentialite',
     'offres-speciales': '/offres-speciales',
     checkout: '/panier',
     confirmation: '/commande/confirmation',
@@ -158,6 +160,14 @@ export function getPathForNavigation(
 export type PageMetadata = { title: string; description: string; robots: string; image?: string };
 
 export function getPageMetadata(view: string, product: Product | undefined, catalogCategory: string): PageMetadata {
+  if (view === 'politique-confidentialite') {
+    return {
+      title: 'Politique de confidentialité | NovaDigital',
+      description: 'Découvrez comment NovaDigital traite et protège vos données personnelles et les données utilisées pour la connexion Google.',
+      robots: 'index,follow',
+    };
+  }
+
   if (view === 'accueil' || view === 'offres-speciales') {
     const offers = view === 'offres-speciales';
     return {
