@@ -23,21 +23,32 @@ const AdminPromosView = lazy(() => import('./views/AdminPromosView.tsx').then((m
 const AdminCoursesView = lazy(() => import('./views/AdminCoursesView.tsx').then((module) => ({ default: module.AdminCoursesView })));
 import { Product, CartItem, PromoCode } from './utils/shop-logic.ts';
 import { isSupabaseConfigured, supabase } from './lib/supabase.ts';
+import { getAppSession } from './lib/auth-client.ts';
+import {
+  applyPageMetadata,
+  findProductBySlug,
+  getPageMetadata,
+  getPathForNavigation,
+  getProductSlug,
+  parseAppRoute,
+} from './lib/routing.ts';
 
 const courseCategories = new Set(['ai_automation', 'web_development', 'design_visual', 'digital_marketing', 'video_content', 'productivity', 'data_bi', 'cybersecurity', 'entrepreneurship', 'career']);
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<string>('accueil');
+  const [currentView, setCurrentView] = useState<string>(() => parseAppRoute(window.location.pathname).view);
   const [selectedProductId, setSelectedProductId] = useState<string>('');
+  const [routeProductSlug, setRouteProductSlug] = useState<string>(() => parseAppRoute(window.location.pathname).productSlug);
+  const [locationPathname, setLocationPathname] = useState<string>(() => window.location.pathname);
   const [products, setProducts] = useState<Product[]>([]);
   const [productsLoading, setProductsLoading] = useState(true);
   const [productsError, setProductsError] = useState('');
   const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [promos, setPromos] = useState<PromoCode[]>(INITIAL_PROMOS);
   const [currency, setCurrency] = useState<'EUR' | 'USD' | 'XAF'>('EUR');
-  const [catalogCategory, setCatalogCategory] = useState('all');
+  const [catalogCategory, setCatalogCategory] = useState<string>(() => parseAppRoute(window.location.pathname).catalogCategory);
   const [authRole, setAuthRole] = useState<string | null>(null);
-  const [authResolved, setAuthResolved] = useState(!supabase);
+  const [authResolved, setAuthResolved] = useState(false);
   const navigateRef = useRef<(view: string, productId?: string) => void>(() => undefined);
   const [latestOrder, setLatestOrder] = useState<OrderRecord | null>(null);
 
@@ -59,7 +70,7 @@ export default function App() {
       } else {
         const categoryLabels: Record<string, string> = {
           ai_automation: 'Intelligence artificielle', web_development: 'Développement web',
-          design_visual: 'Design & UI/UX', digital_marketing: 'Marketing digital',
+          design_visual: 'Design graphique', digital_marketing: 'Marketing digital',
           video_content: 'Vidéo & création de contenu', productivity: 'Bureautique & productivité',
           data_bi: 'Data & Business Intelligence', cybersecurity: 'Cybersécurité',
           entrepreneurship: 'Entrepreneuriat & finances', career: 'Carrière numérique',
@@ -97,56 +108,63 @@ export default function App() {
   // Scroll to top on screen change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentView, selectedProductId]);
+  }, [currentView, selectedProductId, locationPathname]);
 
   const handleNavigate = (view: string, productId?: string) => {
-    const nextView = view.startsWith('catalogue-') || view === 'catalogue' ? 'catalogue' : view === 'offres-speciales' ? 'accueil' : view;
-    const nextCategory = view === 'catalogue-templates' ? 'boilerplates' : view === 'catalogue-formations' ? 'formations' : view === 'catalogue' ? 'all' : catalogCategory;
-    const nextProductId = productId || selectedProductId;
-    window.history.pushState({ currentView: nextView, selectedProductId: nextProductId, catalogCategory: nextCategory }, '', window.location.href);
+    const categoryRoutePrefix = 'catalogue-categorie-';
+    const requestedCategory = view.startsWith(categoryRoutePrefix) ? view.slice(categoryRoutePrefix.length) : null;
+    const nextView = view.startsWith('catalogue-') || view === 'catalogue' ? 'catalogue' : view;
+    const nextCategory = requestedCategory || (view === 'catalogue-templates' ? 'boilerplates' : view === 'catalogue-formations' ? 'formations' : view === 'catalogue' ? 'all' : catalogCategory);
+    const isProductRoute = view === 'produit' || view === 'lecteur';
+    const nextProductId = isProductRoute ? (productId || selectedProductId) : '';
+    const nextProduct = isProductRoute ? products.find((product) => product.id === nextProductId) : undefined;
+    const nextProductSlug = isProductRoute ? (nextProduct ? getProductSlug(nextProduct, products) : nextProductId) : '';
+    const nextPath = getPathForNavigation(view, nextProductId, nextProduct, nextCategory, nextProductSlug);
+
+    window.history.pushState({ currentView: nextView, selectedProductId: nextProductId, catalogCategory: nextCategory }, '', nextPath);
     setCurrentView(nextView);
     setCatalogCategory(nextCategory);
-    if (productId) setSelectedProductId(productId);
-    if (view === 'offres-speciales') setTimeout(() => document.getElementById('bundles')?.scrollIntoView({ behavior: 'smooth' }), 100);
+    setSelectedProductId(nextProductId);
+    setRouteProductSlug(nextProductSlug);
+    setLocationPathname(nextPath);
   };
 
   navigateRef.current = handleNavigate;
 
   useEffect(() => {
-    if (!supabase) { setAuthResolved(true); return; }
-    const client = supabase;
     let active = true;
-    const { data: { subscription } } = client.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT' || !session) {
-        setAuthRole(null);
-        setAuthResolved(true);
-        return;
+    getAppSession().then((session) => {
+      if (!active) return;
+      const role = session?.user.role || null;
+      setAuthRole(role);
+      setAuthResolved(true);
+      const params = new URLSearchParams(window.location.search);
+      const callbackView = params.get('auth_view');
+      const callbackCourse = params.get('auth_course') || undefined;
+      if (session && callbackView) {
+        params.delete('auth_view');
+        params.delete('auth_course');
+        const cleanUrl = `${window.location.pathname}${params.size ? `?${params}` : ''}${window.location.hash}`;
+        window.history.replaceState(window.history.state, '', cleanUrl);
+        navigateRef.current(callbackView, callbackCourse);
       }
-      if (event !== 'INITIAL_SESSION' && event !== 'SIGNED_IN') return;
-
-      // Query after the auth callback returns to avoid blocking Supabase's auth lock.
-      queueMicrotask(async () => {
-        const { data: profile, error } = await client
-          .from('profiles').select('role').eq('id', session.user.id).maybeSingle();
-        if (!active) return;
-        const role = error ? null : profile?.role || null;
-        setAuthRole(role);
-        setAuthResolved(true);
-        if (event === 'SIGNED_IN') {
-          navigateRef.current(role === 'admin' ? 'admin-dashboard' : 'mon-espace-client');
-        }
-      });
+    }).catch(() => {
+      if (!active) return;
+      setAuthRole(null);
+      setAuthResolved(true);
     });
-    return () => { active = false; subscription.unsubscribe(); };
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
     window.history.replaceState({ currentView, selectedProductId, catalogCategory }, '', window.location.href);
-    const restoreNavigation = (event: PopStateEvent) => {
-      const destination = event.state as { currentView?: string; selectedProductId?: string; catalogCategory?: string } | null;
-      setCurrentView(destination?.currentView || 'accueil');
-      setSelectedProductId(destination?.selectedProductId || '');
-      setCatalogCategory(destination?.catalogCategory || 'all');
+    const restoreNavigation = () => {
+      const destination = parseAppRoute(window.location.pathname);
+      setCurrentView(destination.view);
+      setSelectedProductId('');
+      setRouteProductSlug(destination.productSlug);
+      setCatalogCategory(destination.catalogCategory);
+      setLocationPathname(window.location.pathname);
     };
     window.addEventListener('popstate', restoreNavigation);
     return () => window.removeEventListener('popstate', restoreNavigation);
@@ -186,8 +204,26 @@ export default function App() {
   const handleCreatePromo = (created: PromoCode) => setPromos((previous) => [created, ...previous]);
   const handleTogglePromo = (code: string) => setPromos((previous) => previous.map((promo) => promo.code === code ? { ...promo, active: !promo.active } : promo));
 
-  const selectedProduct =
-    products.find((p) => p.id === selectedProductId) || products[0];
+  const selectedProduct = routeProductSlug
+    ? findProductBySlug(products, routeProductSlug)
+    : products.find((product) => product.id === selectedProductId);
+
+  useEffect(() => {
+    if (!routeProductSlug) return;
+    const product = findProductBySlug(products, routeProductSlug);
+    if (product && product.id !== selectedProductId) setSelectedProductId(product.id);
+    if (!product && !productsLoading && currentView !== 'not-found') setCurrentView('not-found');
+  }, [currentView, products, productsLoading, routeProductSlug, selectedProductId]);
+
+  useEffect(() => {
+    applyPageMetadata(getPageMetadata(currentView, selectedProduct, catalogCategory), locationPathname);
+  }, [catalogCategory, currentView, locationPathname, selectedProduct]);
+
+  useEffect(() => {
+    if (currentView !== 'offres-speciales') return;
+    const timer = window.setTimeout(() => document.getElementById('bundles')?.scrollIntoView({ behavior: 'smooth' }), 250);
+    return () => window.clearTimeout(timer);
+  }, [currentView, locationPathname]);
 
   const isAdminView =
     currentView === 'admin-dashboard' ||
@@ -242,7 +278,7 @@ export default function App() {
         <Suspense fallback={<PageSkeleton />}>
         <div key={`${currentView}-${currentView === 'produit' ? selectedProductId : ''}`} className="page-transition">
         {productsError && <div role="alert" className="mx-auto max-w-7xl px-4 py-3 text-sm text-amber-100">{productsError}</div>}
-        {currentView === 'accueil' && (
+        {(currentView === 'accueil' || currentView === 'offres-speciales') && (
           <HomeView
             products={products}
             loading={productsLoading}
@@ -264,7 +300,7 @@ export default function App() {
           />
         )}
 
-        {currentView === 'produit' && productsLoading && !selectedProduct && <PageSkeleton label="Chargement de la formation" />}
+        {(currentView === 'produit' || currentView === 'lecteur') && productsLoading && !selectedProduct && <PageSkeleton label="Chargement de la formation" />}
         {currentView === 'produit' && (
           selectedProduct && (courseCategories.has(selectedProduct.category) ? <CourseOverviewView product={selectedProduct} canPreviewDrafts={authRole === 'admin'} onNavigate={handleNavigate} /> : <ProductDetailView
             product={selectedProduct}
@@ -274,7 +310,7 @@ export default function App() {
           />)
         )}
 
-        {currentView === 'lecteur' && <CourseReaderView courseId={selectedProductId} onNavigate={handleNavigate} />}
+        {currentView === 'lecteur' && selectedProduct && <CourseReaderView courseId={selectedProduct.id} onNavigate={handleNavigate} />}
 
         {currentView === 'checkout' && (
           <CheckoutView
@@ -297,6 +333,14 @@ export default function App() {
 
         {currentView === 'mon-espace-client' && (
           <LearningDashboardView onNavigate={handleNavigate} />
+        )}
+        {currentView === 'not-found' && (
+          <section className="mx-auto max-w-3xl px-4 py-24 text-center">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#4cd7f6]">Erreur 404</p>
+            <h1 className="mt-3 text-3xl font-bold text-white">Cette page est introuvable</h1>
+            <p className="mt-3 text-sm text-[#a9afbf]">Le lien est peut-être incorrect ou la page a été déplacée.</p>
+            <button type="button" onClick={() => handleNavigate('catalogue')} className="mt-6 min-h-11 rounded-lg bg-[#8083ff] px-5 text-sm font-semibold text-[#0d1020]">Parcourir le catalogue</button>
+          </section>
         )}
         </div>
         </Suspense>

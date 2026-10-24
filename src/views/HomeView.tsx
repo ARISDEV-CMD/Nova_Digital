@@ -19,6 +19,19 @@ interface HomeViewProps {
   loading?: boolean;
 }
 
+const COURSE_CATEGORY_PRESENTATION = [
+  { id: 'ai_automation', illustration: '/assets/illustrations/categories/ai-automation.svg', color: 'text-[#4cd7f6]', title: 'Intelligence artificielle', desc: 'IA générative, assistants et automatisation' },
+  { id: 'web_development', illustration: '/assets/illustrations/categories/web-development.svg', color: 'text-[#c0c1ff]', title: 'Développement web', desc: 'Programmation, applications et bases de données' },
+  { id: 'design_visual', illustration: '/assets/illustrations/categories/design-visual.svg', color: 'text-[#d0bcff]', title: 'Design graphique', desc: 'Création visuelle, identité et outils graphiques' },
+  { id: 'digital_marketing', illustration: '/assets/illustrations/categories/digital-marketing.svg', color: 'text-[#4cd7f6]', title: 'Marketing digital', desc: 'SEO, publicité en ligne et stratégie' },
+  { id: 'video_content', illustration: '/assets/illustrations/categories/video-content.svg', color: 'text-[#c0c1ff]', title: 'Vidéo & création de contenu', desc: 'Vidéo, photographie et formats sociaux' },
+  { id: 'productivity', illustration: '/assets/illustrations/categories/productivity.svg', color: 'text-[#d0bcff]', title: 'Bureautique & productivité', desc: 'Outils de travail, organisation et méthodes' },
+  { id: 'data_bi', illustration: '/assets/illustrations/categories/data-analysis.svg', color: 'text-[#4cd7f6]', title: 'Data & analyse', desc: 'Données, visualisation et analyse décisionnelle' },
+  { id: 'cybersecurity', illustration: '/assets/illustrations/categories/cybersecurity.svg', color: 'text-[#c0c1ff]', title: 'Cybersécurité', desc: 'Sécurité, réseaux et systèmes' },
+  { id: 'entrepreneurship', illustration: '/assets/illustrations/categories/entrepreneurship.svg', color: 'text-[#d0bcff]', title: 'Entrepreneuriat & gestion', desc: 'Gestion de projet, activité et finances' },
+  { id: 'career', illustration: '/assets/illustrations/categories/career.svg', color: 'text-[#4cd7f6]', title: 'Carrière numérique', desc: 'Compétences professionnelles et évolution' },
+] as const;
+
 export const HomeView: React.FC<HomeViewProps> = ({
   products,
   onNavigate,
@@ -58,6 +71,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const featuredProducts = products
     .filter((product) => product.courseStatus === 'published' && product.isAvailable === true)
     .slice(0, 4);
+  const trainingCategoryCounts = products.reduce<Record<string, number>>((counts, product) => {
+    if (product.courseStatus === 'published' && !product.isDraft) {
+      counts[product.category] = (counts[product.category] || 0) + 1;
+    }
+    return counts;
+  }, {});
+  const trainingCategories = COURSE_CATEGORY_PRESENTATION
+    .map((category, order) => ({ ...category, order, count: trainingCategoryCounts[category.id] || 0 }))
+    .filter((category) => category.count > 0)
+    .sort((a, b) => b.count - a.count || a.order - b.order)
+    .slice(0, 5);
 
   const toggleFaq = (id: string) => {
     setOpenFaq((prev) => (prev === id ? null : id));
@@ -88,7 +112,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="absolute top-48 -right-20 w-[420px] h-[420px] bg-[#4cd7f6]/10 blur-[140px] rounded-full pointer-events-none"></div>
         <div className="absolute -bottom-24 -left-20 w-[400px] h-[400px] bg-[#571bc1]/30 blur-[130px] rounded-full pointer-events-none"></div>
 
-        <motion.div className="relative max-w-7xl mx-auto px-4 lg:px-6 pt-16 pb-20 lg:pt-10 lg:pb-28 flex flex-col items-center text-center" variants={revealStaggerVariants}>
+        <motion.div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-y-8 px-4 pt-16 pb-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:gap-x-8 lg:px-6 lg:pt-9 lg:pb-24" variants={revealStaggerVariants}>
+          <motion.div className="flex flex-col items-center text-center lg:items-start lg:text-left" variants={revealStaggerVariants}>
           {/* Live Status Pill */}
           <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#262a33]/80 backdrop-blur-md mb-6 shadow-sm border border-[#31353e]/40" variants={revealItemVariants}>
             <span className="flex h-2 w-2 relative">
@@ -106,13 +131,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
           {/* Main Headline */}
           <motion.h1 className="font-['Plus_Jakarta_Sans'] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#dfe2ee] max-w-4xl tracking-tight leading-none mb-6" variants={revealItemVariants}>
-            Accélérez vos projets tech avec des assets digitaux d’élite
+            Développez vos compétences dans tous les domaines du numérique
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p className="text-base sm:text-lg text-[#c7c4d7] max-w-2xl mx-auto mb-10 leading-relaxed" variants={revealItemVariants}>
-            Templates Next.js & Figma, formations avancées, presets créatifs et outils conçus par des experts.
-            Téléchargement instantané et licence commerciale étendue incluse.
+            Développement web, intelligence artificielle, marketing digital, création vidéo, data, cybersécurité et bien plus : des formations pratiques pour apprendre à votre rythme et appliquer vos acquis sur des projets concrets.
           </motion.p>
 
           {/* Search Console Bar */}
@@ -144,7 +168,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </motion.form>
 
           {/* Popular Tags */}
-          <motion.div className="flex flex-wrap items-center justify-center gap-2 mb-10 text-xs" variants={revealStaggerVariants}>
+          <motion.div className="mb-10 flex flex-wrap items-center justify-center gap-2 text-xs lg:justify-start" variants={revealStaggerVariants}>
             <span className="text-[#908fa0] mr-1">Populaire :</span>
             {['SaaS Starter', 'Figma Design System', 'Masterclass Next.js', 'Prompt Packs'].map((tag) => (
               <motion.button
@@ -179,8 +203,35 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </motion.button>
           </motion.div>
 
+          </motion.div>
+
+          <motion.div
+            className="relative mx-auto w-full max-w-[34rem] lg:col-start-2 lg:row-start-1 lg:max-w-none"
+            variants={revealItemVariants}
+          >
+            <motion.img
+              src="/assets/illustrations/hero-digital-studio.svg"
+              alt=""
+              aria-hidden="true"
+              className="h-auto w-full drop-shadow-[0_28px_70px_rgba(76,215,246,0.12)]"
+              animate={prefersReducedMotion ? undefined : { y: [0, -9, 0], rotate: [0, 0.5, 0] }}
+              transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute bottom-[12%] left-[2%] rounded-xl border border-[#4cd7f6]/20 bg-[#101722]/90 px-3 py-2 shadow-xl backdrop-blur-md sm:left-[5%]"
+              initial={false}
+              animate={prefersReducedMotion ? undefined : { y: [0, -5, 0] }}
+              transition={{ duration: 4.5, ease: 'easeInOut', repeat: Infinity, delay: 0.4 }}
+            >
+              <span className="flex items-center gap-2 text-[11px] font-medium text-[#dfe2ee]">
+                <span className="h-2 w-2 rounded-full bg-[#4cd7f6] shadow-[0_0_12px_#4cd7f6]" />
+                Vos idées, prêtes à lancer
+              </span>
+            </motion.div>
+          </motion.div>
+
           {/* Reassurance Strip */}
-          <motion.div className="mt-14 pt-6 w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-[#1c2028]" variants={revealStaggerVariants}>
+          <motion.div className="col-span-full mt-2 grid w-full grid-cols-1 gap-4 border-t border-[#1c2028] pt-6 sm:grid-cols-3" variants={revealStaggerVariants}>
             <motion.div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-[#181c24]/50 border border-[#31353e]/30" variants={revealItemVariants}>
               <span className="material-symbols-outlined text-[#4cd7f6] text-2xl">groups</span>
               <div className="text-left">
@@ -213,84 +264,60 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <span className="font-['JetBrains_Mono'] text-xs text-[#4cd7f6] tracking-wider uppercase font-semibold">
-              Architecture d’actifs
+              Se former dans le numérique
             </span>
             <h2 className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-bold text-white mt-1">
-              Catégories Populaires
+              Catégories populaires
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-[#c7c4d7] max-w-md">
-            Une collection rigoureusement testée, nettoyée et mise à jour pour accélérer chaque étape de votre pipeline tech.
+            Explore des formations concrètes dans les domaines du numérique.
           </p>
         </div>
 
         <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" variants={revealStaggerVariants}>
-          {[
-            {
-              icon: 'layers',
-              color: 'text-[#c0c1ff]',
-              title: 'Templates & UI Kits',
-              desc: 'Next.js 15, Tailwind, React & Figma',
-              count: '320 assets',
-              cat: 'ui',
-            },
-            {
-              icon: 'smart_display',
-              color: 'text-[#4cd7f6]',
-              title: 'Formations & Vidéos',
-              desc: 'Masterclasses pratiques & code-alongs',
-              count: '85 heures',
-              cat: 'formations',
-            },
-            {
-              icon: 'menu_book',
-              color: 'text-[#d0bcff]',
-              title: 'E-books & Guides',
-              desc: 'Playbooks d’ingénierie & solopreneuriat',
-              count: '48 manuels',
-              cat: 'ebooks',
-            },
-            {
-              icon: 'rocket_launch',
-              color: 'text-[#e1e0ff]',
-              title: 'Boilerplates SaaS',
-              desc: 'Auth, Stripe, Emailing prêt en 1h',
-              count: '19 stacks',
-              cat: 'boilerplates',
-            },
-            {
-              icon: 'graphic_eq',
-              color: 'text-[#4cd7f6]',
-              title: 'Presets & Audio',
-              desc: 'Shaders 3D, UI SFX & assets motion',
-              count: '140 packs',
-              cat: 'presets',
-            },
-          ].map((cat, idx) => (
+          {loading ? Array.from({ length: 5 }, (_, index) => (
+            <div key={index} aria-hidden="true" className="min-h-[220px] animate-pulse rounded-xl border border-[#262a33] bg-[#181c24] p-6">
+              <div className="h-12 w-12 rounded-lg bg-[#262a33]" />
+              <div className="mt-6 h-4 w-3/4 rounded bg-[#262a33]" />
+              <div className="mt-3 h-3 w-full rounded bg-[#262a33]" />
+              <div className="mt-10 h-3 w-1/2 rounded bg-[#262a33]" />
+            </div>
+          )) : trainingCategories.length ? trainingCategories.map((category) => (
             <motion.button
-              key={idx}
-              onClick={() => onNavigate('catalogue')}
-              className="group p-6 rounded-xl bg-[#181c24] hover:bg-[#1c2028] transition-all shadow-sm flex flex-col justify-between min-h-[220px] border border-[#262a33] text-left hover:border-[#8083ff]/40"
-             variants={revealItemVariants}>
+              key={category.id}
+              type="button"
+              onClick={() => onNavigate('catalogue-categorie-' + category.id)}
+              className="group flex min-h-[220px] flex-col justify-between rounded-xl border border-[#262a33] bg-[#181c24] p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#8083ff]/40 hover:bg-[#1c2028] hover:shadow-[0_12px_32px_rgb(0_0_0_/_0.18)] motion-reduce:transform-none"
+              variants={revealItemVariants}
+              whileHover={prefersReducedMotion ? undefined : { y: -3 }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
+            >
               <div className="space-y-4">
-                <div className={`w-12 h-12 rounded-lg bg-[#262a33] flex items-center justify-center ${cat.color} group-hover:scale-110 transition-transform`}>
-                  <span className="material-symbols-outlined text-2xl">{cat.icon}</span>
+                <div className={'flex h-12 w-12 items-center justify-center rounded-lg bg-[#262a33] transition-transform group-hover:scale-110 ' + category.color}>
+                  <img src={category.illustration} alt="" aria-hidden="true" loading="lazy" width={48} height={48} className="h-12 w-12 shrink-0 object-contain" />
                 </div>
                 <div>
-                  <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white group-hover:text-[#c0c1ff] transition-colors">
-                    {cat.title}
+                  <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-white transition-colors group-hover:text-[#c0c1ff]">
+                    {category.title}
                   </h3>
-                  <p className="text-xs text-[#c7c4d7] mt-1">{cat.desc}</p>
+                  <p className="mt-1 text-xs leading-5 text-[#c7c4d7]">{category.desc}</p>
                 </div>
               </div>
-              <div className="flex items-center justify-between pt-4 border-t border-[#262a33]/60">
-                <span className="font-['JetBrains_Mono'] text-xs text-[#908fa0]">{cat.count}</span>
-                <span className="material-symbols-outlined text-[#908fa0] group-hover:text-white group-hover:translate-x-1 transition-all text-base">
+              <div className="flex items-center justify-between border-t border-[#262a33]/60 pt-4">
+                <span className="font-['JetBrains_Mono'] text-xs text-[#908fa0]">
+                  {category.count} formation{category.count > 1 ? 's' : ''}
+                </span>
+                <span aria-hidden="true" className="material-symbols-outlined text-base text-[#908fa0] transition-all group-hover:translate-x-1 group-hover:text-white">
                   arrow_forward
                 </span>
               </div>
             </motion.button>
-          ))}
+          )) : (
+            <div className="col-span-full rounded-xl border border-dashed border-[#31353e] bg-[#181c24] p-6 text-center text-sm text-[#c7c4d7]">
+              Les domaines de formation apparaîtront ici dès qu’une formation sera publiée.
+            </div>
+          )}
         </motion.div>
       </motion.section>
 
@@ -360,44 +387,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </div>
             </motion.div>
 
-            {/* Graphical Visualizer */}
+            {/* Bundle artwork */}
             <motion.div className="lg:col-span-5 flex justify-center" variants={revealItemVariants}>
-              <div className="relative w-full max-w-sm rounded-xl bg-[#262a33]/80 p-4 backdrop-blur-md shadow-2xl border border-[#31353e]">
-                <motion.div className="space-y-2" variants={revealStaggerVariants}>
-                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#c0c1ff]">code</span>
-                      <span className="text-xs font-semibold text-white">Nexus Starter Kit</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#908fa0]">69 €</span>
-                  </motion.div>
-                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#4cd7f6]">draw</span>
-                      <span className="text-xs font-semibold text-white">Design System 2024</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#908fa0]">49 €</span>
-                  </motion.div>
-                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#d0bcff]">videocam</span>
-                      <span className="text-xs font-semibold text-white">Masterclass Full-Stack</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#908fa0]">89 €</span>
-                  </motion.div>
-                  <motion.div className="p-2.5 rounded-lg bg-[#1c2028] flex items-center justify-between border border-[#31353e]/40" variants={revealItemVariants}>
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#e1e0ff]">menu_book</span>
-                      <span className="text-xs font-semibold text-white">E-book Solopreneur</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#908fa0]">29 €</span>
-                  </motion.div>
-                  <motion.div className="pt-2 flex items-center justify-between text-xs font-semibold text-white border-t border-[#31353e]" variants={revealItemVariants}>
-                    <span>Réduction Bundle (-45%)</span>
-                    <span className="text-[#4cd7f6]">-107 €</span>
-                  </motion.div>
-                </motion.div>
-              </div>
+              <motion.img
+                src="/assets/illustrations/bundle-universe.svg"
+                alt="Illustration du pack de ressources : code, design, formation et guides"
+                className="h-auto w-full max-w-lg drop-shadow-[0_24px_64px_rgba(128,131,255,0.16)]"
+                initial={false}
+                animate={prefersReducedMotion ? undefined : { y: [0, -7, 0] }}
+                transition={{ duration: 7, ease: 'easeInOut', repeat: Infinity }}
+              />
             </motion.div>
           </motion.div>
         </div>

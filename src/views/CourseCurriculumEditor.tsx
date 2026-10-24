@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { Session } from '@supabase/supabase-js';
 import { isSupabaseConfigured, supabase } from '../lib/supabase.ts';
+import { requestJson } from '../lib/auth-client.ts';
 
 type LessonType = 'video' | 'text' | 'quiz' | 'project' | 'exercise';
 type Chapter = { id: string; course_id: string; version_id: string; position: number; title: string; description: string };
@@ -26,7 +26,7 @@ const fieldClass = 'w-full rounded-lg border border-[#343a46] bg-[#10141d] px-3 
 const buttonClass = 'inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50';
 const starterQuiz = [{ prompt_md: 'Votre question', options: [{ id: 'a', label: 'Réponse A' }, { id: 'b', label: 'Réponse B' }], correct_option_ids: ['a'], explanation_md: '' }];
 
-export function CourseCurriculumEditor({ course, onClose }: { course: Course; session: Session; onClose: () => void }) {
+export function CourseCurriculumEditor({ course, onClose }: { course: Course; onClose: () => void }) {
   const [draftVersionId, setDraftVersionId] = useState(course.draft_version_id || (course.status !== 'published' ? course.current_version_id : null));
   const [metadata, setMetadata] = useState({
     short_description: course.short_description || '', description: course.description || '',
@@ -53,41 +53,24 @@ export function CourseCurriculumEditor({ course, onClose }: { course: Course; se
   const [notice, setNotice] = useState('');
 
   const load = useCallback(async () => {
-    if (!supabase) return;
     setLoading(true);
     setError('');
-    const [chapterResult, lessonResult] = await Promise.all([
-      supabase.from('course_chapters').select('id,course_id,version_id,position,title,description').eq('version_id', draftVersionId || '00000000-0000-0000-0000-000000000000').order('position'),
-      supabase.from('course_lessons').select('id,chapter_id,course_id,position,title,lesson_type,duration_minutes,summary,is_free_preview,preview_requires_login,published').eq('course_id', course.id).order('position'),
-    ]);
-    if (chapterResult.error || lessonResult.error) {
-      setError(`Impossible de charger le programme : ${(chapterResult.error || lessonResult.error)?.message}`);
-      setLoading(false);
-      return;
-    }
-    const nextChapters = (chapterResult.data || []) as Chapter[];
-    const chapterIds = new Set(nextChapters.map((chapter) => chapter.id));
-    const nextLessons = ((lessonResult.data || []) as Lesson[]).filter((lesson) => chapterIds.has(lesson.chapter_id));
-    setChapters(nextChapters);
-    setLessons(nextLessons);
-    if (!selectedChapterId || !nextChapters.some((chapter) => chapter.id === selectedChapterId)) {
-    setSelectedChapterId(nextChapters[0]?.id || '');
-    }
-    if (nextLessons.length) {
-      const ids = nextLessons.map((lesson) => lesson.id);
-      const [contentResult, quizResult] = await Promise.all([
-        supabase.from('course_lesson_contents').select('lesson_id,body_md,video_storage_path,project_instructions').in('lesson_id', ids),
-        supabase.from('quiz_questions').select('id,lesson_id,position,prompt_md,options,quiz_answer_keys(correct_option_ids,explanation_md)').in('lesson_id', ids).order('position'),
-      ]);
-      if (contentResult.error || quizResult.error) setError(`Impossible de charger le contenu des leçons : ${(contentResult.error || quizResult.error)?.message}`);
-      else {
-        setContents(Object.fromEntries((contentResult.data || []).map((row) => [row.lesson_id, row as Content])));
-        const questionsByLesson: Record<string, QuizQuestion[]> = {};
-        for (const row of (quizResult.data || []) as QuizQuestion[]) (questionsByLesson[row.lesson_id] ||= []).push(row);
-        setQuizQuestions(questionsByLesson);
-      }
-    } else { setContents({}); setQuizQuestions({}); }
-    setLoading(false);
+    try {
+      const params = new URLSearchParams({ courseId: course.id, versionId: draftVersionId || '' });
+      const result = await requestJson<{ chapters: Chapter[]; lessons: Lesson[]; contents: Content[]; quizQuestions: QuizQuestion[] }>(`/api/admin/curriculum?${params}`);
+      const nextChapters = result.chapters;
+      const chapterIds = new Set(nextChapters.map((chapter) => chapter.id));
+      const nextLessons = result.lessons.filter((lesson) => chapterIds.has(lesson.chapter_id));
+      setChapters(nextChapters);
+      setLessons(nextLessons);
+      if (!selectedChapterId || !nextChapters.some((chapter) => chapter.id === selectedChapterId)) setSelectedChapterId(nextChapters[0]?.id || '');
+      setContents(Object.fromEntries(result.contents.map((row) => [row.lesson_id, row])));
+      const questionsByLesson: Record<string, QuizQuestion[]> = {};
+      for (const row of result.quizQuestions) (questionsByLesson[row.lesson_id] ||= []).push(row);
+      setQuizQuestions(questionsByLesson);
+    } catch (loadError) {
+      setError(`Impossible de charger le programme : ${loadError instanceof Error ? loadError.message : 'erreur inconnue'}`);
+    } finally { setLoading(false); }
   }, [course.id, draftVersionId]);
 
   useEffect(() => { void load(); }, [load]);
@@ -112,162 +95,129 @@ export function CourseCurriculumEditor({ course, onClose }: { course: Course; se
   }, [selectedLessonId, contents, quizQuestions]);
 
   const createWorkingVersion = async () => {
-    if (!supabase) return;
     setSaving(true); setError(''); setNotice('');
-    const { data, error: forkError } = await supabase.rpc('admin_fork_course_version', { p_course: course.id });
-    if (forkError) setError(`Impossible de créer la version de travail : ${forkError.message}`);
-    else { setDraftVersionId(data as string); setSelectedChapterId(''); setSelectedLessonId(''); setNotice('Version de travail créée. Les changements ne touchent pas encore la version publiée.'); }
+    try {
+      const result = await requestJson<{ versionId: string }>('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'forkVersion', courseId: course.id }) });
+      setDraftVersionId(result.versionId); setSelectedChapterId(''); setSelectedLessonId(''); setNotice('Version de travail cr??e. Les changements ne touchent pas encore la version publi?e.');
+    } catch (reason) { setError(`Impossible de cr?er la version de travail : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setSaving(false);
   };
 
   const saveMetadata = async () => {
-    if (!supabase) return;
     const outcomes = metadata.learning_outcomes.split('\n').map((item) => item.trim()).filter(Boolean);
-    if (outcomes.length === 0) { setError('Ajoute au moins un objectif pédagogique.'); return; }
+    if (outcomes.length === 0) { setError('Ajoute au moins un objectif p?dagogique.'); return; }
     setSaving(true); setError(''); setNotice('');
-    const { error: saveError } = await supabase.from('courses').update({
-      short_description: metadata.short_description.trim(), description: metadata.description.trim(), description_md: metadata.description.trim(),
-      learning_outcomes: outcomes, level: metadata.level, estimated_minutes: Number(metadata.estimated_minutes) || 0,
-      cover_image_url: metadata.cover_image_url.trim() || null, content_source: metadata.content_source.trim() || null,
-      reviewed_at: metadata.reviewed ? (course.reviewed_at || new Date().toISOString()) : null,
-      rights_verified_at: metadata.rights_verified ? (course.rights_verified_at || new Date().toISOString()) : null,
-    }).eq('id', course.id);
-    if (saveError) setError(`Métadonnées non enregistrées : ${saveError.message}`);
-    else setNotice('Métadonnées éditoriales enregistrées.');
+    try {
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'saveMetadata', courseId: course.id, metadata: { ...metadata, learning_outcomes: outcomes } }) });
+      setNotice('M?tadonn?es ?ditoriales enregistr?es.');
+    } catch (reason) { setError(`M?tadonn?es non enregistr?es : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setSaving(false);
   };
 
   const publishCourse = async () => {
-    if (!supabase || !window.confirm('Publier cette version ? Les leçons publiées et gratuites serviront d’aperçu.')) return;
+    if (!window.confirm('Publier cette version ? Les le?ons publi?es et gratuites serviront d?aper?u.')) return;
     setSaving(true); setError(''); setNotice('');
-    const { error: publishError } = await supabase.rpc('admin_publish_course', { p_course: course.id });
-    if (publishError) setError(`Publication refusée : ${publishError.message}`);
-    else { setDraftVersionId(null); setNotice('Formation publiée. Le lecteur peut maintenant la proposer aux apprenants.'); }
+    try {
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'publishCourse', courseId: course.id }) });
+      setDraftVersionId(null); setNotice('Formation publi?e. Le lecteur peut maintenant la proposer aux apprenants.');
+    } catch (reason) { setError(`Publication refus?e : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setSaving(false);
   };
 
   const addChapter = async () => {
-    if (!supabase || !draftVersionId || !newChapterTitle.trim()) return;
+    if (!draftVersionId || !newChapterTitle.trim()) return;
     setSaving(true); setError(''); setNotice('');
-    const { data, error: insertError } = await supabase.from('course_chapters').insert({
-      course_id: course.id, version_id: draftVersionId, position: chapters.length + 1,
-      title: newChapterTitle.trim(), description: '',
-    }).select('id,course_id,version_id,position,title,description').single();
-    if (insertError) setError(`Le chapitre n’a pas été créé : ${insertError.message}`);
-    else { setNewChapterTitle(''); setNotice('Chapitre créé.'); setChapters((current) => [...current, data as Chapter]); setSelectedChapterId(data.id); setSelectedLessonId(''); }
+    try {
+      const result = await requestJson<{ chapter: Chapter }>('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'addChapter', courseId: course.id, versionId: draftVersionId, title: newChapterTitle.trim() }) });
+      setNewChapterTitle(''); setNotice('Chapitre cr??.'); setChapters((current) => [...current, result.chapter]); setSelectedChapterId(result.chapter.id); setSelectedLessonId('');
+    } catch (reason) { setError(`Le chapitre n?a pas ?t? cr?? : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setSaving(false);
   };
 
   const saveChapter = async (chapter: Chapter) => {
-    if (!supabase) return;
     setSaving(true); setError(''); setNotice('');
-    const { error: updateError } = await supabase.from('course_chapters').update({ title: chapter.title, description: chapter.description }).eq('id', chapter.id);
-    if (updateError) setError(`Chapitre non enregistré : ${updateError.message}`); else setNotice('Chapitre enregistré.');
+    try {
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'saveChapter', courseId: course.id, chapterId: chapter.id, title: chapter.title, description: chapter.description }) });
+      setNotice('Chapitre enregistr?.');
+    } catch (reason) { setError(`Chapitre non enregistr? : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setSaving(false);
   };
 
   const deleteChapter = async (chapter: Chapter) => {
-    if (!supabase || !window.confirm(`Supprimer « ${chapter.title} » et toutes ses leçons ?`)) return;
-    const { error: deleteError } = await supabase.from('course_chapters').delete().eq('id', chapter.id);
-    if (deleteError) setError(`Chapitre non supprimé : ${deleteError.message}`);
-    else { setSelectedLessonId(''); setNotice('Chapitre supprimé.'); await load(); }
+    if (!window.confirm(`Supprimer ? ${chapter.title} ? et toutes ses le?ons ?`)) return;
+    try {
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'deleteChapter', courseId: course.id, chapterId: chapter.id }) });
+      setSelectedLessonId(''); setNotice('Chapitre supprim?.'); await load();
+    } catch (reason) { setError(`Chapitre non supprim? : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
   };
 
   const movePosition = async (items: { id: string; position: number }[], index: number, direction: -1 | 1, table: 'course_chapters' | 'course_lessons') => {
-    if (!supabase) return;
     const otherIndex = index + direction;
     if (otherIndex < 0 || otherIndex >= items.length) return;
     const current = items[index]; const other = items[otherIndex]; const temp = items.length + 100;
+    const moves = [{ id: current.id, position: temp }, { id: other.id, position: current.position }, { id: current.id, position: other.position }];
     setSaving(true); setError('');
-    for (const [id, position] of [[current.id, temp], [other.id, current.position], [current.id, other.position]] as [string, number][]) {
-      const { error: updateError } = await supabase.from(table).update({ position }).eq('id', id);
-      if (updateError) { setError(`Impossible de changer l’ordre : ${updateError.message}`); break; }
-    }
+    try {
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'movePosition', courseId: course.id, table: table === 'course_chapters' ? 'chapters' : 'lessons', moves }) });
+    } catch (reason) { setError(`Impossible de changer l?ordre : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     await load(); setSaving(false);
   };
 
   const addLesson = async () => {
-    if (!supabase || !selectedChapterId) return;
+    if (!selectedChapterId) return;
     setSaving(true); setError(''); setNotice('');
-    const { data, error: insertError } = await supabase.from('course_lessons').insert({
-      course_id: course.id, chapter_id: selectedChapterId, position: chapterLessons.length + 1,
-      title: 'Nouvelle leçon', lesson_type: 'video', duration_minutes: 0, summary: '',
-      is_free_preview: false, preview_requires_login: false, published: false,
-    }).select('id,chapter_id,course_id,position,title,lesson_type,duration_minutes,summary,is_free_preview,preview_requires_login,published').single();
-    if (insertError) setError(`Leçon non créée : ${insertError.message}`);
-    else {
-      const { error: contentError } = await supabase.from('course_lesson_contents').upsert({ lesson_id: data.id }, { onConflict: 'lesson_id' });
-      if (contentError) { setError(`Leçon créée, mais son contenu ne peut pas être initialisé : ${contentError.message}`); setSaving(false); return; }
-      setLessons((current) => [...current, data as Lesson]); setSelectedLessonId(data.id); setNotice('Leçon créée. Complète son contenu puis enregistre-la.');
-    }
+    try {
+      const result = await requestJson<{ lesson: Lesson }>('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'addLesson', courseId: course.id, versionId: draftVersionId, chapterId: selectedChapterId }) });
+      setLessons((current) => [...current, result.lesson]); setSelectedLessonId(result.lesson.id); setNotice('Le?on cr??e. Compl?te son contenu puis enregistre-la.');
+    } catch (reason) { setError(`Le?on non cr??e : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setSaving(false);
   };
 
   const uploadVideo = async (file?: File) => {
-    if (!supabase || !file || !selectedLesson) return;
-    if (!file.type.startsWith('video/')) { setError('Choisis un fichier vidéo.'); return; }
+    if (!file || !selectedLesson) return;
+    if (!file.type.startsWith('video/')) { setError('Choisis un fichier vid?o.'); return; }
+    if (!isSupabaseConfigured || !supabase) { setError('Le stockage vidéo n’est pas configuré.'); return; }
     setUploading(true); setError(''); setNotice('');
-    const safeName = file.name.replace(/[^\p{L}\p{N}._-]+/gu, '-');
-    const path = `courses/${course.id}/${selectedLesson.id}/${crypto.randomUUID()}-${safeName}`;
-    const { error: uploadError } = await supabase.storage.from('course-content').upload(path, file, { contentType: file.type, upsert: false });
-    if (uploadError) setError(`Vidéo non envoyée : ${uploadError.message}`);
-    else { setVideoPath(path); setNotice('Vidéo envoyée dans le stockage privé. Enregistre la leçon pour l’associer.'); }
+    try {
+      const { path, token } = await requestJson<{ path: string; token: string }>('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'uploadVideo', courseId: course.id, versionId: draftVersionId, lessonId: selectedLesson.id, fileName: file.name }) });
+      const { error: uploadError } = await supabase.storage.from('course-content').uploadToSignedUrl(path, token, file, { contentType: file.type });
+      if (uploadError) throw uploadError;
+      setVideoPath(path); setNotice('Vidéo envoyée dans le stockage privé. Enregistre la leçon pour l’associer.');
+    } catch (reason) { setError(`Vidéo non envoyée : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
     setUploading(false);
   };
 
-  const saveQuiz = async (lessonId: string) => {
-    if (!supabase) return;
+  const parseQuiz = () => {
     let quiz: { prompt_md: string; options: unknown; correct_option_ids: unknown; explanation_md?: string }[];
     try {
       quiz = JSON.parse(quizJson);
       if (!Array.isArray(quiz) || quiz.some((question) => typeof question.prompt_md !== 'string' || !Array.isArray(question.options) || question.options.length < 2 || !Array.isArray(question.correct_option_ids))) throw new Error();
-    } catch { throw new Error('Le quiz doit être un tableau JSON de questions avec prompt_md, options (au moins deux choix) et correct_option_ids.'); }
-    const existing = quizQuestions[lessonId] || [];
-    const insertedIds: string[] = [];
-    for (const [index, question] of quiz.entries()) {
-      const { data, error: questionError } = await supabase.from('quiz_questions').upsert({
-        lesson_id: lessonId, position: index + 1, prompt_md: question.prompt_md, options: question.options,
-      }, { onConflict: 'lesson_id,position' }).select('id').single();
-      if (questionError) throw questionError;
-      insertedIds.push(data.id);
-      const { error: answerError } = await supabase.from('quiz_answer_keys').upsert({
-        question_id: data.id, correct_option_ids: question.correct_option_ids, explanation_md: question.explanation_md || null,
-      }, { onConflict: 'question_id' });
-      if (answerError) throw answerError;
-    }
-    const obsoleteIds = existing.map((question: any) => question.id).filter((id) => !insertedIds.includes(id));
-    if (obsoleteIds.length) {
-      const { error: deleteError } = await supabase.from('quiz_questions').delete().in('id', obsoleteIds);
-      if (deleteError) throw deleteError;
-    }
+    } catch { throw new Error('Le quiz doit ?tre un tableau JSON de questions avec prompt_md, options (au moins deux choix) et correct_option_ids.'); }
+    return quiz;
   };
 
   const saveLesson = async () => {
-    if (!supabase || !selectedLesson || !draft.title?.trim()) return;
+    if (!selectedLesson || !draft.title?.trim()) return;
     setSaving(true); setError(''); setNotice('');
-    const { error: lessonError } = await supabase.from('course_lessons').update({
-      title: draft.title.trim(), lesson_type: draft.lesson_type, duration_minutes: Math.max(0, Number(draft.duration_minutes) || 0),
-      summary: draft.summary || '', is_free_preview: Boolean(draft.is_free_preview),
-      preview_requires_login: Boolean(draft.preview_requires_login), published: Boolean(draft.published),
-    }).eq('id', selectedLesson.id);
-    if (lessonError) { setError(`Leçon non enregistrée : ${lessonError.message}`); setSaving(false); return; }
-    const { error: contentError } = await supabase.from('course_lesson_contents').upsert({
-      lesson_id: selectedLesson.id, body_md: bodyMd || null,
-      video_storage_path: videoPath || null, project_instructions: projectInstructions || null,
-    }, { onConflict: 'lesson_id' });
-    if (contentError) { setError(`Métadonnées enregistrées, mais contenu non enregistré : ${contentError.message}`); setSaving(false); return; }
-    try { if (draft.lesson_type === 'quiz') await saveQuiz(selectedLesson.id); }
-    catch (saveError) { setError(saveError instanceof Error ? saveError.message : 'Quiz non enregistré.'); setSaving(false); return; }
-    setNotice('Leçon et contenu enregistrés.');
-    await load();
+    try {
+      const quiz = draft.lesson_type === 'quiz' ? parseQuiz() : undefined;
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({
+        action: 'saveLesson', courseId: course.id, versionId: draftVersionId, lessonId: selectedLesson.id,
+        lesson: { title: draft.title.trim(), lesson_type: draft.lesson_type, duration_minutes: Math.max(0, Number(draft.duration_minutes) || 0), summary: draft.summary || '', is_free_preview: Boolean(draft.is_free_preview), preview_requires_login: Boolean(draft.preview_requires_login), published: Boolean(draft.published) },
+        bodyMd, videoPath, projectInstructions, quiz,
+      }) });
+      setNotice('Leçon et contenu enregistrés.');
+      await load();
+    } catch (reason) { setError(reason instanceof Error ? reason.message : 'Leçon non enregistrée.'); }
     setSaving(false);
   };
 
   const deleteLesson = async (lesson: Lesson) => {
-    if (!supabase || !window.confirm(`Supprimer la leçon « ${lesson.title} » ?`)) return;
-    const { error: deleteError } = await supabase.from('course_lessons').delete().eq('id', lesson.id);
-    if (deleteError) setError(`Leçon non supprimée : ${deleteError.message}`);
-    else { setSelectedLessonId(''); setNotice('Leçon supprimée.'); await load(); }
+    if (!window.confirm(`Supprimer la leçon "${lesson.title}" ?`)) return;
+    try {
+      await requestJson('/api/admin/curriculum', { method: 'POST', body: JSON.stringify({ action: 'deleteLesson', courseId: course.id, lessonId: lesson.id, versionId: draftVersionId }) });
+      setSelectedLessonId(''); setNotice('Leçon supprimée.'); await load();
+    } catch (reason) { setError(`Leçon non supprimée : ${reason instanceof Error ? reason.message : 'erreur inconnue'}`); }
   };
 
   return (

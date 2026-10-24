@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Product } from '../utils/shop-logic.ts';
 import { supabase } from '../lib/supabase.ts';
+import { requestJson } from '../lib/auth-client.ts';
 import { Skeleton, SkeletonStatus } from '../components/feedback/Skeleton.tsx';
 
 type Chapter = { id: string; position: number; title: string; description: string };
@@ -14,60 +15,25 @@ export function CourseOverviewView({ product, canPreviewDrafts = false, onNaviga
   const [details, setDetails] = useState<CourseDetails | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [loading, setLoading] = useState(Boolean(supabase && (product.courseStatus === 'published' || canPreviewDrafts)));
+  const [loading, setLoading] = useState(product.courseStatus === 'published' || canPreviewDrafts);
   const [error, setError] = useState('');
   const [weeklyHours, setWeeklyHours] = useState(3);
   const [publicStats, setPublicStats] = useState<{ visible: boolean; learners_count?: number; active_last_7_days?: number } | null>(null);
 
   useEffect(() => {
-    setDetails(null);
-    setChapters([]);
-    setLessons([]);
-    setError('');
-    if (!supabase) { setError('La connexion au catalogue est indisponible.'); setLoading(false); return; }
+    setDetails(null); setChapters([]); setLessons([]); setError('');
     if (product.courseStatus !== 'published' && !canPreviewDrafts) { setLoading(false); return; }
     setLoading(true);
-    const client = supabase;
     let active = true;
     const load = async () => {
       try {
-        const { data: course, error: courseError } = await client.from('courses')
-          .select('description_md,learning_outcomes,estimated_minutes,level,prerequisites_md,current_version_id,draft_version_id')
-          .eq('id', product.id).maybeSingle();
-        if (courseError) throw courseError;
-        if (!course) throw new Error('Formation introuvable.');
-        if (!course.current_version_id) throw new Error('Cette formation ne poss\u00e8de pas de version publi\u00e9e.');
-
-        const { data: chapterRows, error: chapterError } = await client.from('course_chapters')
-          .select('id,position,title,description').eq('course_id', product.id)
-          .eq('version_id', course.current_version_id).order('position');
-        if (chapterError) throw chapterError;
+        const params = new URLSearchParams({ courseId: product.id });
+        const result = await requestJson<{ course: CourseDetails; chapters: Chapter[]; lessons: Lesson[] }>(`/api/learning/program?${params}`);
         if (!active) return;
-        const nextChapters = (chapterRows || []) as Chapter[];
-        setDetails(course as CourseDetails);
-        setChapters(nextChapters);
-
-        const chapterIds = nextChapters.map((chapter) => chapter.id);
-        let lessonRows: Lesson[] = [];
-        if (chapterIds.length) {
-          const { data, error: lessonError } = await client.from('course_lessons')
-            .select('id,chapter_id,position,title,summary,lesson_type,duration_minutes,is_free_preview')
-            .in('chapter_id', chapterIds).eq('published', true).order('position');
-          if (lessonError) {
-            if (!active) return;
-            setLessons([]);
-            setError(`Les chapitres sont visibles, mais les leçons n’ont pas pu être chargées : ${lessonError.message}`);
-            return;
-          }
-          lessonRows = (data || []) as Lesson[];
-        }
-        if (!active) return;
-        setLessons(lessonRows);
+        setDetails(result.course); setChapters(result.chapters); setLessons(result.lessons);
       } catch (loadError) {
         if (active) setError(`Le programme n\u2019a pas pu \u00eatre charg\u00e9 : ${loadError instanceof Error ? loadError.message : 'erreur inconnue'}`);
-      } finally {
-        if (active) setLoading(false);
-      }
+      } finally { if (active) setLoading(false); }
     };
     void load();
     return () => { active = false; };

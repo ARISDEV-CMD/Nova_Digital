@@ -38,7 +38,14 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   const courseCategories=Array.from(new Map(publishedProducts.map(product=>[product.category,{id:product.category,label:product.categoryLabel}])).values());
   const categories=[{id:'all',label:'Toutes les formations',count:publishedProducts.length},...courseCategories.map(category=>({...category,count:publishedProducts.filter(product=>product.category===category.id).length}))];
   useEffect(()=>{setCurrentPage(1)},[search,selectedCategory,maxPrice,deliveryType,sortOrder]);
-  const handleResetFilters=()=>{setSearch('');setSelectedCategory(initialCategory);setMaxPrice(200);setDeliveryType('all');setSortOrder('manual')};
+  const handleCategoryChange=(category:string)=>{
+    setSelectedCategory(category);
+    if(category==='all') onNavigate('catalogue');
+    else if(category==='formations') onNavigate('catalogue-formations');
+    else if(category==='boilerplates') onNavigate('catalogue-templates');
+    else onNavigate(`catalogue-categorie-${category}`);
+  };
+  const handleResetFilters=()=>{setSearch('');handleCategoryChange(initialCategory);setMaxPrice(200);setDeliveryType('all');setSortOrder('manual')};
 
   return (
     <div className="w-full bg-[#0f131c] text-[#dfe2ee]">
@@ -203,7 +210,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                           type="radio"
                           name="category"
                           checked={selectedCategory === cat.id}
-                          onChange={() => setSelectedCategory(cat.id)}
+                          onChange={() => handleCategoryChange(cat.id)}
                           className="w-3.5 h-3.5 rounded bg-[#0a0e16] text-[#8083ff] focus:ring-0 cursor-pointer accent-[#8083ff]"
                         />
                         <span className="text-xs text-[#dfe2ee] group-hover:text-[#c0c1ff] transition-colors">

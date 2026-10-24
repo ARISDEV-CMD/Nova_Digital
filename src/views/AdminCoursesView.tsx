@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import type { Session } from '@supabase/supabase-js';
-import { UserRoundCheckIcon } from '@animateicons/react/lucide';
-import { isSupabaseConfigured, supabase } from '../lib/supabase.ts';
+import { getAppSession, requestJson, signOutApp } from '../lib/auth-client.ts';
+import type { AppSession } from '../lib/auth-client.ts';
 import { CourseCurriculumEditor } from './CourseCurriculumEditor.tsx';
-import { PasswordField } from '../components/ui/PasswordField.tsx';
 import { Skeleton, SkeletonStatus } from '../components/feedback/Skeleton.tsx';
+import { EmailAuthPanel } from '../components/auth/EmailAuthPanel.tsx';
 
 type Currency = 'XAF' | 'EUR';
 type Course = {
@@ -73,11 +72,9 @@ function formatPrice(amount: number | string, currency: Currency): string {
 }
 
 export const AdminCoursesView: React.FC = () => {
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<AppSession | null>(null);
   const [authReady, setAuthReady] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [rows, setRows] = useState<CourseRow[]>([]);
   const [search, setSearch] = useState('');
   const [prices, setPrices] = useState<Record<string, { XAF: string; EUR: string }>>({});
@@ -87,72 +84,34 @@ export const AdminCoursesView: React.FC = () => {
   const [notice, setNotice] = useState('');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
-  const loadCatalog = useCallback(async (activeSession: Session) => {
-    if (!supabase) return;
-    setLoading(true);
-    setError('');
-    setNotice('');
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles').select('role').eq('id', activeSession.user.id).maybeSingle();
-    if (profileError) {
-      setError(`Impossible de vérifier le rôle administrateur : ${profileError.message}`);
+  const loadCatalog = useCallback(async () => {
+    setLoading(true); setError(''); setNotice('');
+    try {
+      const result = await requestJson<{ rows: CourseRow[] }>('/api/admin/catalog');
+      setRows(result.rows);
+      setIsAdmin(true);
+      setPrices(Object.fromEntries(result.rows.map((row) => {
+        const xaf = row.offer?.offer_prices.find((price) => price.currency === 'XAF');
+        const eur = row.offer?.offer_prices.find((price) => price.currency === 'EUR');
+        return [row.id, { XAF: xaf ? fromMinorUnits(xaf.amount_minor, 'XAF') : '', EUR: eur ? fromMinorUnits(eur.amount_minor, 'EUR') : '' }];
+      })));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'Impossible de charger le catalogue.');
+      setRows([]);
       setIsAdmin(false);
-      setRows([]);
-      setLoading(false);
-      return;
-    }
-    if (profile?.role !== 'admin') {
-      setIsAdmin(false);
-      setRows([]);
-      setLoading(false);
-      return;
-    }
-    setIsAdmin(true);
-
-    const [{ data: courses, error: coursesError }, { data: offers, error: offersError }] = await Promise.all([
-      supabase.from('courses').select('id,code,slug,title,category,status,current_version_id,draft_version_id,description,short_description,description_md,prerequisites_md,learning_outcomes,level,estimated_minutes,cover_image_url,content_source,reviewed_at,rights_verified_at').order('code'),
-      supabase.from('offers').select('id,course_id,slug,name,active,offer_prices(currency,amount_minor,compare_at_minor)').eq('kind', 'course'),
-    ]);
-    if (coursesError || offersError) {
-      setError(`Impossible de charger le catalogue : ${(coursesError || offersError)?.message}`);
-      setRows([]);
-      setLoading(false);
-      return;
-    }
-
-    const typedCourses = (courses || []) as Course[];
-    const typedOffers = (offers || []) as CourseOffer[];
-    const nextRows = typedCourses.map((course) => ({
-      ...course,
-      offer: typedOffers.find((offer) => offer.course_id === course.id) || null,
-    }));
-    setRows(nextRows);
-    setPrices(Object.fromEntries(nextRows.map((row) => {
-      const xaf = row.offer?.offer_prices.find((price) => price.currency === 'XAF');
-      const eur = row.offer?.offer_prices.find((price) => price.currency === 'EUR');
-      return [row.id, { XAF: xaf ? fromMinorUnits(xaf.amount_minor, 'XAF') : '', EUR: eur ? fromMinorUnits(eur.amount_minor, 'EUR') : '' }];
-    })));
-    setLoading(false);
+    } finally { setLoading(false); }
   }, []);
 
   useEffect(() => {
-    if (!supabase) { setAuthReady(true); return; }
     let mounted = true;
-    supabase.auth.getSession().then(({ data }) => {
+    getAppSession().then((nextSession) => {
       if (!mounted) return;
-      setSession(data.session);
-      setAuthReady(true);
-      if (data.session) void loadCatalog(data.session);
+      setSession(nextSession); setAuthReady(true);
+      if (nextSession?.user.role === 'admin') void loadCatalog();
+    }).catch((reason) => {
+      if (mounted) { setError(reason instanceof Error ? reason.message : 'Session indisponible.'); setAuthReady(true); }
     });
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
-      setIsAdmin(false);
-      setRows([]);
-      setError('');
-      if (nextSession) queueMicrotask(() => void loadCatalog(nextSession));
-      else setLoading(false);
-    });
-    return () => { mounted = false; listener.subscription.unsubscribe(); };
+    return () => { mounted = false; };
   }, [loadCatalog]);
 
   const visibleRows = useMemo(() => {
@@ -161,97 +120,38 @@ export const AdminCoursesView: React.FC = () => {
     return rows.filter((row) => `${row.code} ${row.title} ${row.category}`.toLocaleLowerCase('fr').includes(normalized));
   }, [rows, search]);
 
-  const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!supabase) return;
-    setLoading(true);
-    setError('');
-    const { error: loginError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-    if (loginError) {
-      setError(loginError.message);
-      setLoading(false);
-    }
-  };
-
-  const handleSignOut = async () => {
-    if (!supabase) return;
-    await supabase.auth.signOut();
-    setPassword('');
-  };
+  const handleSignOut = () => { void signOutApp(); };
 
   const handleSavePrice = async (course: CourseRow) => {
-    if (!supabase) return;
-    setSavingId(course.id);
-    setError('');
-    setNotice('');
+    setSavingId(course.id); setError(''); setNotice('');
     try {
       const values = prices[course.id] || { XAF: '', EUR: '' };
       const xaf = toMinorUnits(values.XAF, 'XAF');
       const eur = toMinorUnits(values.EUR, 'EUR');
-      if (!course.offer && xaf === null && eur === null) throw new Error('Saisis au moins un prix pour créer l’offre.');
-
-      let offerId = course.offer?.id;
-      if (offerId) {
-        const { error: updateError } = await supabase.from('offers').update({ name: course.title }).eq('id', offerId);
-        if (updateError) throw updateError;
-      } else {
-        const { data: created, error: createError } = await supabase.from('offers').insert({
-          kind: 'course', slug: `formation-${course.slug}`, name: course.title, course_id: course.id, active: false,
-        }).select('id').single();
-        if (createError) throw createError;
-        offerId = created.id;
-      }
-
-      if (course.offer?.active && xaf === null && eur === null) {
-        const { error: deactivateError } = await supabase.from('offers').update({ active: false }).eq('id', offerId);
-        if (deactivateError) throw deactivateError;
-      }
-
-      for (const [currency, amount] of [['XAF', xaf], ['EUR', eur]] as const) {
-        if (amount === null) {
-          if (course.offer) {
-            const { error: deleteError } = await supabase.from('offer_prices').delete().eq('offer_id', offerId).eq('currency', currency);
-            if (deleteError) throw deleteError;
-          }
-          continue;
-        }
-        const { error: priceError } = await supabase.from('offer_prices').upsert(
-          { offer_id: offerId, currency, amount_minor: amount, compare_at_minor: null },
-          { onConflict: 'offer_id,currency' },
-        );
-        if (priceError) throw priceError;
-      }
-      setNotice(`Prix enregistrés pour ${course.code}. L’offre reste inactive tant que la formation n’est pas publiée.`);
-      if (session) await loadCatalog(session);
-    } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : 'Enregistrement impossible.');
-    } finally {
-      setSavingId(null);
-    }
+      if (!course.offer && xaf === null && eur === null) throw new Error('Saisis au moins un prix pour cr\u00e9er l\u2019offre.');
+      await requestJson('/api/admin/catalog', { method: 'POST', body: JSON.stringify({ courseId: course.id, offerId: course.offer?.id, prices: { XAF: xaf, EUR: eur } }) });
+      setNotice(`Prix enregistr\u00e9s pour ${course.code}. L\u2019offre reste inactive tant que la formation n\u2019est pas publi\u00e9e.`);
+      await loadCatalog();
+    } catch (reason) { setError(reason instanceof Error ? reason.message : 'Enregistrement impossible.'); }
+    finally { setSavingId(null); }
   };
 
-  if (!isSupabaseConfigured || !supabase) {
-    return <StatusPanel title="Supabase n’est pas configuré" message="Ajoute VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY dans le fichier .env, puis redémarre le serveur Vite." />;
-  }
+  const adminCallbackUrl = new URL('/', window.location.origin);
+  adminCallbackUrl.searchParams.set('auth_view', 'admin-formations');
 
-  if (!authReady) return <StatusPanel title="Connexion à Supabase…" message="Vérification de la session en cours." />;
+
+  if (!authReady) return <StatusPanel title="Vérification de la session…" message="Connexion sécurisée à ton compte Nova Digital." />;
 
   if (!session) {
     return (
       <div className="mx-auto max-w-xl py-8">
         <Header count={0} />
-        <form onSubmit={handleLogin} className="mt-6 space-y-4 rounded-xl border border-[#262a33] bg-[#181c24] p-6">
-          <h2 className="flex items-center gap-2 text-lg font-semibold text-white"><UserRoundCheckIcon size={21} duration={0.75} color="currentColor" />Connexion administrateur</h2>
-          <p className="text-sm text-[#a9afbf]">Connecte-toi avec le compte Supabase dont le profil a le rôle administrateur.</p>
-          <label className="block space-y-1.5 text-sm text-[#c7c4d7]">Adresse e-mail
-            <input className={inputClass} type="email" autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} required />
-          </label>
-          <PasswordField label="Mot de passe" className={inputClass} autoComplete="current-password" value={password} onChange={setPassword} />
+        <div className="mt-6 space-y-4 rounded-xl border border-[#262a33] bg-[#181c24] p-6">
+          <h2 className="text-lg font-semibold text-white">Connexion administrateur</h2>
+          <p className="text-sm text-[#a9afbf]">Connecte-toi avec l’adresse e-mail et le mot de passe, ou le compte Google associés au profil administrateur.</p>
           {error && <Alert message={error} />}
-          <button className={`${buttonClass} w-full bg-[#8083ff] text-[#0d1020] hover:brightness-110`} disabled={loading}>
-            {loading ? 'Connexion…' : 'Se connecter'}
-          </button>
-        </form>
+          <EmailAuthPanel disabled={loading} onError={setError} callbackUrl={adminCallbackUrl.toString()} />
+        </div>
       </div>
     );
   }
@@ -270,7 +170,7 @@ export const AdminCoursesView: React.FC = () => {
   }
 
   if (selectedCourse && session) {
-    return <CourseCurriculumEditor course={selectedCourse} session={session} onClose={() => setSelectedCourse(null)} />;
+    return <CourseCurriculumEditor course={selectedCourse} onClose={() => setSelectedCourse(null)} />;
   }
 
   return (
@@ -281,7 +181,7 @@ export const AdminCoursesView: React.FC = () => {
         <div className="flex flex-wrap items-center gap-3 text-xs text-[#a9afbf]">
           <span>{rows.length} formation{rows.length === 1 ? '' : 's'}</span>
           <span className="rounded-full border border-[#5557a8] bg-[#8083ff]/10 px-2.5 py-1 font-semibold text-[#c0c1ff]">Les offres sont enregistrées inactives</span>
-          <button type="button" onClick={() => session && void loadCatalog(session)} className={`${buttonClass} bg-[#262a33] text-white hover:bg-[#343a46]`} disabled={loading}>
+          <button type="button" onClick={() => void loadCatalog()} className={`${buttonClass} bg-[#262a33] text-white hover:bg-[#343a46]`} disabled={loading}>
             <span className="material-symbols-outlined text-base">refresh</span> Actualiser
           </button>
           <button type="button" onClick={handleSignOut} className={`${buttonClass} bg-[#262a33] text-white hover:bg-[#343a46]`}>Déconnexion</button>
